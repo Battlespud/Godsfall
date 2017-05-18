@@ -2,26 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Announcer : MonoBehaviour {
+public static class Announcer {
 
-	// Use this for initialization
-	void Start () {
-		//all subscriptions go here
-		Entity.onDied += AnnounceDeath;
-	}
+//For now just relays events to the debug log, in the future will be linked to sound files etc
 
-	void AnnounceDeath(Entity e){
+	public static void AnnounceDeath(Actor e){
 		string deathAnnouncement = string.Format ("{0} has been slain!", e.name);
 		Debug.Log (deathAnnouncement);
 	}
 
-	void AnnounceBoneBreak(Entity e, Bone b){
-		string deathAnnouncement = string.Format ("{0} has had their {1} shattered!", e.name, b.name);
+	public static void AnnounceBoneBreak(Entity e, Bone b){
+		string deathAnnouncement = string.Format ("{0} has had their {1} {2} shattered!", e.name, b.parentBodyPart.side.ToString(), b.name);
 		Debug.Log (deathAnnouncement);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DeathEventArgs : UnityEvent<Actor> {
+public class CombatEvent : UnityEvent<Entity,Entity> {
+
 
 }

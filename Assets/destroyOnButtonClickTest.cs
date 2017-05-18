@@ -9,7 +9,7 @@ public class destroyOnButtonClickTest : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		EventSystem.onTest += blowup;
+	//	EventSystem.onTest += blowup;
 	}
 	
 	// Update is called once per frame

@@ -21,5 +21,9 @@ public static class Dice  {
 		return (Random.Range (1 * dice, sides * 3 + 1));
 	}
 
+	public static int modifyByAttribute(int rollResult, int[] attributeArray, AttributeSheet.Attribute attribute){
+		return (rollResult + attributeArray [(int)attribute]);
+	}
+
 
 }

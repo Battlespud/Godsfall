@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class HitPoints : MonoBehaviour {
 
+	public string refName;
+
+	public delegate void hpChanged();
+	public static event hpChanged onHpChanged;
+
 	public bool locked = false;
 
 	public enum TypeOfHP{
@@ -31,7 +36,7 @@ public class HitPoints : MonoBehaviour {
 		set {
 			if (!locked) {
 				hp = value;
-				EventSystem.onHpChanged ();
+				//TODO ADD EVENT
 			}
 		}
 	}

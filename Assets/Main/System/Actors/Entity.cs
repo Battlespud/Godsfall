@@ -4,10 +4,14 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
 
-	public  delegate void died(DeathEventArgs args);
-	public static event died onDied;
 
-	public string name;
+	public DeathEventArgs deathEvent;
+	public CombatEvent combatEvent;
+
+	public  new string name;
+
+	public Body body;
+	public CharacterSheet characterSheet;
 
 	public int blood;
 	public int mBlood;
@@ -19,26 +23,26 @@ public abstract class Entity : MonoBehaviour {
 		Normal=1,
 		Stunned=2
 
-
-
 	};
 
 	public Status status;
 
 	// Use this for initialization
-	void Start () {
-		
+	public void Start () {
+		deathEvent.AddListener (Announcer.AnnounceDeath);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (blood <= 0) {
-			die ();
+	public void Update () {
+
+
+		if (Input.GetKeyDown (KeyCode.LeftShift)) {
+
+			//TESTING
+			Debug.Log("Apparently update() got inhereited by accident");
 		}
 	}
 
-	void die(){
-		onDied.Invoke(new DeathEventArgs(this));
-	}
+
 
 }
