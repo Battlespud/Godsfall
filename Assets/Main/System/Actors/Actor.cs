@@ -12,6 +12,7 @@ public class Actor : Entity , IEventInitializer {
 		status = Status.Normal;
 		body = new Body (this);
 		characterSheet = new CharacterSheet();
+		eGameObject = this.gameObject;
 	}
 
 	public void die(){

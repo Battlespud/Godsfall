@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class InputCatcher : MonoBehaviour {
+public class InputCatcher {
 
-
+	public MovementController movementController;
 
 
 	//Keybinds
+		//constants are always static anyway
+	public const KeyCode ForwardKey = KeyCode.W;
+	public const KeyCode BackKey = KeyCode.S;
+	public const KeyCode LeftKey = KeyCode.A;
+	public const KeyCode RightKey = KeyCode.D;
 
-	const KeyCode Forward = KeyCode.W;
-	const KeyCode Back = KeyCode.W;
-	const KeyCode Left = KeyCode.W;
-	const KeyCode Right = KeyCode.W;
+	public const KeyCode RollKey = KeyCode.Space;
 
 
+	public bool LeftClick(){
+		return Input.GetMouseButtonDown (0);
+	}
+
+	public bool RightClick(){
+		return Input.GetMouseButtonDown (1);
+	}
+
+	public bool MiddleClick(){
+		return Input.GetMouseButtonDown (2);
+	}
 
 
 	// Use this for initialization
