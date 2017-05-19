@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour {
 
+	public GameObject eGameObject;
 
 	public DeathEventArgs deathEvent;
 	public CombatEvent combatEvent;
@@ -12,6 +13,7 @@ public abstract class Entity : MonoBehaviour {
 
 	public Body body;
 	public CharacterSheet characterSheet;
+	public Movement  movement;
 
 	public int blood;
 	public int mBlood;
@@ -37,11 +39,16 @@ public abstract class Entity : MonoBehaviour {
 
 
 		if (Input.GetKeyDown (KeyCode.LeftShift)) {
-
 			//TESTING
-			Debug.Log("Apparently update() got inhereited by accident");
+			Debug.Log(string.Format("Error, {0} did not successfully hide Entity.Update()", name));
 		}
 	}
+
+
+
+}
+
+public class Movement{
 
 
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IHealth
 {
-	void takeDamage(int i);
+	void takeDamage(int hpLost);
+	void heal (int hpGain);
 
 	void destroyed();
 }

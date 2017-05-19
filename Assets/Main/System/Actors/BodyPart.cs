@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BodyPart :  IHealth {
+public class BodyPart :  IHealth , IEventInitializer {
+
+	public LostLimbEvent lostLimbEvent;
 
 	//just rando numbers
 	const int skullHP = 10;
 	const int armHP = 15;
 	const int legHP = 15;
 
+	const float boneHealthModifier = .45f;
 
-	public void takeDamage(int hpLost){
-		hitPoints.Hp -= hpLost;
+	public string name;
+
+	public string getName(){
+		return name;
 	}
 
-	public enum BodyPartType{
-		HEAD=0,
-		ARM=1,
-		LEG=2
+	public bool initialized = false;
 
+	public enum BodyPartType{
+		Head=0,
+		Arm=1,
+		Leg=2
 	};
 	public BodyPartType bodyPartType;
 
@@ -27,7 +33,6 @@ public class BodyPart :  IHealth {
 		Skull=0, //each side is half a skull
 		Humerus=1,
 		Femur=2
-
 	};
 
 	public enum Side{
@@ -45,18 +50,16 @@ public class BodyPart :  IHealth {
 
 
 
-	public void destroyed(){
-		isDestroyed = true;
-		hitPoints.locked = true;
-	}
+
 
 	public BodyPart(BodyPartType typ, Side sid, int h, int hBone){
 		bodyPartType = typ;
 		side = sid;
+		name = typ.ToString();
 		hitPoints = new HitPoints (h, HitPoints.TypeOfHP.bodyPart);
 		hitPoints.refName = (bodyPartType.ToString() + " hp"); //name of this
-		bone = new Bone (hBone, ((BodyPartName)hBone).ToString()); //name of bone
-
+		bone = new Bone (hBone, ((BodyPartName)hBone).ToString(), this); //name of bone
+		initializeEvents();
 	}
 
 
@@ -65,45 +68,74 @@ public class BodyPart :  IHealth {
 	string strArmBone = "Humerus";
 	string strLegBone = "Femur";
 
+	string strHead = "Head";
+	string strArm = "Arm";
+	string strLeg = "Leg";
 
+	string[] nameArrayBP = new string[3] {"Head" ,"Arm","Leg"};
 
 	public BodyPart(int typ, int sid){
-		switch (typ) {
+		name = nameArrayBP[typ];
 
+		switch (typ) {
 		case 0:
 			bodyPartType = (BodyPartType)typ; //skul
 			side = (Side)sid; //left
-				hitPoints = new HitPoints (skullHP/2, HitPoints.TypeOfHP.bodyPart);
-				hitPoints.refName = (strHeadBone + " hp");
-				bone = new Bone (skullHP, (strHeadBone));
-
+			hitPoints = new HitPoints (skullHP / 2, HitPoints.TypeOfHP.bodyPart);
+			hitPoints.refName = (strHeadBone + " hp");
+			bone = new Bone (skullHP, (strHeadBone), this);
 			break;
 
 		case 1:
 
 			bodyPartType = (BodyPartType)typ; //arm
 			side = (Side)sid; //left
-					hitPoints = new HitPoints (armHP, HitPoints.TypeOfHP.bodyPart);
+			hitPoints = new HitPoints (armHP, HitPoints.TypeOfHP.bodyPart);
 			hitPoints.refName = ("Arm" + " hp");
-			bone = new Bone (legHP, (strArmBone));
-
-
+			bone = new Bone (legHP, (strArmBone), this);
 			break;
 
 		case 2: 
 
 			bodyPartType = (BodyPartType)typ; //leg
-			side =(Side) sid; //left
+			side = (Side)sid; //left
 			hitPoints = new HitPoints (legHP, HitPoints.TypeOfHP.bodyPart);
-				hitPoints.refName = ("Leg " + " hp");
-			bone = new Bone (legHP, (strLegBone));
+			hitPoints.refName = ("Leg " + " hp");
+			bone = new Bone ((int)(legHP * boneHealthModifier), (strLegBone), this);
 			break;
-
-
 		}
-
+		initializeEvents ();
+		initialized = true;
 		bone.parentBodyPart = this;
+	}
 
+	//IHealth Implementation
+
+	public void takeDamage(int hpLost){
+		hitPoints.Hp -= hpLost;
+		onHpChanged ();
+	}
+
+	public void heal(int hpGain){
+		hitPoints.Hp += hpGain;
+		onHpChanged ();
+	}
+
+	void onHpChanged(){
+
+	}
+
+	public void destroyed(){
+		isDestroyed = true;
+		hitPoints.Hp = 0;
+		hitPoints.locked = true;
+		lostLimbEvent.Invoke (this.parentBody.parentEntity, this);
+	}
+
+	//IEventInitializer Implementation
+	 public void initializeEvents(){
+		lostLimbEvent = new LostLimbEvent();
+		lostLimbEvent.AddListener (Announcer.AnnounceLimbLoss);
 	}
 
 

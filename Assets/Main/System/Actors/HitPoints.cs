@@ -10,6 +10,7 @@ public class HitPoints : MonoBehaviour {
 	public static event hpChanged onHpChanged;
 
 	public bool locked = false;
+	public bool initialized = false;
 
 	public enum TypeOfHP{
 		bodyPart,
@@ -29,6 +30,7 @@ public class HitPoints : MonoBehaviour {
 
 	private int hp;
 
+	//NEVER call this directly or you will break everything
 	public int Hp {
 		get {
 			return hp;
@@ -36,6 +38,9 @@ public class HitPoints : MonoBehaviour {
 		set {
 			if (!locked) {
 				hp = value;
+				if (hp < 0) {
+					hp = 0;
+				}
 				//TODO ADD EVENT
 			}
 		}
@@ -43,12 +48,16 @@ public class HitPoints : MonoBehaviour {
 
 	public int mHp;
 
+	public bool outOfHP(){
+		return (hp == 0);
+	}
 
 
 	public HitPoints(int mh, TypeOfHP typ){
 		typeOfHP = typ;
 		mHp = mh;
 		hp = mHp;
+		initialized = true;
 	}
 
 

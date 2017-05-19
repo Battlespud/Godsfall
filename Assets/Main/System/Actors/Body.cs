@@ -17,11 +17,12 @@ public class Body  {
 		bodyPartsList.Add(new BodyPart(2,1));
 	}
 
-	public Body(){
+	public Body(Entity e){
+		parentEntity = e;
 		setupHumanBody ();
 		foreach(BodyPart b in bodyPartsList){
 			b.parentBody = this;
 		}
-		Debug.Log ("Body setup");
+		Debug.Log (string.Format("Body setup completed for {0}", parentEntity.name));
 	}
 }

@@ -2,27 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Actor : Entity {
+public class Actor : Entity , IEventInitializer {
 
 
-	//test constructor, setup overloads later
 	void initialize(){
 		name = "fizz"; //because i enjoy torturing fizz
 		mBlood = 25;
 		blood = mBlood;
 		status = Status.Normal;
-		deathEvent = new DeathEventArgs();
-		combatEvent = new CombatEvent ();
-		Debug.Log ("successfully made an actor");
-		body = new Body ();
-		body.parentEntity = this;
+		body = new Body (this);
 		characterSheet = new CharacterSheet();
-	}
-
-	private void registerListeners(){
-		deathEvent.AddListener (Announcer.AnnounceDeath);
-		combatEvent.AddListener (CombatHandler.ResolveCombat);
-
 	}
 
 	public void die(){
@@ -36,11 +25,16 @@ public class Actor : Entity {
 		}
 	}
 
-
+	public void maimEveryLimb(){
+			foreach (BodyPart b in body.bodyPartsList) {
+			b.destroyed ();
+			}
+		}
 
 	// Use this for initialization
 	new void Start () {
 		initialize ();
+		initializeEvents ();
 	}
 	
 	// Update is called once per frame
@@ -55,6 +49,22 @@ public class Actor : Entity {
 			breakEveryBone();
 		}
 
+		if (Input.GetKeyDown (KeyCode.LeftAlt)) {
+			Debug.Log ("Maiming...");
+			//TESTING
+			maimEveryLimb();
+		}
 
 	}
+
+	//
+	public void initializeEvents(){
+		deathEvent = new DeathEventArgs();
+		deathEvent.AddListener (Announcer.AnnounceDeath);
+
+		combatEvent = new CombatEvent ();
+		combatEvent.AddListener (CombatHandler.ResolveCombat);
+
+	}
+
 }
