@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour {
-	public CharacterController cameraController;
 	public Camera camera;
 	public GameObject player_go;
 	CharacterController player_controller;
@@ -83,8 +82,8 @@ public class MovementController : MonoBehaviour {
 	private void move(Vector3 vec){
 		if (canMove()) {
 			player_controller.Move (toMove * Time.deltaTime);
-			cameraController.Move (toMove * Time.deltaTime);
 		}
+		camera.transform.position = new Vector3 (player_go.transform.position.x, 10f, player_go.transform.position.z - 14f);
 	}
 
 	private void lookAtMouse(){

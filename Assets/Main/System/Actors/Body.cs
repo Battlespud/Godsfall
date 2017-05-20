@@ -104,7 +104,7 @@ public class Body : IEventInitializer {
 	}
 
 	public void checkMovement(){ 
-		if (hasLostLeg () || hasBrokenLeg() || !hasAtLeastTwoLegs()) {
+		if ((hasLostLeg () || hasBrokenLeg() || !hasAtLeastTwoLegs()) && parentEntity.isPlayer) {
 			canMoveEvent.Invoke (false);
 		}
 	}
@@ -116,7 +116,9 @@ public class Body : IEventInitializer {
 
 	//implement IInitializeEvents
 	public void initializeEvents(){
-		canMoveEvent = new BoolEvent ();
-		canMoveEvent.AddListener (movementController.setBodyCanMove);
+		if (parentEntity.isPlayer) {
+			canMoveEvent = new BoolEvent ();
+			canMoveEvent.AddListener (movementController.setBodyCanMove);
+		}
 	}
 }

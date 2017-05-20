@@ -23,6 +23,8 @@ public abstract class Entity : MonoBehaviour {
 		//TODO add event
 	}
 
+	public bool isPlayer = false;
+
 	public enum Status{
 		Dead=0,
 		Normal=1,

@@ -54,8 +54,9 @@ public class Bone : IHealth, IEventInitializer {
 		isDestroyed = true;
 		hitPoints.Hp = 0;
 		hitPoints.locked = true;
-		brokenBoneEvent.Invoke (this.parentBodyPart.parentBody.parentEntity, this);
 		alertBodyEvent.Invoke ();
+		brokenBoneEvent.Invoke (this.parentBodyPart.parentBody.parentEntity, this);
+
 	}
 
 	//IEventInitializer Implementation
