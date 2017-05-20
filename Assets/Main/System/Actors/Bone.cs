@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 //add an update loop and have them inhereit from monobehaviour TODO
 public class Bone : IHealth, IEventInitializer {
 
 	public BrokenBoneEventArgs brokenBoneEvent;
+	public UnityEvent alertBodyEvent;
 
 	//destruction = disabling of limb
 		//contained within bodypart, so we dont need to repeat location information here
@@ -21,7 +23,6 @@ public class Bone : IHealth, IEventInitializer {
 		name = nam;
 		hitPoints.refName = name + " hp";
 		parentBodyPart = b;
-		initializeEvents ();
 		Debug.Log (parentBodyPart.getName());
 	}
 
@@ -46,16 +47,24 @@ public class Bone : IHealth, IEventInitializer {
 	}
 
 	public void destroyed(){
+		if (isDestroyed) {
+			Debug.Log (string.Format ("Error, {0}'s {1} {2} is already destroyed", this.parentBodyPart.parentBody.parentEntity.name, this.parentBodyPart.side.ToString(),this.name));
+			return;
+		}
 		isDestroyed = true;
 		hitPoints.Hp = 0;
 		hitPoints.locked = true;
 		brokenBoneEvent.Invoke (this.parentBodyPart.parentBody.parentEntity, this);
+		alertBodyEvent.Invoke ();
 	}
 
 	//IEventInitializer Implementation
 	public void initializeEvents(){
 		brokenBoneEvent = new BrokenBoneEventArgs ();
 		brokenBoneEvent.AddListener (Announcer.AnnounceBoneBreak);	
+
+		alertBodyEvent = new UnityEvent ();
+		alertBodyEvent.AddListener (parentBodyPart.parentBody.checkMovement);
 	}
 
 }

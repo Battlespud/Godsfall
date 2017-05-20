@@ -19,6 +19,9 @@ public abstract class Entity : MonoBehaviour {
 	public int mBlood;
 	public int bleedRate = 0; // bleed per second
 
+	public virtual void modifyBlood(int i){
+		//TODO add event
+	}
 
 	public enum Status{
 		Dead=0,

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class BodyPart :  IHealth , IEventInitializer {
 
 	public LostLimbEvent lostLimbEvent;
+	public UnityEvent alertBodyEvent;
 
 	//just rando numbers
 	const int skullHP = 10;
@@ -59,7 +61,8 @@ public class BodyPart :  IHealth , IEventInitializer {
 		hitPoints = new HitPoints (h, HitPoints.TypeOfHP.bodyPart);
 		hitPoints.refName = (bodyPartType.ToString() + " hp"); //name of this
 		bone = new Bone (hBone, ((BodyPartName)hBone).ToString(), this); //name of bone
-		initializeEvents();
+		bone.parentBodyPart = this;
+		bone.initializeEvents();
 	}
 
 
@@ -73,6 +76,10 @@ public class BodyPart :  IHealth , IEventInitializer {
 	string strLeg = "Leg";
 
 	string[] nameArrayBP = new string[3] {"Head" ,"Arm","Leg"};
+
+	public BodyPart(){
+		//constructs a type reference for type checking. Otherwise please dont use
+	}
 
 	public BodyPart(int typ, int sid){
 		name = nameArrayBP[typ];
@@ -104,9 +111,8 @@ public class BodyPart :  IHealth , IEventInitializer {
 			bone = new Bone ((int)(legHP * boneHealthModifier), (strLegBone), this);
 			break;
 		}
-		initializeEvents ();
-		initialized = true;
 		bone.parentBodyPart = this;
+		hitPoints.parent = this;
 	}
 
 	//IHealth Implementation
@@ -126,16 +132,32 @@ public class BodyPart :  IHealth , IEventInitializer {
 	}
 
 	public void destroyed(){
+		if (isDestroyed) {
+			Debug.Log (string.Format ("Error, {0}'s {1} {2} is already destroyed", this.parentBody.parentEntity.name, this.side.ToString(),this.name));
+			return;
+		}
 		isDestroyed = true;
 		hitPoints.Hp = 0;
 		hitPoints.locked = true;
 		lostLimbEvent.Invoke (this.parentBody.parentEntity, this);
+		alertBodyEvent.Invoke();
+	}
+
+	public void destroyedPermanent(){
+		destroyed ();
+		this.parentBody.bodyPartsList.Remove (this);
+		alertBodyEvent.Invoke ();
 	}
 
 	//IEventInitializer Implementation
 	 public void initializeEvents(){
 		lostLimbEvent = new LostLimbEvent();
 		lostLimbEvent.AddListener (Announcer.AnnounceLimbLoss);
+
+		alertBodyEvent = new UnityEvent ();
+		alertBodyEvent.AddListener (parentBody.checkMovement);
+		initialized = true;
+		bone.initializeEvents ();
 	}
 
 

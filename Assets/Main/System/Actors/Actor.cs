@@ -6,13 +6,18 @@ public class Actor : Entity , IEventInitializer {
 
 
 	void initialize(){
-		name = "fizz"; //because i enjoy torturing fizz
+		name = "Fizz"; //because i enjoy torturing fizz
 		mBlood = 25;
 		blood = mBlood;
 		status = Status.Normal;
 		body = new Body (this);
 		characterSheet = new CharacterSheet();
 		eGameObject = this.gameObject;
+	}
+
+	public override void modifyBlood(int i){
+		blood += i;
+		//TODO add event
 	}
 
 	public void die(){
@@ -30,14 +35,26 @@ public class Actor : Entity , IEventInitializer {
 			foreach (BodyPart b in body.bodyPartsList) {
 			b.destroyed ();
 			}
+	//	maimPermanent ();
 		}
+
+	//probably dont want to mess with this, but it works without any errors so yay
+	void maimPermanent(){
+		int c = body.bodyPartsList.Count;
+		BodyPart[] bArray = new BodyPart[c];
+		bArray = body.bodyPartsList.ToArray ();
+		for (int i = 0; i < c; i++) {
+			Debug.Log("Amputating: " + bArray[i].name);
+			body.bodyPartsList.Remove (bArray [i]);
+		}
+	}
 
 	// Use this for initialization
 	new void Start () {
 		initialize ();
 		initializeEvents ();
 	}
-	
+
 	// Update is called once per frame
 	new void Update () {
 		if (blood <= 0 && (status != Status.Dead)) {
@@ -45,13 +62,13 @@ public class Actor : Entity , IEventInitializer {
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			Debug.Log ("Breaking...");
+			Debug.Log (string.Format("Breaking {0}...", this.name));
 			//TESTING
 			breakEveryBone();
 		}
 
 		if (Input.GetKeyDown (KeyCode.LeftAlt)) {
-			Debug.Log ("Maiming...");
+			Debug.Log (string.Format("Maiming {0}...", this.name));
 			//TESTING
 			maimEveryLimb();
 		}
