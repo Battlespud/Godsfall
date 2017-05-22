@@ -21,4 +21,9 @@ public static class Announcer {
 		Debug.Log (deathAnnouncement);
 	}
 
+	public static void AnnounceString(string s){
+		string deathAnnouncement = s;
+		Debug.Log (deathAnnouncement);
+	}
+
 }

@@ -13,7 +13,6 @@ public abstract class Entity : MonoBehaviour {
 
 	public Body body;
 	public CharacterSheet characterSheet;
-	public Movement  movement;
 
 	public int blood;
 	public int mBlood;
@@ -53,8 +52,4 @@ public abstract class Entity : MonoBehaviour {
 
 }
 
-public class Movement{
 
-
-
-}

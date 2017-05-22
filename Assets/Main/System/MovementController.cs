@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour {
 	public Camera camera;
-	public GameObject player_go;
-	CharacterController player_controller;
+	public GameObject character_go;
+	CharacterController character_controller;
 	public Animator animator;
+	public bool isPlayer;
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
 	bool bodyCanMove = true;
@@ -35,25 +36,43 @@ public class MovementController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		player_go = this.gameObject;
-		player_controller = player_go.GetComponent<CharacterController> ();
+		character_go = this.gameObject;
+		character_controller = character_go.GetComponent<CharacterController> ();
 	}
 
 	Vector3 toMove;
 
 	// Update is called once per frame
 	void Update () {
-		clearBuffer ();
-		checkMovementInput ();
-		checkZoomInput ();
-		move (toMove);
-		lookAtMouse (); //todo remove later
+		switch (isPlayer) {
+
+		case (true):
+			{
+				clearBuffer ();
+				checkMovementInput ();
+				checkZoomInput ();
+				move (toMove);
+				lookAtMouse (); //todo remove later
+				break;
+			}
+		case (false):
+			{
+				npcMove (toMove);
+				clearBuffer ();
+				break;
+			}
+
+		}
+
 	}
 
 	private void clearBuffer(){
 		toMove = new Vector3 (0f, 0f, 0f);
 	}
 
+	public void npcInputToMove(Vector3 i){
+		toMove += i;
+	}
 
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
@@ -81,9 +100,14 @@ public class MovementController : MonoBehaviour {
 
 	private void move(Vector3 vec){
 		if (canMove()) {
-			player_controller.Move (toMove * Time.deltaTime);
+			character_controller.Move (toMove * Time.deltaTime * move_speed);
 		}
-		camera.transform.position = new Vector3 (player_go.transform.position.x, 10f, player_go.transform.position.z - 14f);
+		camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
+	}
+
+	private void npcMove(Vector3 vec){
+		character_controller.Move (vec * Time.deltaTime *move_speed);
+	//	camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
 	}
 
 	private void lookAtMouse(){

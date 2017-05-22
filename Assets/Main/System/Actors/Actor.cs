@@ -13,6 +13,7 @@ public class Actor : Entity , IEventInitializer {
 		body = new Body (this);
 		characterSheet = new CharacterSheet();
 		eGameObject = this.gameObject;
+		eGameObject.GetComponent<MovementController> ().isPlayer = isPlayer;
 	}
 
 	public override void modifyBlood(int i){
