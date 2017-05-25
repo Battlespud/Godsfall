@@ -116,7 +116,7 @@ public class MovementController : MonoBehaviour {
 
 	private void npcMove(Vector3 vec){
 		character_controller.Move (vec * Time.deltaTime *move_speed);
-		camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
+//		camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
 	}
 
 	private void lookAtMouse(){

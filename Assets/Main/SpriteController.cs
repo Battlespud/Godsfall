@@ -24,6 +24,8 @@ public class SpriteController : MonoBehaviour{
 	public Camera cam;
 	public CameraDirection cameraDirection;
 
+	public GameObject parentGo;
+
 	Transform spriteTransform;
 	Transform _t;
 
@@ -76,11 +78,11 @@ public class SpriteController : MonoBehaviour{
 
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 
-		Vector3 targetPoint = new Vector3(cameraDirection.transform.position.x, _t.position.y, cameraDirection.transform.position.z) - transform.position;
-		//transform.LookAt(targetPoint);
-		Quaternion wtf = Quaternion.LookRotation(-targetPoint, Vector3.up);
-		spriteTransform.rotation = Quaternion.LookRotation(-targetPoint, Vector3.up);
-		Debug.Log (wtf.eulerAngles);
+		Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
+		Debug.Log (targetPoint);
+		//transform.rotation=Quaternion.LookRotation(-cam.transform.forward);
+		//transform.rotation=Quaternion.LookRotation(-targetPoint, Vector3.up);
+
 	}
 
 	public void UpdateSprite(Vector3 vec){
