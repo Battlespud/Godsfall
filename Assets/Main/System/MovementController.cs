@@ -6,8 +6,10 @@ public class MovementController : MonoBehaviour {
 	public Camera camera;
 	public GameObject character_go;
 	CharacterController character_controller;
+	SpriteController spriteController;
 	public Animator animator;
 	public bool isPlayer;
+	public bool isMoving = false;
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
 	bool bodyCanMove = true;
@@ -28,7 +30,7 @@ public class MovementController : MonoBehaviour {
 
 	bool rolling = false;
 
-	float move_speed = 5f;
+	float move_speed = 7.5f;
 
 	private float timeAdjusted(float f){
 		return (f * Time.deltaTime);
@@ -38,31 +40,38 @@ public class MovementController : MonoBehaviour {
 	void Start () {
 		character_go = this.gameObject;
 		character_controller = character_go.GetComponent<CharacterController> ();
+		spriteController = GetComponentInChildren<SpriteController> ();
 	}
 
 	Vector3 toMove;
 
 	// Update is called once per frame
 	void Update () {
+		if (toMove != new Vector3 (0, 0, 0)) {
+			isMoving = true;
+		} else {
+			isMoving = false;
+		}
 		switch (isPlayer) {
-
 		case (true):
 			{
-				clearBuffer ();
 				checkMovementInput ();
 				checkZoomInput ();
 				move (toMove);
-				lookAtMouse (); //todo remove later
+			//	lookAtMouse (); 
 				break;
 			}
 		case (false):
 			{
 				npcMove (toMove);
-				clearBuffer ();
 				break;
 			}
 
 		}
+		if(toMove != new Vector3(0,0,0))
+		spriteController.UpdateSprite (toMove);
+		clearBuffer ();
+
 
 	}
 
@@ -76,16 +85,16 @@ public class MovementController : MonoBehaviour {
 
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
-			toMove += Vector3.forward*move_speed;
+			toMove += Vector3.forward;
 		}
 		if (Input.GetKey (InputCatcher.BackKey)) {
-			toMove += Vector3.back*move_speed;
+			toMove += Vector3.back;
 		}
 		if (Input.GetKey (InputCatcher.LeftKey)) {
-			toMove += Vector3.left*move_speed;
+			toMove += Vector3.left;
 		}
 		if (Input.GetKey (InputCatcher.RightKey)) {
-			toMove += Vector3.right*move_speed;
+			toMove += Vector3.right;
 		}
 	}
 
@@ -107,7 +116,7 @@ public class MovementController : MonoBehaviour {
 
 	private void npcMove(Vector3 vec){
 		character_controller.Move (vec * Time.deltaTime *move_speed);
-	//	camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
+		camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
 	}
 
 	private void lookAtMouse(){
@@ -123,7 +132,6 @@ public class MovementController : MonoBehaviour {
 		mouse_pos.y = mouse_pos.y - object_pos.y;
 		angle = Mathf.Atan2 (mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.Euler (new Vector3 (0, -angle+90, 0));
-
 	}
 
 }

@@ -1,0 +1,874 @@
+fileFormatVersion: 2
+guid: b1d1de0272c0d8548bc61a4aa352ce57
+timeCreated: 1495669953
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: NPC_Guards_noBG_0
+    21300002: NPC_Guards_noBG_1
+    21300004: NPC_Guards_noBG_2
+    21300006: NPC_Guards_noBG_3
+    21300008: NPC_Guards_noBG_4
+    21300010: NPC_Guards_noBG_5
+    21300012: NPC_Guards_noBG_6
+    21300014: NPC_Guards_noBG_7
+    21300016: NPC_Guards_noBG_8
+    21300018: NPC_Guards_noBG_9
+    21300020: NPC_Guards_noBG_10
+    21300022: NPC_Guards_noBG_11
+    21300024: NPC_Guards_noBG_12
+    21300026: NPC_Guards_noBG_13
+    21300028: NPC_Guards_noBG_14
+    21300030: NPC_Guards_noBG_15
+    21300032: NPC_Guards_noBG_16
+    21300034: NPC_Guards_noBG_17
+    21300036: NPC_Guards_noBG_18
+    21300038: NPC_Guards_noBG_19
+    21300040: NPC_Guards_noBG_20
+    21300042: NPC_Guards_noBG_21
+    21300044: NPC_Guards_noBG_22
+    21300046: NPC_Guards_noBG_23
+    21300048: NPC_Guards_noBG_24
+    21300050: NPC_Guards_noBG_25
+    21300052: NPC_Guards_noBG_26
+    21300054: NPC_Guards_noBG_27
+    21300056: NPC_Guards_noBG_28
+    21300058: NPC_Guards_noBG_29
+    21300060: NPC_Guards_noBG_30
+    21300062: NPC_Guards_noBG_31
+    21300064: NPC_Guards_noBG_32
+    21300066: NPC_Guards_noBG_33
+    21300068: NPC_Guards_noBG_34
+    21300070: NPC_Guards_noBG_35
+    21300072: NPC_Guards_noBG_36
+    21300074: NPC_Guards_noBG_37
+    21300076: NPC_Guards_noBG_38
+    21300078: NPC_Guards_noBG_39
+    21300080: NPC_Guards_noBG_40
+    21300082: NPC_Guards_noBG_41
+    21300084: NPC_Guards_noBG_42
+    21300086: NPC_Guards_noBG_43
+    21300088: NPC_Guards_noBG_44
+    21300090: NPC_Guards_noBG_45
+    21300092: NPC_Guards_noBG_46
+    21300094: NPC_Guards_noBG_47
+    21300096: NPC_Guards_noBG_48
+    21300098: NPC_Guards_noBG_49
+    21300100: NPC_Guards_noBG_50
+    21300102: NPC_Guards_noBG_51
+    21300104: NPC_Guards_noBG_52
+    21300106: NPC_Guards_noBG_53
+    21300108: NPC_Guards_noBG_54
+    21300110: NPC_Guards_noBG_55
+    21300112: NPC_Guards_noBG_56
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 522
+        width: 37
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 520
+        width: 34
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_2
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 520
+        width: 33
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_3
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 521
+        width: 28
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_4
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 522
+        width: 32
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_5
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 516
+        width: 40
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_6
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 515
+        width: 43
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_7
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 519
+        width: 52
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_8
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 522
+        width: 66
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_9
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 519
+        width: 40
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_10
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 520
+        width: 40
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_11
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 522
+        width: 34
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_12
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 525
+        width: 47
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_13
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 528
+        width: 52
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_14
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 390
+        width: 67
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_15
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 390
+        width: 54
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_16
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 386
+        width: 44
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_17
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 388
+        width: 48
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_18
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 378
+        width: 55
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_19
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 380
+        width: 42
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_20
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 385
+        width: 46
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_21
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 386
+        width: 50
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_22
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 381
+        width: 40
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_23
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 381
+        width: 34
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_24
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 385
+        width: 41
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_25
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 386
+        width: 36
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_26
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 388
+        width: 41
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_27
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 389
+        width: 36
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_28
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 251
+        width: 38
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_29
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 252
+        width: 42
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_30
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 249
+        width: 52
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_31
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_32
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_33
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_34
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_35
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_36
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_37
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 253
+        width: 66
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_38
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 125
+        width: 36
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_39
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 126
+        width: 43
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_40
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 127
+        width: 51
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_41
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 127
+        width: 58
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_42
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 127
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_43
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 127
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_44
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 127
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_45
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 127
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_46
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 127
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_47
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 127
+        width: 56
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_48
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 5
+        width: 48
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_49
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 6
+        width: 48
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_50
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 5
+        width: 50
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_51
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 6
+        width: 49
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_52
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 7
+        width: 46
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_53
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 6
+        width: 46
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_54
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 6
+        width: 46
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_55
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 6
+        width: 46
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NPC_Guards_noBG_56
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 19
+        width: 162
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

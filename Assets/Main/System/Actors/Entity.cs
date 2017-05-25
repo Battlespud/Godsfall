@@ -14,6 +14,8 @@ public abstract class Entity : MonoBehaviour {
 	public Body body;
 	public CharacterSheet characterSheet;
 
+	public SpriteRenderer sr;
+
 	public int blood;
 	public int mBlood;
 	public int bleedRate = 0; // bleed per second

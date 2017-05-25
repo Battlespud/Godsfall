@@ -38,7 +38,7 @@ public class PatrolBehavior : MonoBehaviour , IEventInitializer{
 		if (patrolTimer <= 0) {
 			resetTimer();
 		}
-		movementController.npcInputToMove (new Vector3 (heading, 0, 0)*Time.deltaTime*7.5f);
+		movementController.npcInputToMove (new Vector3 (heading, 0, 0));
 		patrolTimer -= Time.deltaTime;
 	}
 
