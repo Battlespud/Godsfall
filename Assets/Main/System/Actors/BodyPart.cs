@@ -119,6 +119,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 
 	public void takeDamage(int hpLost){
 		hitPoints.Hp -= hpLost;
+		Debug.Log (name + " takes " + hpLost + " points of damage.");
 		onHpChanged ();
 	}
 
@@ -128,7 +129,9 @@ public class BodyPart :  IHealth , IEventInitializer {
 	}
 
 	void onHpChanged(){
-
+		if (hitPoints.outOfHP ()) {
+			destroyed ();
+		}
 	}
 
 	public void destroyed(){
@@ -139,6 +142,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 		isDestroyed = true;
 		hitPoints.Hp = 0;
 		hitPoints.locked = true;
+		bone.destroyed ();
 		lostLimbEvent.Invoke (this.parentBody.parentEntity, this);
 		alertBodyEvent.Invoke();
 	}

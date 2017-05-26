@@ -36,7 +36,21 @@ public class Body : IEventInitializer {
 		Debug.Log (string.Format("Body setup completed for {0}", parentEntity.name));
 	}
 
+	public void dealRandomDamage(int d){
+		BodyPart[] bArray = bodyPartsList.ToArray ();
+		bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
+		/*
+		switch(Random.Range(0,2) > 0){
+		case true:
+			bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
+			break;
+		case false:
+			bArray [Random.Range (0, bodyPartsList.Count)].bone.takeDamage (d);
 
+			break;
+		}
+		*/
+	}
 
 	bool hasLostLeg(){
 		int i = 0;

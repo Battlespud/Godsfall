@@ -79,7 +79,7 @@ public class SpriteController : MonoBehaviour{
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 
 		Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
-		Debug.Log (targetPoint);
+	//	Debug.Log (targetPoint);
 		//transform.rotation=Quaternion.LookRotation(-cam.transform.forward);
 		//transform.rotation=Quaternion.LookRotation(-targetPoint, Vector3.up);
 
