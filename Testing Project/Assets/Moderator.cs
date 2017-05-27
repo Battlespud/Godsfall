@@ -10,7 +10,7 @@ public static class Moderator
 
     //x = level, y = door
     public static Vector2 savedID = new Vector2();
-    public static List<GameObject> doorsList = new List<GameObject>();
+    public static List<GameObject> doorList = new List<GameObject>();
     public static GameObject targetDoor;
     public static GameObject player;
 
@@ -31,17 +31,17 @@ public static class Moderator
 
     private static void registerDoors()
     {
-        doorList.clear();
+        doorList.Clear();
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("door"))
         {
-            doorsList.add(obj);
+            doorList.Add(obj);
         }
         SelectDoor();
     }
 
     private static void SelectDoor()
     {
-        foreach (GameObject obj in doorsList)
+        foreach (GameObject obj in doorList)
         {
             if (obj.GetComponent<DoorID>().GetID() == savedID)
             {
@@ -52,23 +52,23 @@ public static class Moderator
 
     private static void LoadPlayer()
     {
-        private static float f = obj.transform.position.x;
-        private static float offset = 5;
-        player = Instantiate(GameObject.FindGameObjectWithTag("Player"));
-    
-        switch(f) 
+        float f = targetDoor.transform.position.x;
+        float offset = 5;
+        player = GameObject.Instantiate(GameObject.FindGameObjectWithTag("Player"));
+        bool thisCannotContinue = f < 0;
+        switch(thisCannotContinue) 
         {
-            case (f<0):
-                player.transform.position = new Vector3(targetDoor.transform.position.x + offset, targetDoor.transform.position.y, 0f);
+            case true:
+                player.transform.position = new Vector3(f + offset, targetDoor.transform.position.y, 0f);
                 break;
             
-            case (f>0):
-                player.transform.position = new Vector3(targetDoor.transform.position.x + offset* -1, targetDoor.transform.position.y, 0f);
+            case false:
+                player.transform.position = new Vector3(f + offset* -1, targetDoor.transform.position.y, 0f);
                 break; 
+
             default:
             Debug.Log("We're all fucked.jpg");
                 break;
         }
     }
-}
 }
