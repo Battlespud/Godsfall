@@ -52,10 +52,26 @@ public class Body : IEventInitializer {
 		*/
 	}
 
+	public void Equip(Equipment equipment){
+		if (equipment.GetType () == typeof(Armor)) {
+
+
+
+		}
+		if (equipment.GetType () == typeof(Weapon)) {
+
+
+
+		}
+
+
+	}
+
+
 	bool hasLostLeg(){
 		int i = 0;
 		foreach (BodyPart b in bodyPartsList) {
-			if (b.bodyPartType == BodyPart.BodyPartType.Leg && b.isDestroyed) {
+			if (b.bodyPartType == BodyPartType.Leg && b.isDestroyed) {
 				i++;
 			}
 		}
@@ -68,7 +84,7 @@ public class Body : IEventInitializer {
 	bool hasLostArm(){
 		int i = 0;
 		foreach (BodyPart b in bodyPartsList) {
-			if (b.bodyPartType == BodyPart.BodyPartType.Arm && b.isDestroyed) {
+			if (b.bodyPartType == BodyPartType.Arm && b.isDestroyed) {
 				i++;
 			}
 		}
@@ -81,7 +97,7 @@ public class Body : IEventInitializer {
 	bool hasBrokenLeg(){
 		int i = 0;
 		foreach (BodyPart b in bodyPartsList) {
-			if (b.bodyPartType == BodyPart.BodyPartType.Leg && b.bone.isDestroyed) {
+			if (b.bodyPartType == BodyPartType.Leg && b.bone.isDestroyed) {
 				i++;
 			}
 		}
@@ -94,7 +110,7 @@ public class Body : IEventInitializer {
 	bool hasBrokenArm(){
 		int i = 0;
 		foreach (BodyPart b in bodyPartsList) {
-			if (b.bodyPartType == BodyPart.BodyPartType.Arm && b.bone.isDestroyed) {
+			if (b.bodyPartType == BodyPartType.Arm && b.bone.isDestroyed) {
 				i++;
 			}
 		}
@@ -107,7 +123,7 @@ public class Body : IEventInitializer {
 	bool hasAtLeastTwoLegs(){
 		int i = 0;
 		foreach (BodyPart b in bodyPartsList) {
-			if (b.bodyPartType == BodyPart.BodyPartType.Leg) {
+			if (b.bodyPartType == BodyPartType.Leg) {
 				i++;
 			}
 		}

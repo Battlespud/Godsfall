@@ -3,6 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum BodyPartType{
+	Head=0,
+	Arm=1,
+	Leg=2
+};
+
+enum BodyPartName{
+	Skull=0, //each side is half a skull
+	Humerus=1,
+	Femur=2
+};
+
+public enum Side{
+	Left=0,
+	Right=1
+};
 
 public class BodyPart :  IHealth , IEventInitializer {
 
@@ -24,23 +40,9 @@ public class BodyPart :  IHealth , IEventInitializer {
 
 	public bool initialized = false;
 
-	public enum BodyPartType{
-		Head=0,
-		Arm=1,
-		Leg=2
-	};
+
 	public BodyPartType bodyPartType;
 
-	enum BodyPartName{
-		Skull=0, //each side is half a skull
-		Humerus=1,
-		Femur=2
-	};
-
-	public enum Side{
-		Left=0,
-		Right=1
-	};
 	public Side side;
 
 	public bool isDestroyed = false;
@@ -50,7 +52,8 @@ public class BodyPart :  IHealth , IEventInitializer {
 	//pointer to parent
 	public Body parentBody;
 
-
+	//assign armor slot
+	public Armor armor;
 
 
 
