@@ -28,4 +28,8 @@ public class MovementController : MonoBehaviour
             Debug.Log(GameObject.FindGameObjectWithTag("Player").transform.position.ToString());
         }
     }
+    public void yes()
+    {
+        GameObject.FindGameObjectsWithTag("string");
+    }
 }
