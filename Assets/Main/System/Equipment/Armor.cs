@@ -23,7 +23,7 @@ public class Armor : Equipment {
 	public Armor(Materials mat, BodyPartType partType){
 		material = mat;
 		bodyPartType = partType;
-		name = string.Format("{0} {1}", material, armorStringArray[material,bodyPartType]);
+		name = string.Format("{0} {1}", material, armorStringArray[(int)material,(int)bodyPartType]);
 	}
 
 
