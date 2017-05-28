@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/dbgLevelv2num1.unity
+- path: Assets/LoadingScene.unity
   isLoaded: 1
   isActive: 1
