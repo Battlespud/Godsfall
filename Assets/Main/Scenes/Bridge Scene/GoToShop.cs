@@ -19,7 +19,7 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
     void Start()
     {
-        triggerLoc = gameObject.transform.position;
+        Loc = gameObject.transform.position;
         targetLoc = targetTrigger.Loc;
 
     }
@@ -52,7 +52,7 @@ public class GoToShop : MonoBehaviour, IEventInitializer
     {
         try
         {
-            col.gameObject.GetComponent<MovementController>().teleport(new Vector3(triggerLoc.x, yShopLayer, triggerLoc.z);
+			col.gameObject.GetComponent<MovementController>().teleport(new Vector3(Loc.x, yShopLayer, Loc.z));
         }
         catch
         {
