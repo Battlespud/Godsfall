@@ -79,6 +79,10 @@ public class MovementController : MonoBehaviour {
 		toMove = new Vector3 (0f, 0f, 0f);
 	}
 
+	public void teleport(Vector3 vec){
+		//TODO
+		Debug.Log("Teleport was called");
+	}
 
 
 	private void checkMovementInput(){
