@@ -20,7 +20,7 @@ public class GoToShop : MonoBehaviour, IEventInitializer
     void Start()
     {
         Loc = gameObject.transform.position;
-        targetLoc = targetTrigger.Loc;
+		targetLoc = targetTrigger.gameObject.transform.position;
 
     }
 
