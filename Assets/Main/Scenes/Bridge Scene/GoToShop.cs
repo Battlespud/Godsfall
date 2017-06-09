@@ -32,7 +32,21 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
 
 
-    void OnTriggerEnter(Collision col)
+    //void OnTriggerEnter(Collision col)
+    //{
+    //    Debug.Log("Triggered reeeee");
+    //    switch (useLayersMethod)
+    //    {
+    //        case true:
+    //            moveToShopLayers(col);
+    //            break;
+
+    //        case false:
+    //            moveToShopDefault(col);
+    //            break;
+    //    }
+    //}
+    public void OnTriggerEnter(Collider col)
     {
         Debug.Log("Triggered reeeee");
         switch (useLayersMethod)
@@ -48,7 +62,7 @@ public class GoToShop : MonoBehaviour, IEventInitializer
     }
 
 
-    private void moveToShopLayers(Collision col)
+    private void moveToShopLayers(Collider col)
     {
         try
         {
@@ -60,7 +74,7 @@ public class GoToShop : MonoBehaviour, IEventInitializer
         }
     }
 
-    private void moveToShopDefault(Collision col)
+    private void moveToShopDefault(Collider col)
     {
         try
         {

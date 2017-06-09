@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour {
 	public Camera camera;
+    public Transform teleportTarget;
 	public GameObject character_go;
 	CharacterController character_controller;
 	SpriteController spriteController;
@@ -80,7 +81,8 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void teleport(Vector3 vec){
-		//TODO
+        //TODO
+        this.transform.position = vec;
 		Debug.Log("Teleport was called");
 	}
 
