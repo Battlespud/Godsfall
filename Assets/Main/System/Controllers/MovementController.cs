@@ -79,9 +79,7 @@ public class MovementController : MonoBehaviour {
 		toMove = new Vector3 (0f, 0f, 0f);
 	}
 
-	public void npcInputToMove(Vector3 i){
-		toMove += i;
-	}
+
 
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
@@ -103,8 +101,8 @@ public class MovementController : MonoBehaviour {
 		camera.fieldOfView += -20*zoom;
 		if (camera.fieldOfView < 18)
 			camera.fieldOfView = 18;
-		if (camera.fieldOfView > 40)
-			camera.fieldOfView = 40;
+		if (camera.fieldOfView > 75)
+			camera.fieldOfView = 75;
 	}
 
 	private void move(Vector3 vec){
@@ -114,9 +112,12 @@ public class MovementController : MonoBehaviour {
 		camera.transform.position = new Vector3 (character_go.transform.position.x, camera.transform.position.y, character_go.transform.position.z - 14f);
 	}
 
+	public void npcInputToMove(Vector3 i){
+		toMove += i;
+	}
+
 	private void npcMove(Vector3 vec){
 		character_controller.Move (vec * Time.deltaTime *move_speed);
-//		camera.transform.position = new Vector3 (character_go.transform.position.x, 10f, character_go.transform.position.z - 14f);
 	}
 
 	private void lookAtMouse(){
