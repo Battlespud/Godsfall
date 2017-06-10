@@ -61,10 +61,13 @@ public class SpriteController : MonoBehaviour{
 		sr.sprite = bodySpritesArray[(int) facing];
 		_t = transform;
 		spriteTransform = sr.transform;
+		cam = Camera.main;
+		cameraDirection = cam.GetComponent<CameraDirection> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
 		int offset = facing - cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around

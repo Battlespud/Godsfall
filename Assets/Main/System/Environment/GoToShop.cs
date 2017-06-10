@@ -38,20 +38,22 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
     }
 
-
+	//to avoid this being called on environment, all environment objects should be tagged as static
     public void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Triggered reeeee");
-        switch (useLayersMethod)
-        {
-            case true:
-                moveToShopLayers(col);
-                break;
+		if (!col.gameObject.isStatic) {
+			Debug.Log("Triggered reeeee");
 
-            case false:
-                moveToShopDefault(col);
-                break;
-        }
+			switch (useLayersMethod) {
+			case true:
+				moveToShopLayers (col);
+				break;
+
+			case false:
+				moveToShopDefault (col);
+				break;
+			}
+		}
     }
 
 
@@ -71,11 +73,11 @@ public class GoToShop : MonoBehaviour, IEventInitializer
     {
        // try
         {
-			if(inShop){
+			if(inShop && col.gameObject.GetComponent<MovementController>().isPlayer){
 				cam.gameObject.SetActive(false);
 				playerCam.gameObject.SetActive(true);
 			}
-			targetTrigger.recieve();
+			targetTrigger.recieve(col);
             targetTrigger.gameObject.SetActive(false);
             col.gameObject.GetComponent<MovementController>().teleport(targetLoc);
             Invoke("EnableOther", lockoutTimer);
@@ -95,8 +97,8 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 		//todo
     }
 
-	public void recieve(){
-		if (inShop) {			
+	public void recieve(Collider col){
+		if (inShop && col.gameObject.GetComponent<MovementController>().isPlayer) {			
 			cam.gameObject.SetActive (true);
 			playerCam.gameObject.SetActive (false);
 

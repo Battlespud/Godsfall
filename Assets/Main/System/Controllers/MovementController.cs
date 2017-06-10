@@ -42,6 +42,7 @@ public class MovementController : MonoBehaviour {
 		character_go = this.gameObject;
 		character_controller = character_go.GetComponent<CharacterController> ();
 		spriteController = GetComponentInChildren<SpriteController> ();
+		camera = Camera.main;
 	}
 
 	Vector3 toMove;
