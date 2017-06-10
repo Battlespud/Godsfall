@@ -86,6 +86,15 @@ public class SpriteController : MonoBehaviour{
 	}
 
 	public void UpdateSprite(Vector3 vec){
+		int offset = facing - cameraDirection.facing;
+		if (offset < 0)
+			offset += 8; //wrap around
+		finalFacing = (Facing)offset;
+		if (finalFacing == Facing.R || finalFacing == Facing.DR || finalFacing == Facing.UR) {
+			sr.flipX = true;
+		} else {
+			sr.flipX = false;
+		}
 		if(vec.x != 0)
 		{
 			if (vec.x > 0)
@@ -101,13 +110,39 @@ public class SpriteController : MonoBehaviour{
 				facing = Facing.D;
 		}
 
-		sr.sprite = bodySpritesArray [(int)facing];
+
+		sr.sprite = bodySpritesArray [(int)finalFacing];
+
+	}
+
+	/*
+	public void UpdateSprite(Vector3 vec){
+		if(vec.x != 0)
+		{
+			if (vec.x > 0)
+				facing = Facing.R;
+			else
+				facing = Facing.L;
+		}
+		if(vec.z != 0)
+		{
+			if (vec.z > 0)
+				facing = Facing.U;
+			else
+				facing = Facing.D;
+		}
+		int offset = (int)facing - (int)cameraDirection.facing+2;
+			if (offset < 0)
+				offset += 8; //wrap around
 		if (facing == Facing.R || facing == Facing.DR || facing == Facing.UR) {
 			sr.flipX = true;
 		} else {
 			sr.flipX = false;
 		}
-	}
 
+		sr.sprite = bodySpritesArray [offset];
+
+	}
+*/
 
 }

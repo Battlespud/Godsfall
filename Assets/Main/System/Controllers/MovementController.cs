@@ -31,7 +31,7 @@ public class MovementController : MonoBehaviour {
 
 	bool rolling = false;
 
-	float move_speed = 7.5f;
+	float move_speed = 6.5f;
 
 	private float timeAdjusted(float f){
 		return (f * Time.deltaTime);
@@ -53,11 +53,12 @@ public class MovementController : MonoBehaviour {
 		} else {
 			isMoving = false;
 		}
+		toMove.y = -1f;
 		switch (isPlayer) {
 		case (true):
 			{
 				checkMovementInput ();
-				checkZoomInput ();
+			//	checkZoomInput ();
 				move (toMove);
 			//	lookAtMouse (); 
 				break;
@@ -69,8 +70,9 @@ public class MovementController : MonoBehaviour {
 			}
 
 		}
-		if(toMove != new Vector3(0,0,0))
-		spriteController.UpdateSprite (toMove);
+		if (toMove != new Vector3 (0, 0, 0)) {
+			spriteController.UpdateSprite (toMove);
+		}
 		clearBuffer ();
 
 
@@ -115,7 +117,7 @@ public class MovementController : MonoBehaviour {
 		if (canMove()) {
 			character_controller.Move (toMove * Time.deltaTime * move_speed);
 		}
-		camera.transform.position = new Vector3 (character_go.transform.position.x, camera.transform.position.y, character_go.transform.position.z - 14f);
+//		camera.transform.position = new Vector3 (character_go.transform.position.x, camera.transform.position.y, character_go.transform.position.z - 14f);
 	}
 
 	public void npcInputToMove(Vector3 i){

@@ -9,6 +9,7 @@ using System.Collections;
 		public float rotationSmoothing = 10;
 		public float rotationSensitivity = 7;
 		public float distance = 10;
+	public Camera cam;
 
 		private Vector3 _angle = new Vector3();
 		private Quaternion _oldRotation = new Quaternion();
@@ -24,6 +25,15 @@ using System.Collections;
 			_angle.y = angleY;
 		}
 
+	private void checkZoomInput(){
+		var zoom = Input.GetAxis ("Mouse ScrollWheel");
+		cam.fieldOfView += -20*zoom;
+		if (cam.fieldOfView < 18)
+			cam.fieldOfView = 18;
+		if (cam.fieldOfView > 75)
+			cam.fieldOfView = 75;
+	}
+
 		void Update()
 		{
 			if(target && Input.GetMouseButton(1))
@@ -31,6 +41,7 @@ using System.Collections;
 				_angle.x += Input.GetAxis("Mouse X") * rotationSensitivity;
 				RobitTools.ClampAngle(ref _angle);
 			}
+		checkZoomInput ();
 		}
 
 		void LateUpdate()
