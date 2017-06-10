@@ -5,7 +5,12 @@ using UnityEngine;
 public class GoToShop : MonoBehaviour, IEventInitializer
 {
 
-    public int lockoutTimer = 3; //so we dont instantly trigger the teleport when we touch appear on top of the other trigger
+    public float lockoutTimer = 1.5f; //so we dont instantly trigger the teleport when we touch appear on top of the other trigger
+
+	public Camera cam;
+	public Camera playerCam;
+
+	public bool inShop = false;
 
     public bool useLayersMethod = false;
 
@@ -19,9 +24,12 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
     void Start()
     {
+		playerCam = Camera.main;
         Loc = gameObject.transform.position;
 		targetLoc = targetTrigger.gameObject.transform.position;
-
+		if (cam != null) {
+			cam.gameObject.SetActive (false);
+		}
     }
 
     // Update is called once per frame
@@ -31,21 +39,6 @@ public class GoToShop : MonoBehaviour, IEventInitializer
     }
 
 
-
-    //void OnTriggerEnter(Collision col)
-    //{
-    //    Debug.Log("Triggered reeeee");
-    //    switch (useLayersMethod)
-    //    {
-    //        case true:
-    //            moveToShopLayers(col);
-    //            break;
-
-    //        case false:
-    //            moveToShopDefault(col);
-    //            break;
-    //    }
-    //}
     public void OnTriggerEnter(Collider col)
     {
         Debug.Log("Triggered reeeee");
@@ -76,17 +69,22 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
     private void moveToShopDefault(Collider col)
     {
-        try
+       // try
         {
+			if(inShop){
+				cam.gameObject.SetActive(false);
+				playerCam.gameObject.SetActive(true);
+			}
+			targetTrigger.recieve();
             targetTrigger.gameObject.SetActive(false);
             col.gameObject.GetComponent<MovementController>().teleport(targetLoc);
             Invoke("EnableOther", lockoutTimer);
         }
-        catch
+     //   catch
         {
-            Debug.Log("Invalid object triggering");
         }
     }
+
     void EnableOther()
     {
         targetTrigger.gameObject.SetActive(true);
@@ -94,11 +92,18 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 
     public void initializeEvents()
     {
-
+		//todo
     }
-    void teleport()
-    {
 
-    }
+	public void recieve(){
+		if (inShop) {			
+			cam.gameObject.SetActive (true);
+			playerCam.gameObject.SetActive (false);
+
+
+
+		}
+	}
+  
 
 }
