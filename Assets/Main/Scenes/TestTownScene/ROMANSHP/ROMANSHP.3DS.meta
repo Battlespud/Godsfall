@@ -1,0 +1,162 @@
+fileFormatVersion: 2
+guid: f89e24d1243060b499a7d7bbfea474af
+timeCreated: 1497142637
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: roman_blac
+    100002: roman_buil
+    100004: roman_gold
+    100006: roman_map0
+    100008: roman_map_
+    100010: roman_red_
+    100012: roman_rope
+    100014: roman_shi0
+    100016: roman_shi1
+    100018: roman_shi2
+    100020: roman_shie
+    100022: roman_ship
+    100024: roman_tent
+    100026: roman_vela
+    100028: roman_woo0
+    100030: roman_wood
+    100032: roman_yell
+    100034: //RootNode
+    400000: roman_blac
+    400002: roman_buil
+    400004: roman_gold
+    400006: roman_map0
+    400008: roman_map_
+    400010: roman_red_
+    400012: roman_rope
+    400014: roman_shi0
+    400016: roman_shi1
+    400018: roman_shi2
+    400020: roman_shie
+    400022: roman_ship
+    400024: roman_tent
+    400026: roman_vela
+    400028: roman_woo0
+    400030: roman_wood
+    400032: roman_yell
+    400034: //RootNode
+    2300000: roman_blac
+    2300002: roman_buil
+    2300004: roman_gold
+    2300006: roman_map0
+    2300008: roman_map_
+    2300010: roman_red_
+    2300012: roman_rope
+    2300014: roman_shi0
+    2300016: roman_shi1
+    2300018: roman_shi2
+    2300020: roman_shie
+    2300022: roman_ship
+    2300024: roman_tent
+    2300026: roman_vela
+    2300028: roman_woo0
+    2300030: roman_wood
+    2300032: roman_yell
+    3300000: roman_blac
+    3300002: roman_buil
+    3300004: roman_gold
+    3300006: roman_map0
+    3300008: roman_map_
+    3300010: roman_red_
+    3300012: roman_rope
+    3300014: roman_shi0
+    3300016: roman_shi1
+    3300018: roman_shi2
+    3300020: roman_shie
+    3300022: roman_ship
+    3300024: roman_tent
+    3300026: roman_vela
+    3300028: roman_woo0
+    3300030: roman_wood
+    3300032: roman_yell
+    4300000: roman_red_
+    4300002: roman_shie
+    4300004: roman_buil
+    4300006: roman_map_
+    4300008: roman_map0
+    4300010: roman_tent
+    4300012: roman_rope
+    4300014: roman_wood
+    4300016: roman_shi0
+    4300018: roman_shi1
+    4300020: roman_shi2
+    4300022: roman_yell
+    4300024: roman_gold
+    4300026: roman_woo0
+    4300028: roman_blac
+    4300030: roman_vela
+    4300032: roman_ship
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
