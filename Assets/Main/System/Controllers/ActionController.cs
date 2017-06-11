@@ -25,8 +25,8 @@ public class ActionController : MonoBehaviour {
 		RaycastHit rayHit; 
 		Ray ray;
 		if (GetComponent<MovementController> ().isPlayer) {
-			 ray = new Ray (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.forward));
-			Debug.DrawRay (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.forward * 10f), Color.blue, 2f);
+			ray = new Ray (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.GetChild(0).transform.forward));
+			Debug.DrawRay (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.GetChild(0).transform.forward * 10f), Color.blue, 2f);
 		} else {
 			 ray = new Ray (transform.position, transform.TransformDirection (Vector3.forward));
 			Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward * 10f), Color.blue, 2f);

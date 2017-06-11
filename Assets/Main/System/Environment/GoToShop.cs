@@ -5,7 +5,7 @@ using UnityEngine;
 public class GoToShop : MonoBehaviour, IEventInitializer
 {
 
-    public float lockoutTimer = 1.5f; //so we dont instantly trigger the teleport when we touch appear on top of the other trigger
+    public float lockoutTimer = 1f; //so we dont instantly trigger the teleport when we touch appear on top of the other trigger
 
 	public Camera cam;
 	public Camera playerCam;

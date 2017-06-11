@@ -10,14 +10,15 @@ public enum BodyPartType{
 };
 
 enum BodyPartName{
-	Skull=0, //each side is half a skull
+	Skull=0,
 	Humerus=1,
 	Femur=2
 };
 
 public enum Side{
-	Left=0,
-	Right=1
+	Only = 0,
+	Left=1,
+	Right=2
 };
 
 public class BodyPart :  IHealth , IEventInitializer {
@@ -122,7 +123,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 
 	public void takeDamage(int hpLost){
 		hitPoints.Hp -= hpLost;
-		Debug.Log (name + " takes " + hpLost + " points of damage.");
+		Debug.Log (parentBody.parentEntity.name + "'s " + side  + name + " takes " + hpLost + " points of damage.");
 		onHpChanged ();
 	}
 

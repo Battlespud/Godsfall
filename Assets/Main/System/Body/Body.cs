@@ -17,11 +17,10 @@ public class Body : IEventInitializer {
 
 	void setupHumanBody(){
 		bodyPartsList.Add(new BodyPart(0,0));
-		bodyPartsList.Add(new BodyPart(0,1));
-		bodyPartsList.Add(new BodyPart(1,0));
 		bodyPartsList.Add(new BodyPart(1,1));
-		bodyPartsList.Add(new BodyPart(2,0));
+		bodyPartsList.Add(new BodyPart(1,2));
 		bodyPartsList.Add(new BodyPart(2,1));
+		bodyPartsList.Add(new BodyPart(2,2));
 	}
 
 	public Body(Entity e){
@@ -33,13 +32,13 @@ public class Body : IEventInitializer {
 			b.initializeEvents ();
 		}
 		initializeEvents ();
-		Debug.Log (string.Format("Body setup completed for {0}", parentEntity.name));
+		//Debug.Log (string.Format("Body setup completed for {0}", parentEntity.name));
 	}
 
 	public void dealRandomDamage(int d){
 		BodyPart[] bArray = bodyPartsList.ToArray ();
-		bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
-		/*
+		//bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
+
 		switch(Random.Range(0,2) > 0){
 		case true:
 			bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
@@ -49,7 +48,7 @@ public class Body : IEventInitializer {
 
 			break;
 		}
-		*/
+
 	}
 
 	public void Equip(Equipment equipment){

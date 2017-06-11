@@ -64,7 +64,7 @@ public class SpriteController : MonoBehaviour{
 		cam = Camera.main;
 		cameraDirection = cam.GetComponent<CameraDirection> ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	/*	
@@ -86,7 +86,7 @@ public class SpriteController : MonoBehaviour{
 	}
 
 	public void UpdateSprite(Vector3 vec){
-		int offset = facing - cameraDirection.facing;
+		int offset = facing -  cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around
 		finalFacing = (Facing)offset;
@@ -96,8 +96,7 @@ public class SpriteController : MonoBehaviour{
 		} else {
 			sr.flipX = false;
 		}
-
-
+		//vec = Vector3.Cross (vec, cam.transform.GetChild (0).transform.forward);
 		if(vec.x != 0)
 		{
 			if (vec.x > 0)

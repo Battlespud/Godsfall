@@ -23,7 +23,7 @@ public class Bone : IHealth, IEventInitializer {
 		name = nam;
 		hitPoints.refName = name + " hp";
 		parentBodyPart = b;
-		Debug.Log (parentBodyPart.getName());
+		//Debug.Log (parentBodyPart.getName());
 	}
 
 	public BodyPart parentBodyPart;
@@ -32,6 +32,7 @@ public class Bone : IHealth, IEventInitializer {
 
 	public void takeDamage(int hpLost){
 		hitPoints.Hp -= hpLost;
+		Debug.Log (parentBodyPart.parentBody.parentEntity.name + "'s " + parentBodyPart.side  + name + " takes " + hpLost + " points of damage.");
 		onHpChanged ();
 	}
 

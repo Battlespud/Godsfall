@@ -6,7 +6,11 @@ public class Actor : Entity , IEventInitializer {
 
 
 	void initialize(){
-		name = "Fizz"; //because i enjoy torturing fizz
+		if (isPlayer) {
+			name = "Player";
+		} else {
+			name = "Town Guard";
+		}
 		mBlood = 25;
 		blood = mBlood;
 		status = Status.Normal;
