@@ -72,7 +72,11 @@ public class MovementController : MonoBehaviour {
 			}
 
 		}
-		spriteController.UpdateSprite (toSprite);
+		if (isPlayer) {
+			spriteController.UpdateSprite (toSprite);
+		} else {
+			spriteController.UpdateSprite (toMove);
+		}
 		clearBuffer ();
 
 
