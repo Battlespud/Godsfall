@@ -79,7 +79,8 @@ public class SpriteController : MonoBehaviour{
 		}
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 */
-		Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
+		//what does this even do
+	//	Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
 		transform.rotation=Quaternion.LookRotation(cam.transform.forward);
 
 	}
@@ -89,11 +90,14 @@ public class SpriteController : MonoBehaviour{
 		if (offset < 0)
 			offset += 8; //wrap around
 		finalFacing = (Facing)offset;
+	
 		if (finalFacing == Facing.R || finalFacing == Facing.DR || finalFacing == Facing.UR) {
 			sr.flipX = true;
 		} else {
 			sr.flipX = false;
 		}
+
+
 		if(vec.x != 0)
 		{
 			if (vec.x > 0)
@@ -109,8 +113,10 @@ public class SpriteController : MonoBehaviour{
 				facing = Facing.D;
 		}
 
-
-		sr.sprite = bodySpritesArray [(int)finalFacing];
+		int finalfinalfacing = (int)finalFacing - (int)cameraDirection.facing;
+		if (finalfinalfacing  < 8)
+			finalfinalfacing += 8; //wrap around
+		sr.sprite = bodySpritesArray [finalfinalfacing];
 
 	}
 

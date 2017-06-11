@@ -73,7 +73,7 @@ public class MovementController : MonoBehaviour {
 
 		}
 		if (isPlayer) {
-			spriteController.UpdateSprite (toMove);
+			spriteController.UpdateSprite (toSprite);
 		} else {
 			spriteController.UpdateSprite (toMove);
 		}
@@ -97,19 +97,19 @@ public class MovementController : MonoBehaviour {
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
 			toMove += camera.transform.forward;
-			toSprite += Vector3.forward;
+			toSprite += transform.forward;
 		}
 		if (Input.GetKey (InputCatcher.BackKey)) {
 			toMove += camera.transform.forward*-1;
-			toSprite += Vector3.back;
+			toSprite += transform.forward*-1;
 		}
 		if (Input.GetKey (InputCatcher.LeftKey)) {
 			toMove += camera.transform.right*-1;	
-			toSprite += Vector3.left;
+			toSprite += transform.right*-1;
 		}
 		if (Input.GetKey (InputCatcher.RightKey)) {
 			toMove += camera.transform.right;
-			toSprite += Vector3.right;
+			toSprite += transform.right;
 		}
 	}
 
