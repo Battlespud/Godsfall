@@ -13,7 +13,7 @@ public class MovementController : MonoBehaviour {
 	public bool isMoving = false;
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
-	bool bodyCanMove = true;
+	public bool bodyCanMove = true;
 	public void setBodyCanMove(bool b){
 		bodyCanMove = b;
 	}
@@ -122,11 +122,15 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void npcInputToMove(Vector3 i){
-		toMove += i;
+		if (canMove ()) {
+			toMove += i;
+		}
 	}
 
 	private void npcMove(Vector3 vec){
-		character_controller.Move (vec * Time.deltaTime *move_speed);
+		if (canMove ()) {
+			character_controller.Move (vec * Time.deltaTime * move_speed);
+		}
 	}
 
 	private void lookAtMouse(){
