@@ -116,7 +116,7 @@ public class SpriteController : MonoBehaviour{
 		int finalfinalfacing = (int)finalFacing - (int)cameraDirection.facing;
 		if (finalfinalfacing  < 0)
 			finalfinalfacing += 8; //wrap around
-		sr.sprite = bodySpritesArray [finalfinalfacing];
+		sr.sprite = bodySpritesArray [(int)finalFacing];
 
 	}
 
