@@ -67,7 +67,7 @@ public class SpriteController : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
-		
+	/*	
 		int offset = facing - cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around
@@ -77,14 +77,10 @@ public class SpriteController : MonoBehaviour{
 		} else {
 			sr.flipX = false;
 		}
-
-
 		sr.sprite = bodySpritesArray [(int)finalFacing];
-
+*/
 		Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
-	//	Debug.Log (targetPoint);
 		transform.rotation=Quaternion.LookRotation(cam.transform.forward);
-		//transform.rotation=Quaternion.LookRotation(-targetPoint, Vector3.up);
 
 	}
 

@@ -46,6 +46,7 @@ public class MovementController : MonoBehaviour {
 	}
 
 	Vector3 toMove;
+	Vector3 toSprite;
 
 	// Update is called once per frame
 	void Update () {
@@ -71,9 +72,7 @@ public class MovementController : MonoBehaviour {
 			}
 
 		}
-		if (toMove != new Vector3 (0, 0, 0)) {
-			spriteController.UpdateSprite (toMove);
-		}
+		spriteController.UpdateSprite (toSprite);
 		clearBuffer ();
 
 
@@ -81,6 +80,7 @@ public class MovementController : MonoBehaviour {
 
 	private void clearBuffer(){
 		toMove = new Vector3 (0f, 0f, 0f);
+		toSprite = new Vector3 (0f, 0f, 0f);
 	}
 
 	public void teleport(Vector3 vec){
@@ -93,15 +93,19 @@ public class MovementController : MonoBehaviour {
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
 			toMove += camera.transform.forward;
+			toSprite += Vector3.forward;
 		}
 		if (Input.GetKey (InputCatcher.BackKey)) {
 			toMove += camera.transform.forward*-1;
+			toSprite += Vector3.back;
 		}
 		if (Input.GetKey (InputCatcher.LeftKey)) {
-			toMove += camera.transform.right*-1;
+			toMove += camera.transform.right*-1;	
+			toSprite += Vector3.left;
 		}
 		if (Input.GetKey (InputCatcher.RightKey)) {
 			toMove += camera.transform.right;
+			toSprite += Vector3.right;
 		}
 	}
 
