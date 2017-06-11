@@ -23,8 +23,14 @@ public class ActionController : MonoBehaviour {
 
 	public void tryAttack(){
 		RaycastHit rayHit; 
-		Ray ray = new Ray (transform.position, transform.TransformDirection(Vector3.forward));
-		Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward*10f), Color.blue, 2f);
+		Ray ray;
+		if (GetComponent<MovementController> ().isPlayer) {
+			 ray = new Ray (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.forward));
+			Debug.DrawRay (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.forward * 10f), Color.blue, 2f);
+		} else {
+			 ray = new Ray (transform.position, transform.TransformDirection (Vector3.forward));
+			Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward * 10f), Color.blue, 2f);
+		}
 		if (Physics.Raycast (ray, out rayHit, 10f)) {
 			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
 				GameObject hitGo = rayHit.collider.gameObject;

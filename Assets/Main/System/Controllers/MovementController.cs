@@ -73,7 +73,7 @@ public class MovementController : MonoBehaviour {
 
 		}
 		if (isPlayer) {
-			spriteController.UpdateSprite (toSprite);
+			spriteController.UpdateSprite (toMove);
 		} else {
 			spriteController.UpdateSprite (toMove);
 		}
