@@ -92,16 +92,16 @@ public class MovementController : MonoBehaviour {
 
 	private void checkMovementInput(){
 		if (Input.GetKey (InputCatcher.ForwardKey)) {
-			toMove += Vector3.forward;
+			toMove += camera.transform.forward;
 		}
 		if (Input.GetKey (InputCatcher.BackKey)) {
-			toMove += Vector3.back;
+			toMove += camera.transform.forward*-1;
 		}
 		if (Input.GetKey (InputCatcher.LeftKey)) {
-			toMove += Vector3.left;
+			toMove += camera.transform.right*-1;
 		}
 		if (Input.GetKey (InputCatcher.RightKey)) {
-			toMove += Vector3.right;
+			toMove += camera.transform.right;
 		}
 	}
 
