@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Axis{
+	X=0,
+	Y=1,
+	Z=2
+};
+
 public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer {
 
+	public Axis axis = Axis.X;
+
 	StringEvent OnPatrolEvent;
-	MovementController movementController;
+	public MovementController movementController;
 
 	//for detecting collision events
 	GameObject go;
@@ -16,7 +24,6 @@ public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer 
 	private const string endpointTag = ("PatrolEndpoint");
 
 	//axis to travel along
-	Vector3 axis;
 
 	public int heading = 1;
 
@@ -51,7 +58,18 @@ public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer 
 
 	// Update is called once per frame
 	void Update () {
-		movementController.npcInputToMove (new Vector3 (heading*Time.fixedDeltaTime*speedMultiplier, 0, 0));
+		switch (axis) {
+		case Axis.X:
+			movementController.npcInputToMove (new Vector3 (heading*Time.fixedDeltaTime*speedMultiplier, 0, 0));
+			break;
+		case Axis.Y:
+			movementController.npcInputToMove (new Vector3 (0, heading*Time.fixedDeltaTime*speedMultiplier, 0));
+			break;
+		case Axis.Z:
+			movementController.npcInputToMove (new Vector3 (0, 0, heading*Time.fixedDeltaTime*speedMultiplier));
+			break;
+
+		}
 	}
 
 

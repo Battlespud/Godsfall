@@ -11,6 +11,8 @@ public class MovementController : MonoBehaviour {
 	public Animator animator;
 	public bool isPlayer;
 	public bool isMoving = false;
+	public bool hasSpriteController = false;
+	public bool Gravity = true;
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
 	public bool bodyCanMove = true;
@@ -41,7 +43,10 @@ public class MovementController : MonoBehaviour {
 	void Start () {
 		character_go = this.gameObject;
 		character_controller = character_go.GetComponent<CharacterController> ();
-		spriteController = GetComponentInChildren<SpriteController> ();
+		if (GetComponentInChildren<SpriteController> () != null) {
+			spriteController = GetComponentInChildren<SpriteController> ();
+			hasSpriteController = true;
+		}
 		camera = Camera.main;
 	}
 
@@ -55,7 +60,9 @@ public class MovementController : MonoBehaviour {
 		} else {
 			isMoving = false;
 		}
-		toMove.y = -1f;
+		if (Gravity) {
+			toMove.y += -1f;
+		}
 		switch (isPlayer) {
 		case (true):
 			{
@@ -72,10 +79,12 @@ public class MovementController : MonoBehaviour {
 			}
 
 		}
-		if (isPlayer) {
-			spriteController.UpdateSprite (toSprite);
-		} else {
-			spriteController.UpdateSprite (toMove);
+		if (hasSpriteController) {
+			if (isPlayer) {
+				spriteController.UpdateSprite (toSprite);
+			} if(!isPlayer) {
+				spriteController.UpdateSprite (toMove);
+			}
 		}
 		clearBuffer ();
 
