@@ -18,6 +18,10 @@ public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer 
 	//for detecting collision events
 	GameObject go;
 
+	public bool paused =false;
+
+	//pauses at end of patrol
+	public float timeToPause = 2f;
 
 	public float speedMultiplier = 3;
 
@@ -58,23 +62,31 @@ public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer 
 
 	// Update is called once per frame
 	void Update () {
-		switch (axis) {
-		case Axis.X:
-			movementController.npcInputToMove (new Vector3 (heading*Time.fixedDeltaTime*speedMultiplier, 0, 0));
-			break;
-		case Axis.Y:
-			movementController.npcInputToMove (new Vector3 (0, heading*Time.fixedDeltaTime*speedMultiplier, 0));
-			break;
-		case Axis.Z:
-			movementController.npcInputToMove (new Vector3 (0, 0, heading*Time.fixedDeltaTime*speedMultiplier));
-			break;
+		if (!paused) {
+			switch (axis) {
+			case Axis.X:
+				movementController.npcInputToMove (new Vector3 (heading * Time.fixedDeltaTime * speedMultiplier, 0, 0));
+				break;
+			case Axis.Y:
+				movementController.npcInputToMove (new Vector3 (0, heading * Time.fixedDeltaTime * speedMultiplier, 0));
+				break;
+			case Axis.Z:
+				movementController.npcInputToMove (new Vector3 (0, 0, heading * Time.fixedDeltaTime * speedMultiplier));
+				break;
 
+			}
 		}
 	}
 
 
 	public void TurnAround(){
 		heading = heading*-1;
+		paused = true;
+		Invoke ("Unpause", timeToPause);
+	}
+
+	void Unpause(){
+		paused = false;
 	}
 
 	private void AnnounceNewPatrol(){

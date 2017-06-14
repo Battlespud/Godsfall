@@ -54,7 +54,7 @@ public static class SpeechRepo {
 		if (!initialized) {
 			initialized = true;
 			initializeDictionary ();	
-			Debug.Log (RetrieveSpeech (new SpeechKey (1, 1)));
+		//	Debug.Log (RetrieveSpeech (new SpeechKey (1, 1)));
 		}
 	}
 

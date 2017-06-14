@@ -1,7 +1,17 @@
 <DialogCollection>
 	<Speech>
 		<SpeakerID>1</SpeakerID>
+		<SpeechID>0</SpeechID>
+		<Dialog>Hmmm..</Dialog>
+	</Speech>
+		<Speech>
+		<SpeakerID>1</SpeakerID>
 		<SpeechID>1</SpeechID>
-		<Dialog>"Hello!"</Dialog>
+		<Dialog>You seem like a loser!</Dialog>
+	</Speech>
+	<Speech>
+		<SpeakerID>1</SpeakerID>
+		<SpeechID>2</SpeechID>
+		<Dialog>Begone cuck!</Dialog>
 	</Speech>
 </DialogCollection>
