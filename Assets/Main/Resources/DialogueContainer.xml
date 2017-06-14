@@ -1,0 +1,7 @@
+<DialogCollection>
+	<Speech>
+		<SpeakerID>1</SpeakerID>
+		<SpeechID>1</SpeechID>
+		<Dialog>"Hello!"</Dialog>
+	</Speech>
+</DialogCollection>
