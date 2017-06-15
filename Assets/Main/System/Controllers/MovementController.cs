@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour {
 	public Camera camera;
+	public CameraModeManager camModeManager;
     public Transform teleportTarget;
 	public GameObject character_go;
 	CharacterController character_controller;
@@ -67,7 +68,6 @@ public class MovementController : MonoBehaviour {
 		case (true):
 			{
 				checkMovementInput ();
-			//	checkZoomInput ();
 				move (toMove);
 			//	lookAtMouse (); 
 				break;
@@ -104,38 +104,55 @@ public class MovementController : MonoBehaviour {
 
 
 	private void checkMovementInput(){
-		if (Input.GetKey (InputCatcher.ForwardKey)) {
-			toMove += camera.transform.forward;
-			toSprite += transform.forward;
+		switch (camModeManager.cameraMode) {
+
+		case (CameraMode.NORMAL):
+			{
+				if (Input.GetKey (InputCatcher.ForwardKey)) {
+					toMove += camera.transform.forward;
+					toSprite += transform.forward;
+				}
+				if (Input.GetKey (InputCatcher.BackKey)) {
+					toMove += camera.transform.forward*-1;
+					toSprite += transform.forward*-1;
+				}
+				if (Input.GetKey (InputCatcher.LeftKey)) {
+					toMove += camera.transform.right*-1;	
+					toSprite += transform.right*-1;
+				}
+				if (Input.GetKey (InputCatcher.RightKey)) {
+					toMove += camera.transform.right;
+					toSprite += transform.right;
+				}
+				break;
+			}
+		case (CameraMode.OVERHEAD):
+			{
+//TODO
+				break;
+			}
+		case (CameraMode.SIDESCROLLER):
+			{
+				if (Input.GetKey (InputCatcher.LeftKey)) {
+					toMove += camera.transform.right*-1;	
+					toSprite += transform.right*-1;
+				}
+				if (Input.GetKey (InputCatcher.RightKey)) {
+					toMove += camera.transform.right;
+					toSprite += transform.right;
+				}
+				break;
+			}
+
 		}
-		if (Input.GetKey (InputCatcher.BackKey)) {
-			toMove += camera.transform.forward*-1;
-			toSprite += transform.forward*-1;
-		}
-		if (Input.GetKey (InputCatcher.LeftKey)) {
-			toMove += camera.transform.right*-1;	
-			toSprite += transform.right*-1;
-		}
-		if (Input.GetKey (InputCatcher.RightKey)) {
-			toMove += camera.transform.right;
-			toSprite += transform.right;
-		}
+
 	}
 
-	private void checkZoomInput(){
-		var zoom = Input.GetAxis ("Mouse ScrollWheel");
-		camera.fieldOfView += -20*zoom;
-		if (camera.fieldOfView < 18)
-			camera.fieldOfView = 18;
-		if (camera.fieldOfView > 75)
-			camera.fieldOfView = 75;
-	}
 
 	private void move(Vector3 vec){
 		if (canMove()) {
 			character_controller.Move (toMove * Time.deltaTime * move_speed);
 		}
-//		camera.transform.position = new Vector3 (character_go.transform.position.x, camera.transform.position.y, character_go.transform.position.z - 14f);
 	}
 
 	public void npcInputToMove(Vector3 i){
