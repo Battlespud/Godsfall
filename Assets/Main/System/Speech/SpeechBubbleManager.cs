@@ -29,7 +29,7 @@ public class SpeechBubbleManager : MonoBehaviour {
 		Quaternion tempternion = Quaternion.LookRotation (transform.position - cameraTransform.position);
 		float y = tempternion.eulerAngles.y;
 		Debug.Log (y);
-		SpeechBubble.transform.eulerAngles = new Vector3(220f, y, transform.rotation.z);
+	//	SpeechBubble.transform.eulerAngles = new Vector3(220f, y, transform.rotation.z);
 		setScale();
 	}
 
