@@ -8,7 +8,7 @@ public enum Axis{
 	Z=2
 };
 
-public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer {
+public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 
 	public Axis axis = Axis.X;
 
@@ -41,13 +41,11 @@ public class PatrolBetweenEndpointsBehavior : MonoBehaviour , IEventInitializer 
 		}
 	}
 
-	void OnTriggerEnter(Collision col){
-		Debug.Log ("detect coll");
-		if(col.gameObject.CompareTag(endpointTag)){
-			Debug.Log ("collide with endpoint");
-			//resetTimer ();
-		}
+	public void DirectSet(int head, Axis ax){
+		heading = head;
+		axis = ax;
 	}
+
 
 
 	string patrolString;

@@ -16,20 +16,17 @@ public class SpeechModule : MonoBehaviour {
 
 	static List<int> SpeakerIDList = new List<int> ();
 
-	public int speakerID = 0;
+	[SerializeField]private int speakerID = 0;
 
-	private int speechStage = 0;
+	[SerializeField]private int speechStage = 0;
 
-
-	public int mSpeechStage = 0;
+	[SerializeField]private int mSpeechStage = 0;
 
 	public bool locked = true;
 	public bool triggered = false;
 
 
 	public bool SlaveMode = false;
-
-
 
 	// Use this for initialization
 	void Start () {
@@ -44,8 +41,6 @@ public class SpeechModule : MonoBehaviour {
 	void Update () {
 
 	}
-
-
 
 	void AdvanceSpeechStage(){
 		speechStage++;

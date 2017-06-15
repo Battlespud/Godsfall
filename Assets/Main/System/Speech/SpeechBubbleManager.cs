@@ -28,7 +28,7 @@ public class SpeechBubbleManager : MonoBehaviour {
 		fov = Camera.main.fieldOfView; //for text sizing
 		Quaternion tempternion = Quaternion.LookRotation (transform.position - cameraTransform.position);
 		float y = tempternion.eulerAngles.y;
-		Debug.Log (y);
+	//	Debug.Log (y);
 	//	SpeechBubble.transform.eulerAngles = new Vector3(220f, y, transform.rotation.z);
 		setScale();
 	}

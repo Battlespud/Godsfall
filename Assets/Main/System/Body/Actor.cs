@@ -65,7 +65,7 @@ public class Actor : Entity , IEventInitializer {
 		if (blood <= 0 && (status != Status.Dead)) {
 			die ();
 		}
-
+		/*
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			Debug.Log (string.Format("Breaking {0}...", this.name));
 			//TESTING
@@ -77,6 +77,7 @@ public class Actor : Entity , IEventInitializer {
 			//TESTING
 			maimEveryLimb();
 		}
+		*/
 
 	}
 

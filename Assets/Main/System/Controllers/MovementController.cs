@@ -14,6 +14,8 @@ public class MovementController : MonoBehaviour {
 	public bool isMoving = false;
 	public bool hasSpriteController = false;
 	public bool Gravity = true;
+	private const float GRAVITY = 2F;
+
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
 	public bool bodyCanMove = true;
@@ -141,6 +143,9 @@ public class MovementController : MonoBehaviour {
 					toMove += camera.transform.right;
 					toSprite += transform.right;
 				}
+				if (Input.GetKeyDown (InputCatcher.RollKey) && isGrounded()) {
+					Debug.Log ("Jump");
+				}
 				break;
 			}
 
@@ -148,6 +153,9 @@ public class MovementController : MonoBehaviour {
 
 	}
 
+	public bool isGrounded(){
+		return(transform.position.y < 2.6); //TODO
+	}
 
 	private void move(Vector3 vec){
 		if (canMove()) {

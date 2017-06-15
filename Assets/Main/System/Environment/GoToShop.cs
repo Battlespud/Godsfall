@@ -79,7 +79,10 @@ public class GoToShop : MonoBehaviour, IEventInitializer
 			}
 			targetTrigger.recieve(col);
             targetTrigger.gameObject.SetActive(false);
-            col.gameObject.GetComponent<MovementController>().teleport(targetLoc);
+			try{col.gameObject.GetComponent<MovementController>().teleport(targetLoc);}
+			catch{
+				Debug.Log (col.gameObject.name + " is causing problems with the doors");
+			}		
             Invoke("EnableOther", lockoutTimer);
         }
      //   catch

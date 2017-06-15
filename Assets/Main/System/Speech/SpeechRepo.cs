@@ -29,9 +29,7 @@ public static class SpeechRepo {
 		}
 	}
 
-
 	private static bool initialized = false;
-
 
 	public static bool debugInitialized {
 		get {
@@ -54,7 +52,6 @@ public static class SpeechRepo {
 		if (!initialized) {
 			initialized = true;
 			initializeDictionary ();	
-		//	Debug.Log (RetrieveSpeech (new SpeechKey (1, 1)));
 		}
 	}
 
@@ -79,15 +76,5 @@ public static class SpeechRepo {
 		}
 
 	}
-
-
-
-	//XML stuff
-
-
-
-
-
-
 
 }
