@@ -89,7 +89,7 @@ public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 			}
 			courseCorrection ();
 			toMove += correctionVec;
-			Debug.Log (correctionVec);
+//			Debug.Log (correctionVec);
 			movementController.npcInputToMove (toMove);
 
 		}
@@ -168,7 +168,7 @@ public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 	}
 
 	void updateGuidance(){
-		Debug.Log ("Updating Guidance");
+//		Debug.Log ("Updating Guidance");
 		guidanceVec = go.transform.position;
 		Invoke ("Unpause", timeToPause);
 		}
