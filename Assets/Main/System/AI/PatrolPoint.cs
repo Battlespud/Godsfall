@@ -21,14 +21,10 @@ public class PatrolPoint : MonoBehaviour {
 				if (PositiveHeading) {
 					heading = 1;
 				}
-
 				patrolBehaviour.DirectSet (heading, axis);
-
-
 			}
 		}
 	}
-
 
 	// Use this for initialization
 	void Start () {
