@@ -6,6 +6,11 @@ public static class DirectionResolver {
 
 	static CameraDirection cd = Camera.main.GetComponent<CameraDirection> ();
 
+	static  Vector3 UL = new Vector3(-1,0,1);
+	static  Vector3 UR = new Vector3(1,0,1);
+	static  Vector3 DL = new Vector3(-1,0,-1);
+	static  Vector3 DR = new Vector3(1,0,-1);
+
 	public static Vector3 RayDirection(SpriteController sc){
 		Vector3 dirVec = new Vector3 ();
 		Facing facing = sc.finalFacing;
@@ -19,7 +24,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.DL):{
-						dirVec = new Vector3 (-1, 0, -1);
+						dirVec = DL;
 						break;
 					}
 				case(Facing.L):{
@@ -27,7 +32,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.UL):{
-						dirVec = new Vector3 (-1, 0, 1);
+						dirVec = UL;
 						break;
 					}
 				case(Facing.U):{
@@ -35,7 +40,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.UR):{
-						dirVec = new Vector3 (1, 0, 1);
+						dirVec = UR;
 						break;
 					}
 				case(Facing.R):{
@@ -43,7 +48,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.DR):{
-						dirVec = new Vector3 (-1, 0, 1);
+						dirVec = DR;
 						break;
 
 					}
@@ -51,6 +56,7 @@ public static class DirectionResolver {
 				dirVec *= -1;
 				break;
 			}
+
 		case (Facing.L):
 			{
 				switch (facing) {
@@ -59,7 +65,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.DL):{
-					//	dirVec = new Vector3 (-1, 0, -1);
+						dirVec = DR;
 						break;
 					}
 				case(Facing.L):{
@@ -67,7 +73,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.UL):{
-					//	dirVec = new Vector3 (-1, 0, 1);
+						dirVec = DL;
 						break;
 
 					}
@@ -76,7 +82,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.UR):{
-					//	dirVec = new Vector3 (1, 0, 1);
+						dirVec = UL;
 						break;
 					}
 				case(Facing.R):{
@@ -84,7 +90,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.DR):{
-					//	dirVec = new Vector3 (-1, 0, 1);
+						dirVec = UR;
 						break;
 					}
 				}
@@ -181,6 +187,7 @@ public static class DirectionResolver {
 
 
 	public static Vector3 VectorProcessor(Vector3 dirVec){
+		Debug.Log (dirVec);
 		switch(cd.facing)
 		{
 		case (Facing.U):
@@ -188,26 +195,26 @@ public static class DirectionResolver {
 				//Nothing to be done, this is default
 				break;
 			}
-		case (Facing.D):
-			{
-
-				dirVec *= -1;
-				break;
-			}
-		case (Facing.L):
+		case (Facing.UR):
 			{
 				if (dirVec == Vector3.forward) {
+					dirVec = DL;
+				} else if (dirVec == UR) {
 					dirVec = Vector3.left;
-				}
-				else if (dirVec == Vector3.back) {
+				}else if (dirVec == Vector3.right) {
+					dirVec = UL;
+				}else if (dirVec == DR) {
+					dirVec = Vector3.forward;
+				}else if (dirVec == Vector3.back) {
+					dirVec = UR;
+				} else if (dirVec == DL) {
 					dirVec = Vector3.right;
-				}
-				else if (dirVec == Vector3.left) {
+				}else if (dirVec == Vector3.left) {
+					dirVec = DR;
+				} else if (dirVec == UL) {
 					dirVec = Vector3.back;
 				}
-				else if (dirVec == Vector3.right) {
-					dirVec = Vector3.forward;
-				}
+				dirVec *= -1;
 				break;
 			}
 		case (Facing.R):
@@ -227,6 +234,93 @@ public static class DirectionResolver {
 				dirVec *= -1;
 				break;
 			}
+		case (Facing.DR): 
+			{
+				if (dirVec == Vector3.forward) {
+					dirVec = UL;
+				} else if (dirVec == UR) {
+					dirVec = Vector3.forward;
+				}else if (dirVec == Vector3.right) {
+					dirVec = UR;
+				}else if (dirVec == DR) {
+					dirVec = Vector3.right;
+				}else if (dirVec == Vector3.back) {
+					dirVec = DR;
+				} else if (dirVec == DL) {
+					dirVec = Vector3.back;
+				}else if (dirVec == Vector3.left) {
+					dirVec = DL;
+				} else if (dirVec == UL) {
+					dirVec = Vector3.left;
+				}
+				dirVec *= -1;
+				break;
+			}
+		case (Facing.D):
+			{
+				dirVec *= -1;
+				break;
+			}
+		case (Facing.DL):
+			{
+				if (dirVec == Vector3.forward) {
+					dirVec = DL;
+				} else if (dirVec == UR) {
+					dirVec = Vector3.left;
+				}else if (dirVec == Vector3.right) {
+					dirVec = UL;
+				}else if (dirVec == DR) {
+					dirVec = Vector3.forward;
+				}else if (dirVec == Vector3.back) {
+					dirVec = UR;
+				} else if (dirVec == DL) {
+					dirVec = Vector3.right;
+				}else if (dirVec == Vector3.left) {
+					dirVec = DR;
+				} else if (dirVec == UL) {
+					dirVec = Vector3.back;
+				}
+				break;
+			}
+		case (Facing.L):
+			{
+				if (dirVec == Vector3.forward) {
+					dirVec = Vector3.left;
+				}
+				else if (dirVec == Vector3.back) {
+					dirVec = Vector3.right;
+				}
+				else if (dirVec == Vector3.left) {
+					dirVec = Vector3.back;
+				}
+				else if (dirVec == Vector3.right) {
+					dirVec = Vector3.forward;
+				}
+				break;
+			}
+		case (Facing.UL): 
+			{
+				if (dirVec == Vector3.forward) {
+					dirVec = UL;
+				} else if (dirVec == UR) {
+					dirVec = Vector3.forward;
+				}else if (dirVec == Vector3.right) {
+					dirVec = UR;
+				}else if (dirVec == DR) {
+					dirVec = Vector3.right;
+				}else if (dirVec == Vector3.back) {
+					dirVec = DR;
+				} else if (dirVec == DL) {
+					dirVec = Vector3.back;
+				}else if (dirVec == Vector3.left) {
+					dirVec = DL;
+				} else if (dirVec == UL) {
+					dirVec = Vector3.left;
+				}
+				break;
+			}
+
+
 
 		default:
 			break;

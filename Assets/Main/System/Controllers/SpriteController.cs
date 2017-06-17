@@ -98,24 +98,49 @@ public class SpriteController : MonoBehaviour{
 			sr.flipX = false;
 		}
 		//vec = Vector3.Cross (vec, cam.transform.GetChild (0).transform.forward);
+		bool xGreaterNonZero = false;
+		bool zGreaterNonZero = false;
+		bool xLessNonZero = false;
+		bool zLessNonZero = false;
+
 		if(vec.x != 0)
 		{
-			if (vec.x > 0)
+			if (vec.x > 0) {
 				facing = Facing.R;
-			else
+				xGreaterNonZero = true;
+			} else {
 				facing = Facing.L;
+				xLessNonZero = true;
+			}
 		}
 		if(vec.z != 0)
 		{
-			if (vec.z > 0)
+			if (vec.z > 0) {
 				facing = Facing.U;
-			else
+				zGreaterNonZero = true;
+			} else {
 				facing = Facing.D;
+				zLessNonZero = true;
+			}
+		}
+
+		if (xGreaterNonZero && zGreaterNonZero) {
+			facing = Facing.UR;
+		}
+		if (xGreaterNonZero && zLessNonZero) {
+			facing = Facing.DR;
+		}
+		if (xLessNonZero && zGreaterNonZero) {
+			facing = Facing.UL;
+		}
+		if (xLessNonZero && zLessNonZero) {
+			facing = Facing.DL;
 		}
 
 		int finalfinalfacing = (int)finalFacing - (int)cameraDirection.facing;
 		if (finalfinalfacing  < 0)
 			finalfinalfacing += 8; //wrap around
+		
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 
 	}
