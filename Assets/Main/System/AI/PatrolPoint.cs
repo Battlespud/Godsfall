@@ -26,6 +26,7 @@ public class PatrolPoint : MonoBehaviour {
 		}
 	}
 
+
 	// Use this for initialization
 	void Start () {
 		

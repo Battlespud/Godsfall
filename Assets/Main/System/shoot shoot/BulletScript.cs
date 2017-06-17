@@ -8,7 +8,7 @@ public class BulletScript : MonoBehaviour {
 	int counter;
 	public GameObject shooter;
 
-	const int mCounter = 60;
+	const int mCounter = 180;
 
 	// Use this for initialization
 	void Start () {
