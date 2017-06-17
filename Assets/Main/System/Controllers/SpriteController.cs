@@ -86,6 +86,7 @@ public class SpriteController : MonoBehaviour{
 	}
 
 	public void UpdateSprite(Vector3 vec){
+		vec = DirectionResolver.VectorProcessor (vec);
 		int offset = facing -  cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around
