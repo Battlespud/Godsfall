@@ -85,9 +85,9 @@ public class MovementController : MonoBehaviour {
 		}
 		if (hasSpriteController) {
 			if (isPlayer) {
-				spriteController.UpdateSprite (toSprite);
+				spriteController.UpdateSprite (toSprite, true);
 			} if(!isPlayer) {
-				spriteController.UpdateSprite (toMove);
+				spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
 			}
 		}
 		clearBuffer ();

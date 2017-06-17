@@ -67,26 +67,16 @@ public class SpriteController : MonoBehaviour{
 
 	// Update is called once per frame
 	void Update () {
-	/*	
-		int offset = facing - cameraDirection.facing;
-		if (offset < 0)
-			offset += 8; //wrap around
-		finalFacing = (Facing)offset;
-		if (finalFacing == Facing.R || finalFacing == Facing.DR || finalFacing == Facing.UR) {
-			sr.flipX = true;
-		} else {
-			sr.flipX = false;
-		}
-		sr.sprite = bodySpritesArray [(int)finalFacing];
-*/
-		//what does this even do
-	//	Vector3 targetPoint = new Vector3(cam.transform.position.x, _t.position.y, cam.transform.position.z) - transform.position;
+
 		transform.rotation=Quaternion.LookRotation(cam.transform.forward);
 
 	}
 
-	public void UpdateSprite(Vector3 vec){
-		vec = DirectionResolver.VectorProcessor (vec);
+	public void UpdateSprite(Vector3 vec, bool useVectorProcessor){
+		//the vectorprocessor will break npc sprites because they don't use relativized vectors.
+		if (useVectorProcessor) { 
+			vec = DirectionResolver.VectorProcessor (vec);
+		}
 		int offset = facing -  cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around
@@ -136,11 +126,11 @@ public class SpriteController : MonoBehaviour{
 		if (xLessNonZero && zLessNonZero) {
 			facing = Facing.DL;
 		}
-
+		/*
 		int finalfinalfacing = (int)finalFacing - (int)cameraDirection.facing;
 		if (finalfinalfacing  < 0)
 			finalfinalfacing += 8; //wrap around
-		
+		*/
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 
 	}

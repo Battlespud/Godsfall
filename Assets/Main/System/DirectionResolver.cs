@@ -11,6 +11,7 @@ public static class DirectionResolver {
 	static  Vector3 DL = new Vector3(-1,0,-1);
 	static  Vector3 DR = new Vector3(1,0,-1);
 
+	#region Ray adjustment stuff, not really important
 	public static Vector3 RayDirection(SpriteController sc){
 		Vector3 dirVec = new Vector3 ();
 		Facing facing = sc.finalFacing;
@@ -174,18 +175,14 @@ public static class DirectionResolver {
 				dirVec *= -1;
 				break;
 			}
-
-
 		}
-
-
 		return dirVec;
-
-
-
 	}
 
 
+	#endregion
+
+	#region used to adjust the vector that movementController sends to spritecontroller based upon camera angle.
 	public static Vector3 VectorProcessor(Vector3 dirVec){
 		Debug.Log (dirVec);
 		switch(cd.facing)
@@ -339,5 +336,5 @@ public static class DirectionResolver {
 		return dirVec;
 
 	}
-
+	#endregion
 }
