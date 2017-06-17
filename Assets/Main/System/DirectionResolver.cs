@@ -221,15 +221,20 @@ public static class DirectionResolver {
 			{
 				if (dirVec == Vector3.forward) {
 					dirVec = Vector3.left;
-				}
-				else if (dirVec == Vector3.back) {
-					dirVec = Vector3.right;
-				}
-				else if (dirVec == Vector3.left) {
-					dirVec = Vector3.back;
-				}
-				else if (dirVec == Vector3.right) {
+				} else if (dirVec == UR) {
+					dirVec = UL;
+				}else if (dirVec == Vector3.right) {
 					dirVec = Vector3.forward;
+				}else if (dirVec == DR) {
+					dirVec = UR;
+				}else if (dirVec == Vector3.back) {
+					dirVec = Vector3.right;
+				} else if (dirVec == DL) {
+					dirVec = DR;
+				}else if (dirVec == Vector3.left) {
+					dirVec = Vector3.back;
+				} else if (dirVec == UL) {
+					dirVec = DL;
 				}
 				dirVec *= -1;
 				break;
@@ -286,15 +291,20 @@ public static class DirectionResolver {
 			{
 				if (dirVec == Vector3.forward) {
 					dirVec = Vector3.left;
-				}
-				else if (dirVec == Vector3.back) {
-					dirVec = Vector3.right;
-				}
-				else if (dirVec == Vector3.left) {
-					dirVec = Vector3.back;
-				}
-				else if (dirVec == Vector3.right) {
+				} else if (dirVec == UR) {
+					dirVec = UL;
+				}else if (dirVec == Vector3.right) {
 					dirVec = Vector3.forward;
+				}else if (dirVec == DR) {
+					dirVec = UR;
+				}else if (dirVec == Vector3.back) {
+					dirVec = Vector3.right;
+				} else if (dirVec == DL) {
+					dirVec = DR;
+				}else if (dirVec == Vector3.left) {
+					dirVec = Vector3.back;
+				} else if (dirVec == UL) {
+					dirVec = DL;
 				}
 				break;
 			}
