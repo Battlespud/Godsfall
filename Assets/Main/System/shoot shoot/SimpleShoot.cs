@@ -7,6 +7,7 @@ public class SimpleShoot : MonoBehaviour {
 	public GameObject bullet;
 
 	MovementController mc;
+	SpriteController sc;
 
 	GameObject wayfinder;
 

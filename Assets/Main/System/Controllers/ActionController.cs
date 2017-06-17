@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class ActionController : MonoBehaviour {
 
-	GameObject thisGameObject;
+	public GameObject thisGameObject;
+	public SpriteController sc;
 	const KeyCode attackKey = KeyCode.F;
 
 	// Use this for initialization
 	void Start () {
 		thisGameObject = this.gameObject;
+		sc = GetComponentInChildren<SpriteController> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (attackKey)) {
-		//	tryAttack ();
+			tryAttack ();
 		}
 	}
 
@@ -24,13 +26,8 @@ public class ActionController : MonoBehaviour {
 	public void tryAttack(){
 		RaycastHit rayHit; 
 		Ray ray;
-		if (GetComponent<MovementController> ().isPlayer) {
-			ray = new Ray (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.GetChild(0).transform.forward));
-			Debug.DrawRay (transform.position, transform.TransformDirection (GetComponent<MovementController>().camera.transform.GetChild(0).transform.forward * 10f), Color.blue, 2f);
-		} else {
-			 ray = new Ray (transform.position, transform.TransformDirection (Vector3.forward));
-			Debug.DrawRay (transform.position, transform.TransformDirection (Vector3.forward * 10f), Color.blue, 2f);
-		}
+			ray = new Ray (transform.position, DirectionResolver.RayDirection (sc));
+			Debug.DrawRay (transform.position, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 2f);
 		if (Physics.Raycast (ray, out rayHit, 10f)) {
 			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
 				GameObject hitGo = rayHit.collider.gameObject;
