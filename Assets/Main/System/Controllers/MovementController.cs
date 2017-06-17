@@ -45,6 +45,8 @@ public class MovementController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		character_go = this.gameObject;
+		camera = Camera.main;
+		camModeManager = camera.gameObject.GetComponent<CameraModeManager> ();
 		character_controller = character_go.GetComponent<CharacterController> ();
 		if (GetComponentInChildren<SpriteController> () != null) {
 			spriteController = GetComponentInChildren<SpriteController> ();

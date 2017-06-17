@@ -101,11 +101,11 @@ public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 		if (guidanceActive) {
 			switch (axis) {
 			case Axis.X:
-				if (Mathf.Abs(transform.position.z - guidanceVec.z) > guideScale) {
-					guidanceFixZ ();
-				}
 				if (Mathf.Abs(transform.position.y - guidanceVec.y) > guideScale) {
 					guidanceFixY ();
+				}
+				if (Mathf.Abs(transform.position.z - guidanceVec.z) > guideScale) {
+					guidanceFixZ ();
 				}
 				break;
 
