@@ -73,7 +73,6 @@ public class MovementController : MonoBehaviour {
 			{
 				checkMovementInput ();
 				move (toMove);
-			//	lookAtMouse (); 
 				break;
 			}
 		case (false):

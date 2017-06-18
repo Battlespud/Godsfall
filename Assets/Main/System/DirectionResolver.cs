@@ -37,6 +37,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.U):{
+						//something screwy here
 						dirVec = Vector3.forward;
 						break;
 					}
@@ -184,7 +185,7 @@ public static class DirectionResolver {
 
 	#region used to adjust the vector that movementController sends to spritecontroller based upon camera angle.
 	public static Vector3 VectorProcessor(Vector3 dirVec){
-		Debug.Log (dirVec);
+//		Debug.Log (dirVec);
 		switch(cd.facing)
 		{
 		case (Facing.U):
