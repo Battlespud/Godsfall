@@ -85,6 +85,9 @@ public class FormationMaster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (ChangeAxis) {
+			ChangeFormationAxis ();
+		}
 		if (!formationFinished) {
 			bool weDidIt = true;
 			foreach (FormationSlave slave in slaves) {
@@ -112,9 +115,23 @@ public class FormationMaster : MonoBehaviour {
 	}
 
 
+	void ChangeFormationAxis(){
+		if (formation.axis == Axis.X) {
+			formation.axis = Axis.Z;
+		} else {
+			formation.axis = Axis.X;
+		}
+		formationFinished = false;
+		AssignPositions ();
+		ChangeAxis = false;
+	}
+
 	void AssignPositions(){
 		DisableColliders ();
 		Vector3 basePosition = captain.transform.position;
+		foreach (FormationSlave slave in slaves) {
+			slave.inFormation = false;
+		}
 		int[] incrementsEven = new int[100];
 		//evens
 		for (int i = 0; i < slaves.Count; i += 2) {
