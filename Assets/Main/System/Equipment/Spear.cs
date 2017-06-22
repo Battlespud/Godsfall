@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spear : MonoBehaviour {
 
-	public const int spearDamage = 1;
+	public const int spearDamage = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -13,7 +13,7 @@ public class Spear : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.GetComponent<Entity> () && !col.gameObject.isStatic) {
-		//	col.gameObject.GetComponent<Entity> ().body.dealRandomDamage (spearDamage);
+			col.gameObject.GetComponent<Entity> ().body.dealRandomDamage (spearDamage);
 		}
 	}
 

@@ -29,6 +29,7 @@ public class SlaveSpeechModule : MonoBehaviour {
 
 	void Enslave(){
 		slaveModule.SlaveMode = true;
+		Unspeak ();
 	}
 
 
