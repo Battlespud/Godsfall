@@ -17,8 +17,16 @@ public class SlaveSpeechModule : MonoBehaviour {
 	}
 
 	void Register(){
-		master.register (this);
+		if (master != null) {
+			master.register (this);
+		}
 	}
+
+	public void ForceRegister(SpeechMaster mas){
+		master = mas;
+		Register ();
+	}
+
 	void Enslave(){
 		slaveModule.SlaveMode = true;
 	}

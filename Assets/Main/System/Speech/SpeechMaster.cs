@@ -9,6 +9,8 @@ public class SpeechMaster : MonoBehaviour {
 	public	int speakerID = 1;
 	public	int speechID = 2;
 
+	public bool active = false;
+
 	List<SlaveSpeechModule> Slaves;
 
 	public void register(SlaveSpeechModule slave){
@@ -35,12 +37,14 @@ public class SpeechMaster : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("Player")){
+			active = true;
 			MassSpeak (new SpeechKey (speakerID, speechID));
 		}
 	}
 
 	void OnTriggerExit(Collider col){
 		if(col.gameObject.CompareTag("Player")){
+			active = false;
 			MassUnspeak ();
 		}
 	}

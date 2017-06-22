@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Entity : MonoBehaviour {
 
 	public GameObject eGameObject;
+	public MovementController movementController;
 
 	public DeathEventArgs deathEvent;
 	public CombatEvent combatEvent;

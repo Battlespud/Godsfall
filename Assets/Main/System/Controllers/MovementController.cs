@@ -160,13 +160,21 @@ public class MovementController : MonoBehaviour {
 
 	private void move(Vector3 vec){
 		if (canMove()) {
-			character_controller.Move (toMove * Time.deltaTime * move_speed);
+			//toMove.y = gameObject.transform.position.y;
+			character_controller.Move (toMove.normalized * Time.deltaTime * move_speed);
 		}
 	}
 
 	public void npcInputToMove(Vector3 i){
 		if (canMove ()) {
 			toMove += i;
+		}
+	}
+
+	public void MoveToPosition(Vector3 i){
+		if (canMove ()) {
+			Vector3 vec = i - transform.position;
+			toMove += vec;
 		}
 	}
 

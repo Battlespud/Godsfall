@@ -18,6 +18,7 @@ public class Actor : Entity , IEventInitializer {
 		characterSheet = new CharacterSheet();
 		eGameObject = this.gameObject;
 		eGameObject.GetComponent<MovementController> ().isPlayer = isPlayer;
+		movementController = eGameObject.GetComponent<MovementController> ();
 	}
 
 	public override void modifyBlood(int i){
