@@ -6,7 +6,11 @@ public class Initializer : MonoBehaviour {
 
 
 	//use this to initialize static classes etc
-
+	void Awake(){
+		for (int i = 0; i < Faction.MaxFactions; i++) {
+			Faction.FactionIDs [i] = i;
+		}
+	}
 
 	// Use this for initialization
 	void Start () {

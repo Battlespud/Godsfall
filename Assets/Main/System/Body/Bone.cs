@@ -19,7 +19,7 @@ public class Bone : IHealth, IEventInitializer {
 	public HitPoints hitPoints;
 
 	public Bone(int h, string nam, BodyPart b){
-		hitPoints = new HitPoints (h, HitPoints.TypeOfHP.bodyPart);
+		hitPoints = new HitPoints (h);
 		name = nam;
 		hitPoints.refName = name + " hp";
 		parentBodyPart = b;
