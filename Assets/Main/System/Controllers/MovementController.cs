@@ -42,6 +42,10 @@ public class MovementController : MonoBehaviour {
 		return (f * Time.deltaTime);
 	}
 
+
+	int gravityTimer=0;
+	int mGrav = 20;
+
 	// Use this for initialization
 	void Start () {
 		character_go = this.gameObject;
@@ -66,7 +70,7 @@ public class MovementController : MonoBehaviour {
 			isMoving = false;
 		}
 		if (Gravity) {
-			toMove.y += -1f;
+			toMove.y += -2;
 		}
 		switch (isPlayer) {
 		case (true):
@@ -83,9 +87,10 @@ public class MovementController : MonoBehaviour {
 
 		}
 		if (hasSpriteController) {
-			if (isPlayer) {
+			if (isPlayer && toMove != new Vector3()) {
 				spriteController.UpdateSprite (toSprite, true);
-			} if(!isPlayer) {
+			} 
+			else if(!isPlayer && toMove != new Vector3()) {
 				spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
 			}
 		}

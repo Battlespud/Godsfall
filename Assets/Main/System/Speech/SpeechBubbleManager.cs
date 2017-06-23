@@ -24,13 +24,15 @@ public class SpeechBubbleManager : MonoBehaviour {
 
 	void Update () {
 		//face camera 
-		cameraTransform = Camera.main.transform; 
-		fov = Camera.main.fieldOfView; //for text sizing
-		Quaternion tempternion = Quaternion.LookRotation (transform.position - cameraTransform.position);
-		float y = tempternion.eulerAngles.y;
-	//	Debug.Log (y);
-	//	SpeechBubble.transform.eulerAngles = new Vector3(220f, y, transform.rotation.z);
-		setScale();
+		if (SpeechBubble.enabled) {
+			cameraTransform = Camera.main.transform; 
+			fov = Camera.main.fieldOfView; //for text sizing
+			Quaternion tempternion = Quaternion.LookRotation (transform.position - cameraTransform.position);
+			float y = tempternion.eulerAngles.y;
+			//	Debug.Log (y);
+			//	SpeechBubble.transform.eulerAngles = new Vector3(220f, y, transform.rotation.z);
+			setScale ();
+		}
 	}
 
 	void setScale(){
