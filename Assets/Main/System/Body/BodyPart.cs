@@ -62,7 +62,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 		bodyPartType = typ;
 		side = sid;
 		name = typ.ToString();
-		hitPoints = new HitPoints (h, HitPoints.TypeOfHP.bodyPart);
+		hitPoints = new HitPoints (h);
 		hitPoints.refName = (bodyPartType.ToString() + " hp"); //name of this
 		bone = new Bone (hBone, ((BodyPartName)hBone).ToString(), this); //name of bone
 		bone.parentBodyPart = this;
@@ -92,7 +92,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 		case 0:
 			bodyPartType = (BodyPartType)typ; //skul
 			side = (Side)sid; //left
-			hitPoints = new HitPoints (skullHP / 2, HitPoints.TypeOfHP.bodyPart);
+			hitPoints = new HitPoints (skullHP / 2);
 			hitPoints.refName = (strHeadBone + " hp");
 			bone = new Bone (skullHP, (strHeadBone), this);
 			break;
@@ -101,7 +101,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 
 			bodyPartType = (BodyPartType)typ; //arm
 			side = (Side)sid; //left
-			hitPoints = new HitPoints (armHP, HitPoints.TypeOfHP.bodyPart);
+			hitPoints = new HitPoints (armHP);
 			hitPoints.refName = ("Arm" + " hp");
 			bone = new Bone (legHP, (strArmBone), this);
 			break;
@@ -110,7 +110,7 @@ public class BodyPart :  IHealth , IEventInitializer {
 
 			bodyPartType = (BodyPartType)typ; //leg
 			side = (Side)sid; //left
-			hitPoints = new HitPoints (legHP, HitPoints.TypeOfHP.bodyPart);
+			hitPoints = new HitPoints (legHP);
 			hitPoints.refName = ("Leg " + " hp");
 			bone = new Bone ((int)(legHP * boneHealthModifier), (strLegBone), this);
 			break;

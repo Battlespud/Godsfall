@@ -177,6 +177,7 @@ public static class DirectionResolver {
 				break;
 			}
 		}
+		//this should be where the sprite is facing. i think.
 		return dirVec;
 	}
 

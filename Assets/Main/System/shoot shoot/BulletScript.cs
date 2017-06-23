@@ -10,6 +10,8 @@ public class BulletScript : MonoBehaviour {
 
 	const int mCounter = 180;
 
+	const int bulletDamage = 5;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -25,12 +27,21 @@ public class BulletScript : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 		if (col.gameObject.GetComponent <Actor>() !=null && col.gameObject != shooter) {
-			col.gameObject.GetComponent<Actor> ().body.dealRandomDamage (2);
+			col.gameObject.GetComponent<Actor> ().body.dealRandomDamage (bulletDamage);
 			Destroy ();
 		}
+
+
+		if (col.gameObject.GetComponent<IDestructible> () != null) {
+			Debug.Log ("IDestructible");
+			col.gameObject.GetComponent<IDestructible> ().ITakeDamage (bulletDamage);
+		}
+
+
 		if (col.gameObject.CompareTag ("Enviro")) {
 			Destroy ();
 		}
+
 
 	}
 

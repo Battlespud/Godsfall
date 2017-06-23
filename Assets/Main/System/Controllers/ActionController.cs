@@ -40,7 +40,7 @@ public class ActionController : MonoBehaviour {
 				IInteractableC genericClass = (IInteractableC)rayHit.collider.gameObject.GetComponent (typeof(IInteractableC));
 				genericClass.Interact ();
 			} else {
-				Debug.Log ("Hit Nothing!");
+			//	Debug.Log ("Hit Nothing!");
 			}
 		}
 	}
