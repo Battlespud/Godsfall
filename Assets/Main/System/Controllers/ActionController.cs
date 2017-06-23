@@ -28,7 +28,7 @@ public class ActionController : MonoBehaviour {
 		Ray ray;
 		//something screwy here
 			ray = new Ray (transform.position, DirectionResolver.RayDirection (sc));
-			Debug.DrawRay (transform.position, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 2f);
+			Debug.DrawRay (transform.position, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 4f);
 		if (Physics.Raycast (ray, out rayHit, 10f)) {
 			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
 				GameObject hitGo = rayHit.collider.gameObject;
@@ -40,7 +40,7 @@ public class ActionController : MonoBehaviour {
 				IInteractableC genericClass = (IInteractableC)rayHit.collider.gameObject.GetComponent (typeof(IInteractableC));
 				genericClass.Interact ();
 			} else {
-			//	Debug.Log ("Hit Nothing!");
+				Debug.Log ("Hit Nothing!");
 			}
 		}
 	}

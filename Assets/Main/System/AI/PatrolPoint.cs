@@ -13,15 +13,16 @@ public class PatrolPoint : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.GetComponent<PatrolBehaviour> () != null) {
 			PatrolBehaviour patrolBehaviour = other.GetComponent<PatrolBehaviour> ();
-			if (TurnAround) {
-				patrolBehaviour.TurnAround ();
-			}
-			else {
-				int heading = -1;
-				if (PositiveHeading) {
-					heading = 1;
+			if (patrolBehaviour.isActiveAndEnabled) {
+				if (TurnAround) {
+					patrolBehaviour.TurnAround ();
+				} else {
+					int heading = -1;
+					if (PositiveHeading) {
+						heading = 1;
+					}
+					patrolBehaviour.DirectSet (heading, axis);
 				}
-				patrolBehaviour.DirectSet (heading, axis);
 			}
 		}
 	}

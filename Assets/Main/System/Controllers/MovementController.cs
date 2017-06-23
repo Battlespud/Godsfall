@@ -15,7 +15,7 @@ public class MovementController : MonoBehaviour {
 	public bool hasSpriteController = false;
 	public bool Gravity = true;
 	private const float GRAVITY = 2F;
-
+	public bool lockout = false; //use to lockout input except from combat controller
 
 	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
 	public bool bodyCanMove = true;
@@ -166,7 +166,13 @@ public class MovementController : MonoBehaviour {
 	}
 
 	public void npcInputToMove(Vector3 i){
-		if (canMove ()) {
+		if (canMove () && !lockout) {
+			toMove += i;
+		}
+	}
+
+	public void npcInputToMoveCombat(Vector3 i){
+		if (canMove () && lockout) {
 			toMove += i;
 		}
 	}
