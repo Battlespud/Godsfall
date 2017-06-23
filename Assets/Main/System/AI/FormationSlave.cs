@@ -16,6 +16,8 @@ public class FormationSlave : MonoBehaviour {
 	public bool inFormation = false;
 	public Vector3 formationPosition; //where this soldier needs to go
 	public int rank = 1; //which line this soldier stands in, 1 is first
+	public int lastRank;
+	public int formationSlot;
 
 	private Vector3 debugFacingVector = new Vector3 (0f, 0f, -1f); //make them all face hte same way
 
@@ -32,10 +34,15 @@ public class FormationSlave : MonoBehaviour {
 	void Start () {
 		mc = gameObject.GetComponent<MovementController> ();
 		body = entity.body;
+		lastRank = rank;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (rank != lastRank) {
+			inFormation = false;
+		//	updateFormationPosition ();
+		}
 		if (!inFormation && formationPosition != null) {
 			mc.MoveToPosition (formationPosition);
 		}

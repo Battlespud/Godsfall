@@ -42,6 +42,8 @@ public class FormationMaster : MonoBehaviour {
 	//Collections
 	List<FormationSlave> slaves = new List<FormationSlave>();
 	List<Vector3> vectors = new List<Vector3> ();
+	FormationSlave[] slavesArray; //arrangement of soldiers according to formation rank and identifier
+
 
 	//TODO
 	Formation formation;
@@ -50,8 +52,8 @@ public class FormationMaster : MonoBehaviour {
 	public FormationSlave captain; //who all the troops will gather around.
 
 	//Ints/Floats
-	float distanceBetweenRanks = 5f; //how far between each line of soldiers
-
+	float distanceBetweenRanks = 3f; //how far between each line of soldiers
+	const int maxRanks = 100;
 
 	//Bools
 	[SerializeField]bool formationFinished = false; //everyone has moved into position so we can move around now
@@ -87,6 +89,12 @@ public class FormationMaster : MonoBehaviour {
 	void Update () {
 		if (ChangeAxis) {
 			ChangeFormationAxis ();
+		}
+		if(Input.GetKey(KeyCode.UpArrow)){
+			MassMove(transform.forward);
+		}
+		if(Input.GetKey(KeyCode.DownArrow)){
+			MassMove(transform.forward*-1);
 		}
 		if (!formationFinished) {
 			bool weDidIt = true;
@@ -132,10 +140,14 @@ public class FormationMaster : MonoBehaviour {
 		foreach (FormationSlave slave in slaves) {
 			slave.inFormation = false;
 		}
-		int[] incrementsEven = new int[100];
+		switch(formation.formationType){
+
+		case(FormationTypes.LINE):{
+		int[] incrementsEven = new int[maxRanks];
 		//evens
 		for (int i = 0; i < slaves.Count; i += 2) {
 			FormationSlave slave = slaves [i];
+			slave.formationSlot = i;
 			if (slave != captain) {
 				switch (formation.axis) {
 				case(Axis.X):
@@ -154,10 +166,11 @@ public class FormationMaster : MonoBehaviour {
 			}
 		}
 
-		int[] incrementsOdd = new int[100];
+		int[] incrementsOdd = new int[maxRanks];
 		//odds
 		for (int i = 1; i < slaves.Count; i += 2) {
 			FormationSlave slave = slaves [i];
+			slave.formationSlot = i;
 			if (slave != captain) {
 				switch (formation.axis) {
 				case(Axis.X):
@@ -176,7 +189,18 @@ public class FormationMaster : MonoBehaviour {
 				incrementsOdd[slave.rank]++;
 			}
 		}
+				break;
+			}
 
+
+		
+		case(FormationTypes.SQUARE):{
+
+			break;
+		}
+
+
+	}
 		captain.formationPosition = captain.transform.position;
 
 	}
