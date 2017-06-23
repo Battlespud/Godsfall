@@ -16,15 +16,22 @@ public class MovementController : MonoBehaviour {
 	public bool Gravity = true;
 	private const float GRAVITY = 2F;
 	public bool lockout = false; //use to lockout input except from combat controller
+    public bool isGravityGrounded;
+    int gravityTimer = 0;
+    int mGrav = 20;
+    Vector3 toMove;
+    Vector3 toSprite;
+    bool rolling = false;
+    float move_speed = 6.5f;
+    public bool bodyCanMove = true;
+    bool disabled = false;
 
-	//is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
-	public bool bodyCanMove = true;
-	public void setBodyCanMove(bool b){
+    //is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
+    public void setBodyCanMove(bool b){
 		bodyCanMove = b;
 	}
 
 	//are we disabled from a stun, sleep, paralysis or some other short term effect? Will be Set via event from Actor.cs
-	bool disabled = false;
 	public void setDisabled(bool b){
 		disabled = b;
 	}
@@ -34,17 +41,9 @@ public class MovementController : MonoBehaviour {
 		return (!disabled && bodyCanMove);
 	}
 
-	bool rolling = false;
-
-	float move_speed = 6.5f;
-
 	private float timeAdjusted(float f){
 		return (f * Time.deltaTime);
 	}
-
-
-	int gravityTimer=0;
-	int mGrav = 20;
 
 	// Use this for initialization
 	void Start () {
@@ -59,9 +58,6 @@ public class MovementController : MonoBehaviour {
 		camera = Camera.main;
 	}
 
-	Vector3 toMove;
-	Vector3 toSprite;
-
 	// Update is called once per frame
 	void Update () {
 		if (toMove != new Vector3 (0, 0, 0)) {
@@ -69,7 +65,7 @@ public class MovementController : MonoBehaviour {
 		} else {
 			isMoving = false;
 		}
-		if (Gravity) {
+		if (Gravity && !isGravityGrounded) {
 			toMove.y += -2;
 		}
 		switch (isPlayer) {
@@ -84,7 +80,6 @@ public class MovementController : MonoBehaviour {
 				npcMove (toMove);
 				break;
 			}
-
 		}
 		if (hasSpriteController) {
 			if (isPlayer && toMove != new Vector3()) {
@@ -95,8 +90,6 @@ public class MovementController : MonoBehaviour {
 			}
 		}
 		clearBuffer ();
-
-
 	}
 
 	private void clearBuffer(){
@@ -209,5 +202,4 @@ public class MovementController : MonoBehaviour {
 		angle = Mathf.Atan2 (mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
 		transform.rotation = Quaternion.Euler (new Vector3 (0, -angle+90, 0));
 	}
-
 }
