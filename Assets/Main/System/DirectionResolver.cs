@@ -5,6 +5,10 @@ using UnityEngine;
 public static class DirectionResolver {
 
 	static CameraDirection cd = Camera.main.GetComponent<CameraDirection> ();
+	static Vector3 U = Vector3.forward;
+	static Vector3 D = Vector3.back;
+	static Vector3 L = Vector3.left;
+	static Vector3 R = Vector3.right;
 
 	static  Vector3 UL = new Vector3(-1,0,1);
 	static  Vector3 UR = new Vector3(1,0,1);
@@ -21,7 +25,7 @@ public static class DirectionResolver {
 			{
 				switch (facing) {
 				case(Facing.D):{
-						dirVec = Vector3.back;
+						dirVec = D;
 						break;
 					}
 				case(Facing.DL):{
@@ -29,7 +33,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.L):{
-						dirVec = Vector3.left;
+						dirVec = L;
 						break;
 					}
 				case(Facing.UL):{
@@ -38,7 +42,7 @@ public static class DirectionResolver {
 					}
 				case(Facing.U):{
 						//something screwy here
-						dirVec = Vector3.forward;
+						dirVec = U;
 						break;
 					}
 				case(Facing.UR):{
@@ -46,7 +50,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.R):{
-						dirVec = Vector3.right;
+						dirVec = R;
 						break;
 					}
 				case(Facing.DR):{
@@ -58,12 +62,52 @@ public static class DirectionResolver {
 				dirVec *= -1;
 				break;
 			}
+		case (Facing.DL):
+			{
+				switch (facing) {
+				case(Facing.D):{
+						dirVec = UR;
+						break;
+					}
+				case(Facing.DL):{
+						dirVec = R;
+						break;
+					}
+				case(Facing.L):{
+						dirVec = DR;
+						break;
+					}
+				case(Facing.UL):{
+						dirVec = D;
+						break;
+					}
+				case(Facing.U):{
+						//something screwy here
+						dirVec = DL;
+						break;
+					}
+				case(Facing.UR):{
+						dirVec = L;
+						break;
+					}
+				case(Facing.R):{
+						dirVec = UL;
+						break;
+					}
+				case(Facing.DR):{
+						dirVec = U;
+						break;
 
+					}
+				}
+				//dirVec *= -1;
+				break;
+			}
 		case (Facing.L):
 			{
 				switch (facing) {
 				case(Facing.D):{
-						dirVec = Vector3.right;
+						dirVec = R;
 						break;
 					}
 				case(Facing.DL):{
@@ -71,7 +115,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.L):{
-						dirVec = Vector3.back;
+						dirVec = D;
 						break;
 					}
 				case(Facing.UL):{
@@ -80,7 +124,7 @@ public static class DirectionResolver {
 
 					}
 				case(Facing.U):{
-						dirVec = Vector3.left;
+						dirVec = L;
 						break;
 					}
 				case(Facing.UR):{
@@ -88,7 +132,7 @@ public static class DirectionResolver {
 						break;
 					}
 				case(Facing.R):{
-						dirVec = Vector3.forward;
+						dirVec = U;
 						break;
 					}
 				case(Facing.DR):{
@@ -98,85 +142,207 @@ public static class DirectionResolver {
 				}
 				break;
 			}
-		case (Facing.U):
+		
+		case (Facing.UL):
 			{
 				switch (facing) {
 				case(Facing.D):{
-						dirVec = Vector3.back;
+						dirVec = UL;
 						break;
 					}
 				case(Facing.DL):{
-						dirVec = new Vector3 (-1, 0, -1);
+						dirVec = U;
 						break;
 					}
 				case(Facing.L):{
-						dirVec = Vector3.left;
+						dirVec = UR;
 						break;
 					}
 				case(Facing.UL):{
-						dirVec = new Vector3 (-1, 0, 1);
-						break;
-					}
-				case(Facing.U):{
-						dirVec = Vector3.forward;
-						break;
-					}
-				case(Facing.UR):{
-						dirVec = new Vector3 (1, 0, 1);
-						break;
-					}
-				case(Facing.R):{
-						dirVec = Vector3.right;
-						break;
-					}
-				case(Facing.DR):{
-						dirVec = new Vector3 (-1, 0, 1);
-						break;
-					}
-				}
-				break;
-			}
-		case (Facing.R):
-			{
-				switch (facing) {
-				case(Facing.D):{
-						dirVec = Vector3.right;
-						break;
-					}
-				case(Facing.DL):{
-						//	dirVec = new Vector3 (-1, 0, -1);
-						break;
-					}
-				case(Facing.L):{
-						dirVec = Vector3.back;
-						break;
-					}
-				case(Facing.UL):{
-						//	dirVec = new Vector3 (-1, 0, 1);
+						dirVec = R;
 						break;
 
 					}
 				case(Facing.U):{
-						dirVec = Vector3.left;
+						dirVec = DR;
 						break;
 					}
 				case(Facing.UR):{
-						//	dirVec = new Vector3 (1, 0, 1);
+						dirVec = D;
 						break;
 					}
 				case(Facing.R):{
-						dirVec = Vector3.forward;
+						dirVec = DL;
 						break;
 					}
 				case(Facing.DR):{
-						//	dirVec = new Vector3 (-1, 0, 1);
+						dirVec = L;
 						break;
 					}
 				}
 				dirVec *= -1;
 				break;
 			}
+		case (Facing.U):
+			{
+				switch (facing) {
+				case(Facing.D):{
+						dirVec = D;
+						break;
+					}
+				case(Facing.DL):{
+						dirVec = DL;
+						break;
+					}
+				case(Facing.L):{
+						dirVec = L;
+						break;
+					}
+				case(Facing.UL):{
+						dirVec = UL;
+						break;
+					}
+				case(Facing.U):{
+						dirVec = U;
+						break;
+					}
+				case(Facing.UR):{
+						dirVec = UR;
+						break;
+					}
+				case(Facing.R):{
+						dirVec = R;
+						break;
+					}
+				case(Facing.DR):{
+						dirVec = DR;
+						break;
+					}
+				}
+				break;
+			}
+		case (Facing.UR):
+			{
+				switch (facing) {
+				case(Facing.D):{
+						dirVec = UR;
+						break;
+					}
+				case(Facing.DL):{
+						dirVec = R;
+						break;
+					}
+				case(Facing.L):{
+						dirVec = DR;
+						break;
+					}
+				case(Facing.UL):{
+						dirVec = D;
+						break;
+					}
+				case(Facing.U):{
+						dirVec = DL;
+						break;
+					}
+				case(Facing.UR):{
+						dirVec = L;
+						break;
+					}
+				case(Facing.R):{
+						dirVec = UL;
+						break;
+					}
+				case(Facing.DR):{
+						dirVec = U;
+						break;
+
+					}
+				}
+				dirVec *= -1;
+				break;
+			}
+		case (Facing.R):
+			{
+				switch (facing) {
+				case(Facing.D):{
+						dirVec = R;
+						break;
+					}
+				case(Facing.DL):{
+						dirVec = DR;
+						break;
+					}
+				case(Facing.L):{
+						dirVec = D;
+						break;
+					}
+				case(Facing.UL):{
+						dirVec = DL;
+						break;
+
+					}
+				case(Facing.U):{
+						dirVec = L;
+						break;
+					}
+				case(Facing.UR):{
+						dirVec = UL;
+						break;
+					}
+				case(Facing.R):{
+						dirVec = U;
+						break;
+					}
+				case(Facing.DR):{
+						dirVec = UR;
+						break;
+					}
+				}
+				dirVec *= -1;
+				break;
+			}
+		case (Facing.DR):
+			{
+				switch (facing) {
+				case(Facing.D):{
+						dirVec = UL;
+						break;
+					}
+				case(Facing.DL):{
+						dirVec = U;
+						break;
+					}
+				case(Facing.L):{
+						dirVec = UR;
+						break;
+					}
+				case(Facing.UL):{
+						dirVec = R;
+						break;
+
+					}
+				case(Facing.U):{
+						dirVec = DR;
+						break;
+					}
+				case(Facing.UR):{
+						dirVec = D;
+						break;
+					}
+				case(Facing.R):{
+						dirVec = DL;
+						break;
+					}
+				case(Facing.DR):{
+						dirVec = L;
+						break;
+					}
+				}
+				//dirVec *= -1;
+				break;
+			}
 		}
+
 		//this should be where the sprite is facing. i think.
 		return dirVec;
 	}

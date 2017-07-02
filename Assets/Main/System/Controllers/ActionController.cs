@@ -24,12 +24,17 @@ public class ActionController : MonoBehaviour {
 
 
 	public void tryAttack(){
+		const float offset = .25f;
 		RaycastHit rayHit; 
-		Ray ray;
-		//something screwy here
-			ray = new Ray (transform.position, DirectionResolver.RayDirection (sc));
-			Debug.DrawRay (transform.position, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 4f);
-		if (Physics.Raycast (ray, out rayHit, 10f)) {
+		Vector3 pos = transform.position;
+		Vector3 left = new Vector3 (pos.x - offset, pos.y, pos.z);
+		Vector3 right = new Vector3 (pos.x + offset, pos.y, pos.z);
+		Ray rayL = new Ray (left, DirectionResolver.RayDirection (sc));
+		Ray rayR = new Ray (right, DirectionResolver.RayDirection (sc));
+			Debug.DrawRay (left, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 4f);
+			Debug.DrawRay (right, DirectionResolver.RayDirection (sc) * 10f, Color.blue, 4f);
+				
+		if (Physics.Raycast (rayL, out rayHit, 10f)) {
 			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
 				GameObject hitGo = rayHit.collider.gameObject;
 				Actor hitActor = hitGo.GetComponent<Actor> ();
@@ -42,6 +47,20 @@ public class ActionController : MonoBehaviour {
 			} else {
 				Debug.Log ("Hit Nothing!");
 			}
+		} else if((Physics.Raycast (rayR, out rayHit, 10f))) {
+			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
+				GameObject hitGo = rayHit.collider.gameObject;
+				Actor hitActor = hitGo.GetComponent<Actor> ();
+				Debug.Log ("Attack hits " + hitActor.name);
+				doAttack (hitActor);
+			} else if (rayHit.collider.gameObject.GetComponent (typeof(IInteractableC)) != null) {
+				Debug.Log ("Found the interactable interface!");
+				IInteractableC genericClass = (IInteractableC)rayHit.collider.gameObject.GetComponent (typeof(IInteractableC));
+				genericClass.Interact ();
+			} else {
+				Debug.Log ("Hit Nothing!");
+			}
+
 		}
 	}
 

@@ -7,7 +7,7 @@ public class Ground : MonoBehaviour {
     public MovementController mc;
 	// Use this for initialization
 	void Start () {
-		
+		mc = gameObject.GetComponentInParent<MovementController> ();
 	}
 	
 	// Update is called once per frame

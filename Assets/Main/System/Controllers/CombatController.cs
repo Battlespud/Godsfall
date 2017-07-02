@@ -19,6 +19,11 @@ public enum CombatState{ //determined by confidence + health, formation and leve
 
 public class CombatController : MonoBehaviour {
 
+	public const int defaultCooldown = 2;
+	public float cdTimer;
+
+	bool canAttack = true;
+
 	ActionController actionController;
 	MovementController movementController;
 	Entity entity;
@@ -26,6 +31,16 @@ public class CombatController : MonoBehaviour {
 	public GameObject target;
 	public Vector3 targetPos;
 	public Vector3 moveInput;
+
+	//random value added to movement so it isnt perfect
+	float updateTimer;
+	float updateTimerMax = .075f; //max offset in percent
+	bool doUpdate = true;
+
+	//better to calculate only a few times a second instead of constantly to make it seem more natural
+	float recalcTargetPosCounter = 0f;		//just the counter
+	const float recalcTargetPosMax = .2f; // how often to recalculate in seconds
+	bool recalculateTargetPos = true;
 
 	public Confidence confidence = Confidence.Neutral;
 	public CombatState combatState = CombatState.Reactive;
@@ -71,6 +86,9 @@ public class CombatController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (inCombat) {
+			if (!canAttack) {
+				Cooldown ();
+			}
 		switch (isPlayer) {
 		case(true):
 			{
@@ -87,7 +105,16 @@ public class CombatController : MonoBehaviour {
 			if (doAttack && InsideCloseDistance()) {
 				Attack ();
 				doAttack = false;
+				canAttack = false;
 			}
+		}
+	}
+
+	void Cooldown(){
+		cdTimer += Time.deltaTime;
+		if (cdTimer >= defaultCooldown) {
+			canAttack = true;
+			cdTimer = cdTimer - defaultCooldown;
 		}
 	}
 
@@ -97,7 +124,12 @@ public class CombatController : MonoBehaviour {
 	}
 
 	void NPCLoop(){
+		if (canAttack) {
+			doAttack = true;
+		}
 		LockoutControl ();
+		UpdateCalc();
+		if(doUpdate || Random.Range(0,4) == 2)
 		TrackTarget ();
 	}
 
@@ -109,7 +141,16 @@ public class CombatController : MonoBehaviour {
 		}
 	}
 
+	void UpdateCalc(){
+		updateTimer += Time.deltaTime;
+		if (updateTimer >= updateTimerMax) {
+			doUpdate = true;
+			updateTimer -= updateTimerMax;
+		}
+	}
+
 	void TrackTarget(){
+		doUpdate = false;
 		moveInput = new Vector3();
 		targetPos = target.transform.position;
 		distanceToTarget = Vector3.Distance (transform.position, target.transform.position);
@@ -131,7 +172,7 @@ public class CombatController : MonoBehaviour {
 						movementController.npcInputToMoveCombat (moveInput.normalized  * 1);
 					}
 					//but not too close
-					if (InsideCloseDistance(2) && !doAttack) {
+					else if (InsideCloseDistance(2) && !doAttack) {
 						movementController.npcInputToMoveCombat (moveInput.normalized  * -1);
 					}
 					break;
@@ -141,7 +182,7 @@ public class CombatController : MonoBehaviour {
 					if (!InsideCloseDistance (2)) {
 						movementController.npcInputToMoveCombat (moveInput.normalized * 1);
 					}
-					if (!doAttack && InsideCloseDistance() ) {
+					else if (!doAttack && InsideCloseDistance() ) {
 						movementController.npcInputToMoveCombat (moveInput.normalized * -1);
 					}
 					break;

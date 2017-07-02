@@ -12,6 +12,8 @@ public enum Diplo{
 public static class FactionMatrix {
 	//records diplomatic relations between all groups as a 2d array
 
+	public static bool hasChanged = false;
+
 	static Diplo[,] RelationshipMatrix = new Diplo[Faction.MaxFactions,Faction.MaxFactions];
 
 	public static void SetRelationship(int a, int b, Diplo relationship)
@@ -21,6 +23,7 @@ public static class FactionMatrix {
 		} else {
 			RelationshipMatrix [a, b] = relationship;
 			RelationshipMatrix [b, a] = relationship;
+			hasChanged = true;
 		}
 	}
 
