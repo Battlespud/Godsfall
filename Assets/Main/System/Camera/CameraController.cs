@@ -21,7 +21,9 @@ using System.Collections;
 		public Vector2 CurrentRotation { get { return _angle; } }
 
 	void Awake(){
-		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		if (target == null) {
+			target = GameObject.FindGameObjectWithTag ("Player").transform;
+		}
 	}
 
 		void Start()
