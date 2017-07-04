@@ -386,7 +386,7 @@ public static class DirectionResolver {
 			{
 				if (dirVec == Vector3.forward) {
 					dirVec = Vector3.left;
-				} else if (dirVec == UR) {
+				}else if (dirVec == UR) {
 					dirVec = UL;
 				}else if (dirVec == Vector3.right) {
 					dirVec = Vector3.forward;

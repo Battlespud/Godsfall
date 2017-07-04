@@ -112,7 +112,7 @@ public class MovementController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	//	GravityLoop ();
+		GravityLoop ();
 		switch (isPlayer) {
 		case (true):
 			{
@@ -129,10 +129,10 @@ public class MovementController : MonoBehaviour {
 			}
 		}
 		if (hasSpriteController) {
-			if (isPlayer && isMoving) {
+			if (isPlayer) {
 				spriteController.UpdateSprite (toSprite, true);
 			} 
-			else if(!isPlayer && isMoving) {
+			else if(!isPlayer) {
 				spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
 			}
 		}

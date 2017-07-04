@@ -74,9 +74,7 @@ public class SpriteController : MonoBehaviour{
 
 	public void UpdateSprite(Vector3 vec, bool useVectorProcessor){
 		//the vectorprocessor will break npc sprites because they don't use relativized vectors.
-		if (useVectorProcessor) { 
-			vec = DirectionResolver.VectorProcessor (vec);
-		}
+		if (useVectorProcessor) vec = DirectionResolver.VectorProcessor (vec);
 		int offset = facing -  cameraDirection.facing;
 		if (offset < 0)
 			offset += 8; //wrap around
@@ -117,13 +115,13 @@ public class SpriteController : MonoBehaviour{
 		if (xGreaterNonZero && zGreaterNonZero) {
 			facing = Facing.UR;
 		}
-		if (xGreaterNonZero && zLessNonZero) {
+		else if (xGreaterNonZero && zLessNonZero) {
 			facing = Facing.DR;
 		}
-		if (xLessNonZero && zGreaterNonZero) {
+		else if (xLessNonZero && zGreaterNonZero) {
 			facing = Facing.UL;
 		}
-		if (xLessNonZero && zLessNonZero) {
+		else if (xLessNonZero && zLessNonZero) {
 			facing = Facing.DL;
 		}
 
