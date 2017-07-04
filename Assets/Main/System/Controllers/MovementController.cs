@@ -57,6 +57,10 @@ public class MovementController : MonoBehaviour {
     Vector3 toMove;
     Vector3 toSprite;
 
+//Physics Emulation
+	float mass = 1f;
+	Vector3 impact;
+
 
     //is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
     public void setBodyCanMove(bool b){
@@ -75,6 +79,10 @@ public class MovementController : MonoBehaviour {
 
 	private float TimeAdjusted(float f){
 		return (f * Time.deltaTime);
+	}
+
+	private Vector3 TimeAdjusted(Vector3 v){
+		return (v * Time.deltaTime);
 	}
 
 	#region Initialization
@@ -97,6 +105,7 @@ public class MovementController : MonoBehaviour {
 			}
 			camera = Camera.main;
 			MovementSpeedModifiers = new List<float> ();
+		impact = new Vector3 ();
 		}
 
 	void GravitySetup(){
@@ -113,10 +122,11 @@ public class MovementController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GravityLoop ();
+		Collisions ();
 		switch (isPlayer) {
 		case (true):
 			{
-				checkMovementInput ();
+				if(!lockout)checkMovementInput ();
 				CheckMoving ();
 				Move ();
 				break;
@@ -165,7 +175,7 @@ public class MovementController : MonoBehaviour {
 	private void CheckGravity(){ //TODO literally just doesnt work idfk why
 		RaycastHit hit;
 
-		Debug.DrawRay (transform.position, Vector3.down * gravityCheckDistance); 
+		//Debug.DrawRay (transform.position, Vector3.down * gravityCheckDistance); 
 		GravityCheckingRay = new Ray (transform.position, Vector3.down);
 		if (Physics.Raycast (GravityCheckingRay, out hit, gravityCheckDistance) ) {
 			if (hit.collider.transform.parent != gameObject && hit.collider.transform.gameObject != gameObject) {
@@ -182,6 +192,24 @@ public class MovementController : MonoBehaviour {
 	}
 
 	#endregion 
+
+	//processes collisions and locks out controls temporarily (might bug ai in formation, needs testing)
+	void Collisions(){
+		if (impact.magnitude > .2f) {
+			lockout = true;
+			ForceMove (TimeAdjusted (impact));
+			impact = Vector3.Lerp (impact, Vector3.zero, 5 * Time.deltaTime);
+		} else {
+			lockout = false;
+		}
+	}
+
+	public void AddImpact(Vector3 dir, float force){
+		dir.Normalize ();
+		if (dir.y < 0)
+			dir.y = -dir.y;
+		impact += dir.normalized * force / mass;
+	}
 
 	private void CheckMoving(){
 		if (toMove != new Vector3 (0, 0, 0)) {
@@ -269,10 +297,16 @@ public class MovementController : MonoBehaviour {
 		return BASESPEED + moveSpeedModifier;
 	}
 
+	//dont call this directly, add to toMove instead
 	private void Move(){
 		if (canMove()) {
 			character_controller.Move (toMove.normalized * TimeAdjusted(MoveSpeed()));
 		}
+	}
+
+	//For physics only
+	private void ForceMove(Vector3 forcedVec){
+			character_controller.Move (forcedVec);
 	}
 
 	public void PlayerInputToMove(Vector3 i){
@@ -283,6 +317,11 @@ public class MovementController : MonoBehaviour {
 	public void InputToMoveY(float f)
 	{
 		toMove.y += f;
+	}
+
+	public void BypassPlayerInputToMove(Vector3 i){
+	//	i.y = 0;
+		toMove += i;
 	}
 
 	public void npcInputToMove(Vector3 i){
