@@ -16,7 +16,7 @@ public class ActionController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (attackKey)) {
+		if (Input.GetKeyDown (attackKey) && gameObject.GetComponent<MovementController>().isPlayer) {
 			tryAttack ();
 		}
 	}

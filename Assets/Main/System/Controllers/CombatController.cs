@@ -34,7 +34,7 @@ public class CombatController : MonoBehaviour {
 
 	//random value added to movement so it isnt perfect
 	float updateTimer;
-	float updateTimerMax = .075f; //max offset in percent
+	float updateTimerMax = 0f; //max offset in percent
 	bool doUpdate = true;
 
 	//better to calculate only a few times a second instead of constantly to make it seem more natural
@@ -56,7 +56,7 @@ public class CombatController : MonoBehaviour {
 		return(Vector3.Distance(transform.position, target.transform.position) > fleeDistance*i);
 	}
 
-	const float closeDistance = 2.5f;
+	const float closeDistance = 5f;
 	private bool InsideCloseDistance(){
 		return(Vector3.Distance(transform.position, target.transform.position) <= closeDistance);
 	}
