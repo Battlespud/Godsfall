@@ -49,7 +49,7 @@ public class MovementController : MonoBehaviour {
 	private float gravityTimer;
 	private float mGravityTimer; //autocalculated from Interval to save us from the division every frame.
 	private float gravityCheckDistance;
-	private const float gravityCheckOffsetDistance = .3f; //check this far from the bottom.  .2f or so is a good number since the colliders arent usually touching the ground.
+	private const float gravityCheckOffsetDistance = .15f; //check this far from the bottom.  .2f or so is a good number since the colliders arent usually touching the ground.
 	private Ray GravityCheckingRay;
 
 
