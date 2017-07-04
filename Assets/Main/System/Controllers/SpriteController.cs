@@ -68,7 +68,7 @@ public class SpriteController : MonoBehaviour{
 	// Update is called once per frame
 	void Update () {
 
-		transform.rotation=Quaternion.LookRotation(cam.transform.forward);
+		transform.rotation=Quaternion.LookRotation(cam.transform.forward); //Rotates the object so that the image pane is always at the same angle to the camera, doesnt affect which sprites are displayed.  Works perfectly, dont touch it, this is not whats breaking whatever you just broke.
 
 	}
 
@@ -126,43 +126,9 @@ public class SpriteController : MonoBehaviour{
 		if (xLessNonZero && zLessNonZero) {
 			facing = Facing.DL;
 		}
-		/*
-		int finalfinalfacing = (int)finalFacing - (int)cameraDirection.facing;
-		if (finalfinalfacing  < 0)
-			finalfinalfacing += 8; //wrap around
-		*/
+
 		sr.sprite = bodySpritesArray [(int)finalFacing];
 
 	}
-
-	/*
-	public void UpdateSprite(Vector3 vec){
-		if(vec.x != 0)
-		{
-			if (vec.x > 0)
-				facing = Facing.R;
-			else
-				facing = Facing.L;
-		}
-		if(vec.z != 0)
-		{
-			if (vec.z > 0)
-				facing = Facing.U;
-			else
-				facing = Facing.D;
-		}
-		int offset = (int)facing - (int)cameraDirection.facing+2;
-			if (offset < 0)
-				offset += 8; //wrap around
-		if (facing == Facing.R || facing == Facing.DR || facing == Facing.UR) {
-			sr.flipX = true;
-		} else {
-			sr.flipX = false;
-		}
-
-		sr.sprite = bodySpritesArray [offset];
-
-	}
-*/
 
 }

@@ -49,8 +49,8 @@ public class MovementController : MonoBehaviour {
 	private float gravityTimer;
 	private float mGravityTimer; //autocalculated from Interval to save us from the division every frame.
 	private float gravityCheckDistance;
-	private const float gravityCheckOffsetDistance = 5f; //check this far from the bottom.  .2f or so is a good number since the colliders arent usually touching the ground.
-	private Ray gravityCheckingRay;
+	private const float gravityCheckOffsetDistance = .3f; //check this far from the bottom.  .2f or so is a good number since the colliders arent usually touching the ground.
+	private Ray GravityCheckingRay;
 
 
 //dont touch
@@ -105,7 +105,6 @@ public class MovementController : MonoBehaviour {
 		} else {
 			mGravityTimer = 1 / Interval;
 			gravityCheckDistance = GetComponent<Collider> ().bounds.size.y / 2 + gravityCheckOffsetDistance;
-			Ray GravityCheckingRay = new Ray (transform.position, Vector3.down);
 		}
 	}
 
@@ -113,7 +112,7 @@ public class MovementController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		GravityLoop ();
+	//	GravityLoop ();
 		switch (isPlayer) {
 		case (true):
 			{
@@ -156,7 +155,7 @@ public class MovementController : MonoBehaviour {
 				CheckGravity ();
 			}
 			if (gravityEnabled) {
-				toMove.y += GRAVITY;
+				InputToMoveY (GRAVITY);
 			}
 		} else {
 			gravityEnabled = false; //in case we change mid game for some reason
@@ -167,10 +166,16 @@ public class MovementController : MonoBehaviour {
 		RaycastHit hit;
 
 		Debug.DrawRay (transform.position, Vector3.down * gravityCheckDistance); 
-
-		if (Physics.Raycast (gravityCheckingRay, out hit, 10f)) {
-			Debug.Log (hit.collider.name);
-			gravityEnabled = false;
+		GravityCheckingRay = new Ray (transform.position, Vector3.down);
+		if (Physics.Raycast (GravityCheckingRay, out hit, gravityCheckDistance) ) {
+			if (hit.collider.transform.parent != gameObject && hit.collider.transform.gameObject != gameObject) {
+				if (isPlayer) {
+				//	Debug.Log (hit.collider.name);
+				}
+				gravityEnabled = false;
+			} else {
+				gravityEnabled = true;
+			}
 		} else {
 			gravityEnabled = true;
 		}
@@ -203,36 +208,51 @@ public class MovementController : MonoBehaviour {
 		case (CameraMode.NORMAL):
 			{
 				if (Input.GetKey (InputCatcher.ForwardKey)) {
-					toMove += camera.transform.forward;
+					PlayerInputToMove(camera.transform.forward);
 					toSprite += transform.forward;
 				}
 				if (Input.GetKey (InputCatcher.BackKey)) {
-					toMove += camera.transform.forward*-1;
+					PlayerInputToMove(camera.transform.forward*-1);
 					toSprite += transform.forward*-1;
 				}
 				if (Input.GetKey (InputCatcher.LeftKey)) {
-					toMove += camera.transform.right*-1;	
+					PlayerInputToMove(camera.transform.right*-1);	
 					toSprite += transform.right*-1;
 				}
 				if (Input.GetKey (InputCatcher.RightKey)) {
-					toMove += camera.transform.right;
+					PlayerInputToMove(camera.transform.right);
 					toSprite += transform.right;
 				}
 				break;
 			}
 		case (CameraMode.OVERHEAD):
 			{
-//TODO
+				if (Input.GetKey (InputCatcher.ForwardKey)) {
+					PlayerInputToMove(transform.forward);
+					toSprite += transform.forward;
+				}
+				if (Input.GetKey (InputCatcher.BackKey)) {
+					PlayerInputToMove(transform.forward*-1);
+					toSprite += transform.forward*-1;
+				}
+				if (Input.GetKey (InputCatcher.LeftKey)) {
+					PlayerInputToMove(transform.right*-1);	
+					toSprite += transform.right*-1;
+				}
+				if (Input.GetKey (InputCatcher.RightKey)) {
+					PlayerInputToMove(transform.right);
+					toSprite += transform.right;
+				}
 				break;
 			}
 		case (CameraMode.SIDESCROLLER):
 			{
 				if (Input.GetKey (InputCatcher.LeftKey)) {
-					toMove += camera.transform.right*-1;	
+					PlayerInputToMove(camera.transform.right*-1);	
 					toSprite += transform.right*-1;
 				}
 				if (Input.GetKey (InputCatcher.RightKey)) {
-					toMove += camera.transform.right;
+					PlayerInputToMove(camera.transform.right);
 					toSprite += transform.right;
 				}
 				if (Input.GetKeyDown (InputCatcher.RollKey) && IsGrounded()) {
@@ -253,6 +273,16 @@ public class MovementController : MonoBehaviour {
 		if (canMove()) {
 			character_controller.Move (toMove.normalized * TimeAdjusted(MoveSpeed()));
 		}
+	}
+
+	public void PlayerInputToMove(Vector3 i){
+		i.y = 0;
+		toMove += i;
+	}
+
+	public void InputToMoveY(float f)
+	{
+		toMove.y += f;
 	}
 
 	public void npcInputToMove(Vector3 i){
