@@ -3,28 +3,60 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour {
+
+
+	//Dependencies:
+		// Only the main camera that follows the player should be active at the start of the scene. 
+		// Character Controller component must be present on same gameobject.
+	//Can be used on vehicles, npcs and player without any changes (aside from setting the "Player" bool to negative, and disabling gravity for
+	// vehicles like boats.
+
+	//Camera
 	public Camera camera;
 	public CameraModeManager camModeManager;
-    public Transform teleportTarget;
-	public GameObject character_go;
+
 	CharacterController character_controller;
 	SpriteController spriteController;
-	public Animator animator;
+	public Animator animator; //TODO
+
+	//Author Must Setup
 	public bool isPlayer;
+
+	//Automated
 	public bool isMoving = false;
 	public bool hasSpriteController = false;
-	public bool Gravity = true;
-	private const float GRAVITY = 2F;
 	public bool lockout = false; //use to lockout input except from combat controller
-    public bool isGravityGrounded;
-    int gravityTimer = 0;
-    int mGrav = 20;
+	public bool bodyCanMove = true;
+	bool disabled = false;
+
+	//Constants
+	const float GRAVITY = -2f;
+	public const float BASESPEED = 7f;
+
+	//Floats
+	public List<float> MovementSpeedModifiers;
+	public float moveSpeedModifier;
+
+	//Gravity
+	//Polled every couple frames and applied as needed.
+	[SerializeField]private bool usesGravity = true; //Select or Unselect in editor to determine if this object will use gravity automatically.
+	[SerializeField]private bool gravityEnabled = false;
+	private bool grounded = false;
+		public bool IsGrounded(){
+			return grounded;
+		}
+	private const float Interval = 10; // Every 1/Interval a second, gravity will be checked.  TODO make a seperate interval for npc because we care less
+	private float gravityTimer;
+	private float mGravityTimer; //autocalculated from Interval to save us from the division every frame.
+	private float gravityCheckDistance;
+	private const float gravityCheckOffsetDistance = 5f; //check this far from the bottom.  .2f or so is a good number since the colliders arent usually touching the ground.
+	private Ray gravityCheckingRay;
+
+
+//dont touch
     Vector3 toMove;
     Vector3 toSprite;
-    bool rolling = false;
-    float move_speed = 6.5f;
-    public bool bodyCanMove = true;
-    bool disabled = false;
+
 
     //is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
     public void setBodyCanMove(bool b){
@@ -41,51 +73,67 @@ public class MovementController : MonoBehaviour {
 		return (!disabled && bodyCanMove);
 	}
 
-	private float timeAdjusted(float f){
+	private float TimeAdjusted(float f){
 		return (f * Time.deltaTime);
 	}
 
+	#region Initialization
+
 	// Use this for initialization
 	void Start () {
-		character_go = this.gameObject;
-		camera = Camera.main;
-		camModeManager = camera.gameObject.GetComponent<CameraModeManager> ();
-		character_controller = character_go.GetComponent<CharacterController> ();
-		if (GetComponentInChildren<SpriteController> () != null) {
-			spriteController = GetComponentInChildren<SpriteController> ();
-			hasSpriteController = true;
-		}
-		camera = Camera.main;
+		GrabReferences ();
+		GravitySetup ();
 	}
+
+
+
+	void GrabReferences(){
+			camera = Camera.main;
+			camModeManager = camera.gameObject.GetComponent<CameraModeManager> ();
+		character_controller = gameObject.GetComponent<CharacterController> ();
+			if (GetComponentInChildren<SpriteController> () != null) {
+				spriteController = GetComponentInChildren<SpriteController> ();
+				hasSpriteController = true;
+			}
+			camera = Camera.main;
+			MovementSpeedModifiers = new List<float> ();
+		}
+
+	void GravitySetup(){
+		if (!usesGravity) {
+			gravityEnabled = false;
+		} else {
+			mGravityTimer = 1 / Interval;
+			gravityCheckDistance = GetComponent<Collider> ().bounds.size.y / 2 + gravityCheckOffsetDistance;
+			Ray GravityCheckingRay = new Ray (transform.position, Vector3.down);
+		}
+	}
+
+	#endregion
 
 	// Update is called once per frame
 	void Update () {
-		if (toMove != new Vector3 (0, 0, 0)) {
-			isMoving = true;
-		} else {
-			isMoving = false;
-		}
-		if (Gravity && !isGravityGrounded) {
-			toMove.y += -2;
-		}
+		GravityLoop ();
 		switch (isPlayer) {
 		case (true):
 			{
 				checkMovementInput ();
-				move (toMove);
+				CheckMoving ();
+				Move ();
 				break;
 			}
 		case (false):
 			{
-				npcMove (toMove);
+				Move ();
+				CheckMoving ();
 				break;
 			}
 		}
 		if (hasSpriteController) {
-			if (isPlayer && toMove != new Vector3()) {
+			if (isPlayer && isMoving) {
 				spriteController.UpdateSprite (toSprite, true);
 			} 
-			else if(!isPlayer && toMove != new Vector3()) {
+			else if(!isPlayer && isMoving) {
 				spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
 			}
 		}
@@ -95,6 +143,51 @@ public class MovementController : MonoBehaviour {
 	private void clearBuffer(){
 		toMove = new Vector3 (0f, 0f, 0f);
 		toSprite = new Vector3 (0f, 0f, 0f);
+	}
+
+
+	#region Gravity
+
+	private void GravityLoop(){
+		if (usesGravity) {
+			gravityTimer += Time.fixedUnscaledDeltaTime;
+			if (gravityTimer >= mGravityTimer) {
+				gravityTimer -= mGravityTimer;
+				CheckGravity ();
+			}
+			if (gravityEnabled) {
+				toMove.y += GRAVITY;
+			}
+		} else {
+			gravityEnabled = false; //in case we change mid game for some reason
+		}
+	}
+
+	private void CheckGravity(){ //TODO literally just doesnt work idfk why
+		RaycastHit hit;
+
+		Debug.DrawRay (transform.position, Vector3.down * gravityCheckDistance); 
+
+		if (Physics.Raycast (gravityCheckingRay, out hit, 10f)) {
+			Debug.Log (hit.collider.name);
+			gravityEnabled = false;
+		} else {
+			gravityEnabled = true;
+		}
+	}
+
+	#endregion 
+
+	private void CheckMoving(){
+		if (toMove != new Vector3 (0, 0, 0)) {
+			isMoving = true;
+			moveSpeedModifier = 0f;
+			foreach (float flo in MovementSpeedModifiers) {
+				moveSpeedModifier += flo;
+			}
+		} else {
+			isMoving = false;
+		}
 	}
 
 	public void teleport(Vector3 vec){
@@ -142,7 +235,7 @@ public class MovementController : MonoBehaviour {
 					toMove += camera.transform.right;
 					toSprite += transform.right;
 				}
-				if (Input.GetKeyDown (InputCatcher.RollKey) && isGrounded()) {
+				if (Input.GetKeyDown (InputCatcher.RollKey) && IsGrounded()) {
 					Debug.Log ("Jump");
 				}
 				break;
@@ -152,14 +245,13 @@ public class MovementController : MonoBehaviour {
 
 	}
 
-	public bool isGrounded(){
-		return(transform.position.y < 2.6); //TODO
+	float MoveSpeed(){
+		return BASESPEED + moveSpeedModifier;
 	}
 
-	private void move(Vector3 vec){
+	private void Move(){
 		if (canMove()) {
-			//toMove.y = gameObject.transform.position.y;
-			character_controller.Move (toMove.normalized * Time.deltaTime * move_speed);
+			character_controller.Move (toMove.normalized * TimeAdjusted(MoveSpeed()));
 		}
 	}
 
@@ -182,11 +274,7 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
-	private void npcMove(Vector3 vec){
-		if (canMove ()) {
-			character_controller.Move (vec * Time.deltaTime * move_speed);
-		}
-	}
+
 
 	private void lookAtMouse(){
 		Vector3 mouse_pos;

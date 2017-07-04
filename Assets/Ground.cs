@@ -17,13 +17,13 @@ public class Ground : MonoBehaviour {
 
     public void OnTriggerEnter(Collider other)
     {
-        mc.isGravityGrounded = true;
+   //     mc.isGravityGrounded = true;
         Debug.Log("is grounded");
     }
 
     public void OnTriggerExit(Collider other)
     {
-        mc.isGravityGrounded = false;
+      //  mc.isGravityGrounded = false;
         Debug.Log("is not groundedeededed");
     }
 }
