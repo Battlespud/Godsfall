@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spear : MonoBehaviour {
+public class Spear : MonoBehaviour, IWeapon {
+
+
+	//TODO add IWeapon interface
 
 	public const int spearDamage = 5;
+	public const int spearKnockback = 3;
 	Vector3 basePosition;
 
 	// Use this for initialization
@@ -16,14 +20,13 @@ public class Spear : MonoBehaviour {
 		if (col.gameObject.GetComponent<Entity> () && !col.gameObject.isStatic) {
 			Entity e = col.gameObject.GetComponent<Entity> ();
 			e.body.dealRandomDamage (spearDamage);
-			e.movementController.AddImpact (transform.up, 15);
-			Thrust ();
+			e.movementController.AddImpact (transform.up, spearKnockback);
+			Attack ();
 		}
 	}
 
 
-	void Thrust(){
-		float timer = 0f;
+	public void Attack(){
 		transform.localPosition = transform.localPosition + (transform.up * .55f);
 		Invoke ("PullThrust", 2f); //ToDo find a better way to do this, Invoke is expensive
 	}

@@ -8,10 +8,13 @@ public class ActionController : MonoBehaviour {
 	public SpriteController sc;
 	const KeyCode attackKey = KeyCode.F;
 
+	public IWeapon Weapon;
+
 	// Use this for initialization
 	void Start () {
 		thisGameObject = this.gameObject;
 		sc = GetComponentInChildren<SpriteController> ();
+		Weapon = GetComponentInChildren<IWeapon> ();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +27,7 @@ public class ActionController : MonoBehaviour {
 
 
 	public void tryAttack(){
+		Weapon.Attack ();
 		const float offset = .25f;
 		RaycastHit rayHit; 
 		Vector3 pos = transform.position;

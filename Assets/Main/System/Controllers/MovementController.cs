@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MovementController : MonoBehaviour {
 
@@ -15,12 +16,15 @@ public class MovementController : MonoBehaviour {
 	public Camera camera;
 	public CameraModeManager camModeManager;
 
+	//Refs
 	CharacterController character_controller;
 	SpriteController spriteController;
 	public Animator animator; //TODO
+	NavMeshAgent agent;
 
 	//Author Must Setup
 	public bool isPlayer;
+	public bool useNavMeshAgent;
 
 	//Automated
 	public bool isMoving = false;
@@ -30,8 +34,9 @@ public class MovementController : MonoBehaviour {
 	bool disabled = false;
 
 	//Constants
-	const float GRAVITY = -2f;
-	public const float BASESPEED = 7f;
+	const float GRAVITY = -.4f; //acceleration
+	public const float BASESPEED = 11f;
+	[SerializeField]float currGravity;
 
 	//Floats
 	public List<float> MovementSpeedModifiers;
@@ -45,7 +50,7 @@ public class MovementController : MonoBehaviour {
 		public bool IsGrounded(){
 			return grounded;
 		}
-	private const float Interval = 10; // Every 1/Interval a second, gravity will be checked.  TODO make a seperate interval for npc because we care less
+	private const float Interval = 60; // Every 1/Interval a second, gravity will be checked.  TODO make a seperate interval for npc because we care less
 	private float gravityTimer;
 	private float mGravityTimer; //autocalculated from Interval to save us from the division every frame.
 	private float gravityCheckDistance;
@@ -58,7 +63,8 @@ public class MovementController : MonoBehaviour {
     Vector3 toSprite;
 
 //Physics Emulation
-	float mass = 1f;
+	float mass = 10f;
+	float jumpForce = 8f;
 	Vector3 impact;
 
 
@@ -91,6 +97,7 @@ public class MovementController : MonoBehaviour {
 	void Start () {
 		GrabReferences ();
 		GravitySetup ();
+		AgentSetup ();
 	}
 
 
@@ -103,6 +110,9 @@ public class MovementController : MonoBehaviour {
 				spriteController = GetComponentInChildren<SpriteController> ();
 				hasSpriteController = true;
 			}
+		if (GetComponent<NavMeshAgent> () != null) {
+			agent = GetComponentInChildren<NavMeshAgent> ();
+		}
 			camera = Camera.main;
 			MovementSpeedModifiers = new List<float> ();
 		impact = new Vector3 ();
@@ -117,36 +127,60 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
+	void AgentSetup()
+	{
+		if (agent != null) {
+			agent.angularSpeed = 0f; //no rotating
+		} else {
+			useNavMeshAgent = false;
+		}
+	}
+
 	#endregion
 
 	// Update is called once per frame
 	void Update () {
-		GravityLoop ();
-		Collisions ();
-		switch (isPlayer) {
-		case (true):
-			{
-				if(!lockout)checkMovementInput ();
-				CheckMoving ();
-				Move ();
-				break;
+		if (agent != null)
+			agent.enabled = useNavMeshAgent;
+		character_controller.enabled = !useNavMeshAgent;
+		if (!useNavMeshAgent) {
+			GravityLoop ();
+			Collisions ();
+			switch (isPlayer) {
+			case (true):
+				{
+					if (!lockout)
+						checkMovementInput ();
+					CheckMoving ();
+					Move ();
+					spriteController.UpdateSprite (toSprite, true);
+					break;
+				}
+			case (false):
+				{
+					Move ();
+					CheckMoving ();
+					if (hasSpriteController)
+						spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
+					break;
+				}
 			}
-		case (false):
-			{
-				Move ();
-				CheckMoving ();
-				break;
-			}
+			clearBuffer ();
+		} else {
+			//NavMeshAgentController
+
+			spriteController.UpdateSprite (agent.velocity, false);
+
+
+
+
+
+
+
+
+
+
 		}
-		if (hasSpriteController) {
-			if (isPlayer) {
-				spriteController.UpdateSprite (toSprite, true);
-			} 
-			else if(!isPlayer) {
-				spriteController.UpdateSprite (toMove, false); //TODO this causes problems with diagonal movement
-			}
-		}
-		clearBuffer ();
 	}
 
 	private void clearBuffer(){
@@ -165,7 +199,10 @@ public class MovementController : MonoBehaviour {
 				CheckGravity ();
 			}
 			if (gravityEnabled) {
-				InputToMoveY (GRAVITY);
+				currGravity += GRAVITY * Time.deltaTime;
+				ForceMove (new Vector3 (0f, currGravity, 0f));
+			} else {
+				currGravity = 0f; //reset to base acceleration
 			}
 		} else {
 			gravityEnabled = false; //in case we change mid game for some reason
@@ -195,9 +232,9 @@ public class MovementController : MonoBehaviour {
 
 	//processes collisions and locks out controls temporarily (might bug ai in formation, needs testing)
 	void Collisions(){
-		if (impact.magnitude > .2f) {
-			lockout = true;
-			ForceMove (TimeAdjusted (impact));
+		if (impact.magnitude > .1f) {
+			lockout = false;
+			ForceMove ( (impact));
 			impact = Vector3.Lerp (impact, Vector3.zero, 5 * Time.deltaTime);
 		} else {
 			lockout = false;
@@ -250,6 +287,10 @@ public class MovementController : MonoBehaviour {
 				if (Input.GetKey (InputCatcher.RightKey)) {
 					PlayerInputToMove(camera.transform.right);
 					toSprite += transform.right;
+				}
+				if (Input.GetKeyDown (InputCatcher.RollKey) && !gravityEnabled) {
+					gravityEnabled = true;
+					AddImpact(transform.up, jumpForce);
 				}
 				break;
 			}
