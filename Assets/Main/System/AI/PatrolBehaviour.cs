@@ -10,6 +10,19 @@ public enum Axis{
 
 public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 
+
+	//Adapting for agent use
+
+
+	public bool usingAgent = false;
+
+
+
+	/// 
+
+
+
+
 	public Axis axis = Axis.X;
 
 	StringEvent OnPatrolEvent;
@@ -73,24 +86,30 @@ public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 
 	// Update is called once per frame
 	void Update () {
-		if (!paused) {
-			Vector3 toMove = new Vector3 ();
-			switch (axis) {
-			case Axis.X:
-				toMove = new Vector3 (heading * Time.fixedDeltaTime * speedMultiplier, 0, 0);
-				break;
-			case Axis.Y:
-				toMove = new Vector3 (0, heading * Time.fixedDeltaTime * speedMultiplier, 0);
-				break;
-			case Axis.Z:
-				toMove = new Vector3 (0, 0, heading * Time.fixedDeltaTime * speedMultiplier);
-				break;
+		usingAgent = movementController.useNavMeshAgent;
+		if (!usingAgent) {
+			if (!paused) {
+				Vector3 toMove = new Vector3 ();
+				switch (axis) {
+				case Axis.X:
+					toMove = new Vector3 (heading, 0, 0);
+					break;
+				case Axis.Y:
+					toMove = new Vector3 (0, heading , 0);
+					break;
+				case Axis.Z:
+					toMove = new Vector3 (0, 0, heading );
+					break;
+
+				}
+				courseCorrection ();
+				toMove += correctionVec;
+//			Debug.Log (correctionVec);
+				movementController.npcInputToMove (toMove);
 
 			}
-			courseCorrection ();
-			toMove += correctionVec;
-//			Debug.Log (correctionVec);
-			movementController.npcInputToMove (toMove);
+		} else {
+			//using agent
 
 		}
 	}

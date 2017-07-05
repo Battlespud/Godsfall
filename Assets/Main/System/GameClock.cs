@@ -21,7 +21,8 @@ public class GameClock : MonoBehaviour, IEventInitializer {
 
 	public UnityEvent HourChangeEvent;
 
-	private float timeScale = 1; //how many seconds to 1 hour. //45 will be final, anything else is just testing
+	[Tooltip("How many seconds in an hour. Strongly recommended not to change while running")]
+	public float timeScale = 10; //how many seconds to 1 hour. //45 will be final, anything else is just testing
 
 	public TimeState timeState;
 

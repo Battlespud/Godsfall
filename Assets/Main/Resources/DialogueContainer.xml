@@ -14,4 +14,9 @@
 		<SpeechID>2</SpeechID>
 		<Dialog>Begone cuck!</Dialog>
 	</Speech>
+	<Speech>
+		<SpeakerID>99</SpeakerID>
+		<SpeechID>0</SpeechID>
+		<Dialog>I'm On Patrol!</Dialog>
+	</Speech>
 </DialogCollection>

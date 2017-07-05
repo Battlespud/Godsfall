@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ActionController : MonoBehaviour {
 
-	public GameObject thisGameObject;
 	public SpriteController sc;
 	const KeyCode attackKey = KeyCode.F;
 
@@ -12,7 +11,6 @@ public class ActionController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		thisGameObject = this.gameObject;
 		sc = GetComponentInChildren<SpriteController> ();
 		Weapon = GetComponentInChildren<IWeapon> ();
 	}

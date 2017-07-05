@@ -37,12 +37,8 @@ public class CombatController : MonoBehaviour {
 	float updateTimerMax = 0f; //max offset in percent
 	bool doUpdate = true;
 
-	//better to calculate only a few times a second instead of constantly to make it seem more natural
-	float recalcTargetPosCounter = 0f;		//just the counter
-	const float recalcTargetPosMax = .2f; // how often to recalculate in seconds
-	bool recalculateTargetPos = true;
-
 	public Confidence confidence = Confidence.Neutral;
+	[Tooltip("Combat State affects how close the actor will get to the target before attacking")]
 	public CombatState combatState = CombatState.Reactive;
 
 	public const int maxConfidence = 4; //max confidence value, 
@@ -64,11 +60,12 @@ public class CombatController : MonoBehaviour {
 		return(Vector3.Distance(transform.position, target.transform.position) <= closeDistance*i);
 	}
 
+	[Tooltip("When true, the actor will stay at a range defined by CombatState from the target, then move close and attack when doAttack is true (based on a cooldown)")]
 	public bool inCombat = false;
 	private bool isPlayer = false;
-
+	[Tooltip("Used for debugging ranges.")]
 	[SerializeField]float distanceToTarget;
-
+	[Tooltip("Actor will close distance and launch an attack when true, has a cooldown and is true when ready to attack.")]
 	public bool doAttack = false;
 	public void AttackNextFrame()
 	{

@@ -7,8 +7,8 @@ public class Spear : MonoBehaviour, IWeapon {
 
 	//TODO add IWeapon interface
 
-	public const int spearDamage = 5;
-	public const int spearKnockback = 3;
+	 const int spearDamage = 5;
+	 const int spearKnockback = 3;
 	Vector3 basePosition;
 
 	// Use this for initialization

@@ -32,7 +32,7 @@ public class Faction : MonoBehaviour, IFaction {
 	public void ChangeFaction(int i){
 		FactionID = i;
 		FactionName = FactionNames [FactionID];
-		if (dependents != null) {
+		if (dependents != null && dependents.Count > 0) {
 			foreach (IFaction dependent in dependents) {
 				dependent.ChangeFaction (i);
 			}

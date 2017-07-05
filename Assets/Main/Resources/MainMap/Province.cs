@@ -5,8 +5,8 @@ using UnityEngine;
 public class Province : MonoBehaviour, IFaction {
 
 	//Materials
-	public static Material[] FactionMaterials = new Material[Faction.MaxFactions];
-	static bool initialized = false;
+	public  Material[] FactionMaterials = new Material[Faction.MaxFactions];
+	 bool initialized = false;
 
 
 
@@ -14,7 +14,7 @@ public class Province : MonoBehaviour, IFaction {
 
 	//Visuals
 	private Renderer CityRenderer;
-	private Material CityMaterial;
+	public Material CityMaterial;
 	public Material Test;
 		//linerenderer
 
@@ -25,7 +25,7 @@ public class Province : MonoBehaviour, IFaction {
 	void Start () {
 		//Connected = new List<Province> ();
 		name = gameObject.name;
-		Test = Resources.Load ("Faction0") as Material;
+		Test = Resources.Load ("MainMap/Faction0") as Material;
 		faction = gameObject.GetComponent<Faction> ();
 		faction.dependents.Add (this);
 		CityRenderer = gameObject.GetComponent<Renderer> ();
@@ -34,6 +34,7 @@ public class Province : MonoBehaviour, IFaction {
 			initialized = true;
 		}
 		ProvinceManager.RegisterProvince (this, Connected);
+		ChangeFaction (faction.FactionID);	
 	}
 
 	//loads all the materials into the statics
@@ -57,8 +58,7 @@ public class Province : MonoBehaviour, IFaction {
 	public void ChangeFaction(int i)
 	{
 		faction.ChangeFaction (i);
-		ChooseMaterial (i);
-		CityRenderer.material = CityMaterial;
+		CityRenderer.material = FactionMaterials[i];
 	}
 
 	public Faction GetFaction(){

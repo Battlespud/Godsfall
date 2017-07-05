@@ -24,18 +24,22 @@ public class MovementController : MonoBehaviour {
 
 	//Author Must Setup
 	public bool isPlayer;
+	[Tooltip("When active, only instructions to the actor will be followed, toMove modifications will be ignored.")]
 	public bool useNavMeshAgent;
 
 	//Automated
 	public bool isMoving = false;
 	public bool hasSpriteController = false;
+	[Tooltip("Blocks all input, used while under remote control from a master block (ie formation) or when being knocked back or stunned")]
 	public bool lockout = false; //use to lockout input except from combat controller
+	[Tooltip("Damage to limbs can reduce or remove ability to move.")]
 	public bool bodyCanMove = true;
 	bool disabled = false;
 
 	//Constants
 	const float GRAVITY = -.4f; //acceleration
 	public const float BASESPEED = 11f;
+	[Tooltip("Current Velocity from gravity.")]
 	[SerializeField]float currGravity;
 
 	//Floats
@@ -44,12 +48,11 @@ public class MovementController : MonoBehaviour {
 
 	//Gravity
 	//Polled every couple frames and applied as needed.
+	[Tooltip("Gravity performance cost is negligible, its recommended to leave this enabled for most things")]
 	[SerializeField]private bool usesGravity = true; //Select or Unselect in editor to determine if this object will use gravity automatically.
+	[Tooltip("Gravity is currently being applied.  Also can function as a grounded bool.")]
 	[SerializeField]private bool gravityEnabled = false;
-	private bool grounded = false;
-		public bool IsGrounded(){
-			return grounded;
-		}
+
 	private const float Interval = 60; // Every 1/Interval a second, gravity will be checked.  TODO make a seperate interval for npc because we care less
 	private float gravityTimer;
 	private float mGravityTimer; //autocalculated from Interval to save us from the division every frame.
@@ -58,9 +61,13 @@ public class MovementController : MonoBehaviour {
 	private Ray GravityCheckingRay;
 
 
-//dont touch
+//dont touch, non agent
     Vector3 toMove;
     Vector3 toSprite;
+
+//Agent stuff
+	[Tooltip("Approximately where the Actor will attempt to navigate, must be near navmesh.")]
+	[SerializeField]Vector3 destination;
 
 //Physics Emulation
 	float mass = 10f;
@@ -170,16 +177,11 @@ public class MovementController : MonoBehaviour {
 			//NavMeshAgentController
 
 			spriteController.UpdateSprite (agent.velocity, false);
-
-
-
-
-
-
-
-
-
-
+			if (canMove ()) {
+				agent.destination = destination;
+			} else {
+				agent.destination = transform.position;
+			}
 		}
 	}
 
@@ -324,8 +326,9 @@ public class MovementController : MonoBehaviour {
 					PlayerInputToMove(camera.transform.right);
 					toSprite += transform.right;
 				}
-				if (Input.GetKeyDown (InputCatcher.RollKey) && IsGrounded()) {
-					Debug.Log ("Jump");
+				if (Input.GetKeyDown (InputCatcher.RollKey) && !gravityEnabled) {
+					gravityEnabled = true;
+					AddImpact(transform.up, jumpForce);
 				}
 				break;
 			}
@@ -363,6 +366,11 @@ public class MovementController : MonoBehaviour {
 	public void BypassPlayerInputToMove(Vector3 i){
 	//	i.y = 0;
 		toMove += i;
+	}
+
+	public void agentInputToMove(Vector3 vec)
+	{
+		destination = vec;
 	}
 
 	public void npcInputToMove(Vector3 i){

@@ -4,6 +4,7 @@ using System.Collections;
 
 	public class CameraController : MonoBehaviour
 	{
+	[Tooltip("This can be used to switch between different camera angles.  The controls will change automatically.  Can be changed mid game and via inspector.")]
 		public CameraModeManager manager;
 		public Transform target;
 		public float angleY = 35;
@@ -12,6 +13,9 @@ using System.Collections;
 		public float distance = 10;
 	public float verticalOffset = 12; //for overhead
 	public Camera cam;
+
+	public float minimumY =5f;
+	public float maximumY = 40f;
 
 		private Vector3 _angle = new Vector3();
 		private Quaternion _oldRotation = new Quaternion();
@@ -48,6 +52,12 @@ using System.Collections;
 			{
 				_angle.x += Input.GetAxis("Mouse X") * rotationSensitivity;
 				RobitTools.ClampAngle(ref _angle);
+			_angle.y += Input.GetAxis("Mouse Y") * rotationSensitivity*.2f;
+			if (_angle.y < minimumY)
+				_angle.y = minimumY;
+			if (_angle.y > maximumY)
+				_angle.y = maximumY;
+			//RobitTools.ClampAngle(ref _angle);
 			}
 		checkZoomInput ();
 		}

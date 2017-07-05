@@ -5,12 +5,8 @@ using UnityEngine;
 
 public class Schedule : MonoBehaviour, ISchedule {
 
-	//this is a sample schedule only.  To make a new one, simply add the ISchedule interface and add events to an array;
-
+	[Tooltip("Simply a middleman that collects all the child ScheduleEvents and presents them to Scheduler. We can probably rework so this isnt needed later.")]
 	public ScheduleEvent[] EventSchedule = new ScheduleEvent[GameClock.HoursInDay]; //set in inspector
-
-	//the interface actually isnt needed anymore, simply drag and drop a bunch of ScheduleEvents onto this gameobject and they will be automatically loaded at game start, once this is loaded into the Scheduler, this gameobject will be destroyed remotely.
-
 
 	//README
 	//Proper structure is as so:
