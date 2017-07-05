@@ -18,8 +18,14 @@ public enum Facing{
 	UL
 };
 
+
+
 //must be mono to be searchable with get component
 public class SpriteController : MonoBehaviour{
+
+	public bool CastShadows;
+	public bool RecieveShadows;
+
 
 	public Camera cam;
 	public CameraDirection cameraDirection;
@@ -63,6 +69,8 @@ public class SpriteController : MonoBehaviour{
 		spriteTransform = sr.transform;
 		cam = Camera.main;
 		cameraDirection = cam.GetComponent<CameraDirection> ();
+		GetComponent<Renderer> ().receiveShadows = RecieveShadows;
+		if(CastShadows)	GetComponent<Renderer>().shadowCastingMode =  UnityEngine.Rendering.ShadowCastingMode.On;
 	}
 
 	// Update is called once per frame
