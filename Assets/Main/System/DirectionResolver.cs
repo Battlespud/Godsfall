@@ -505,4 +505,45 @@ public static class DirectionResolver {
 
 	}
 	#endregion
+
+
+	public static Facing FlipFacing(Facing f){
+		switch (f) {
+		case (Facing.U):
+			{
+				return Facing.D;
+			}
+		case (Facing.UR):
+			{
+				return Facing.DL;
+			}
+		case (Facing.R):
+			{
+				return Facing.L;
+			}
+		case (Facing.DR):
+			{
+				return Facing.UL;
+			}
+		case (Facing.D):
+			{
+				return Facing.U;
+			}
+		case (Facing.DL):
+			{
+				return Facing.UR;
+			}
+		case (Facing.L):
+			{
+				return Facing.R;
+			}
+		case (Facing.UL):
+			{
+				return Facing.DR;
+			}
+		default:
+			Debug.Log ("Something broke in flipfacing " + f);
+			return Facing.U;
+		}
+	}
 }
