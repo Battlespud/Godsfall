@@ -12,13 +12,10 @@ public class CharacterLightController : MonoBehaviour {
 
 	public int debugindex;
 
-	const int maxDif = 4; //8 options on base 0
+	const int maxDif = 4; //8 options on base 0 circular
 
 	float maxIntensity = 2f;
-	float minIntensity = .3f;
-
 	public float intensityPercent = 0f;
-	public int dif;
 
 	// Use this for initialization
 	void Start () {
@@ -64,7 +61,6 @@ public class CharacterLightController : MonoBehaviour {
 
 
 		if (dir.facing == facing) {
-			characterLight.intensity = minIntensity;
 			debugindex = 0;
 			intensityPercent = 0f;
 
