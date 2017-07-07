@@ -54,9 +54,6 @@ public class CharacterLightController : MonoBehaviour {
 		facing = DirectionResolver.FlipFacing (facing);
 	}
 
-
-
-	// Update is called once per frame
 	void Update () {
 
 

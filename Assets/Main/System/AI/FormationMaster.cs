@@ -14,56 +14,37 @@ public enum FormationRoles{
 };
 
 
-public struct Formation{
-	public int troops; //number of troops
-	public float spread; //how far soldiers are from each other
-	public FormationTypes formationType;
-	public Axis axis; //axis along which to form formation if applicable
 
-	//Constructor
-	public Formation(FormationTypes typ, int i, float spr, Axis ax)
-	{
-		troops = i;
-		formationType = typ;
-		spread = spr; //a gap of 1.5f with a closeEnoughFloat of .3f provides a solid spear wall that cant be walked through, and seems pretty stable.
-		axis = ax;
-	}
-}
-
-
-
-
-//CLASS STARTS BELOW DONT PUT STUFF UP HERE!!
-
-
-
+[RequireComponent(typeof(Formation))]
 public class FormationMaster : MonoBehaviour {
+
+	//DEPENDENCY:
+	//A Formation component must be present on this GameObject and properly configured.
 
 	//Collections
 	List<FormationSlave> slaves = new List<FormationSlave>();
 	List<Vector3> vectors = new List<Vector3> ();
 	FormationSlave[] slavesArray; //arrangement of soldiers according to formation rank and identifier
 
+	public bool UseNavMeshAgent = true;
 
-	//TODO
 	Formation formation;
 
 	//Assign in inspector
 	public FormationSlave captain; //who all the troops will gather around.
 
 	//Ints/Floats
-	float distanceBetweenRanks = 3f; //how far between each line of soldiers
 	const int maxRanks = 100;
 
 	//Bools
 	[SerializeField]bool formationFinished = false; //everyone has moved into position so we can move around now
 
-	//Editor Testing Buttons
+//Deprecated
 	public bool ChangeAxis = false;
 
 	//						Optional SpeechModule Integration
 	//Does NOT require that you manually add speech slaves or anything else.  To enable,
-	//simply place a speechmaster anywhere in the scene and drag and drop to this script in inspector.
+	//simply place a speechmaster on this gameobject.
 	//Adding slaveModules and registering them will be handled automatically once the game starts.
 	//The Captain will not be registered to the slave module however, so their collider will still be active.
 
@@ -78,47 +59,67 @@ public class FormationMaster : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		formation = new Formation (FormationTypes.LINE, slaves.Count, 1.5f, Axis.X); //just a default one for testing
+	//	formation = new Formation (FormationTypes.LINE, slaves.Count, 1.5f, Axis.X); //just a default one for testing
+		formation = GetComponent<Formation>();
+		formationSpeechMaster = GetComponent<SpeechMaster> ();
 		if (formationSpeechMaster != null) {
 			HandleSpeechSetup ();
 		}
-		AssignPositions ();
+		Debug.Log ("Assigning positions..");
+		AssignPositions();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (ChangeAxis) {
-			ChangeFormationAxis ();
-		}
-		if(Input.GetKey(KeyCode.UpArrow)){
-			MassMove(transform.forward);
-		}
-		if(Input.GetKey(KeyCode.DownArrow)){
-			MassMove(transform.forward*-1);
-		}
-		if (!formationFinished) {
-			bool weDidIt = true;
-			foreach (FormationSlave slave in slaves) {
-				if (!slave.inFormation) {
-					weDidIt = false;
-				}
+		if (!UseNavMeshAgent) {
+			if (ChangeAxis) {
+				ChangeFormationAxis ();
 			}
-			formationFinished = weDidIt;
-			if (formationFinished) {
-				EnableColliders ();
-				switch (formation.axis) {
-				case(Axis.X):
-					{
-						MassMove(new Vector3(0,0f,-2f));
-						break;
-					}
-				case(Axis.Z):
-					{
-						MassMove(new Vector3(-2f,0f,0f));
-						break;
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				MassMove (transform.forward);
+			}
+			if (Input.GetKey (KeyCode.DownArrow)) {
+				MassMove (transform.forward * -1);
+			}
+			if (!formationFinished) {
+				bool weDidIt = true;
+				foreach (FormationSlave slave in slaves) {
+					if (!slave.inFormation) {
+						weDidIt = false;
 					}
 				}
+				formationFinished = weDidIt;
+				if (formationFinished) {
+					EnableColliders ();
+					switch (formation.axis) {
+					case(Axis.X):
+						{
+							MassMove (new Vector3 (0, 0f, -2f));
+							break;
+						}
+					case(Axis.Z):
+						{
+							MassMove (new Vector3 (-2f, 0f, 0f));
+							break;
+						}
+					}
+				}
 			}
+		} else {
+
+
+			//NavMeshSection
+
+
+
+
+
+
+
+
+
+
+
 		}
 	}
 
@@ -135,79 +136,154 @@ public class FormationMaster : MonoBehaviour {
 	}
 
 	void AssignPositions(){
-		DisableColliders ();
-		Vector3 basePosition = captain.transform.position;
-		foreach (FormationSlave slave in slaves) {
-			slave.inFormation = false;
-		}
-		switch(formation.formationType){
+		if (!UseNavMeshAgent) {
+			DisableColliders ();
+			Vector3 basePosition = captain.transform.position;
+			foreach (FormationSlave slave in slaves) {
+				slave.inFormation = false;
+			}
+			switch (formation.formationType) {
 
-		case(FormationTypes.LINE):{
-		int[] incrementsEven = new int[maxRanks];
-		//evens
-		for (int i = 0; i < slaves.Count; i += 2) {
-			FormationSlave slave = slaves [i];
-			slave.formationSlot = i;
-			if (slave != captain) {
-				switch (formation.axis) {
-				case(Axis.X):
-					{
-						slaves [i].formationPosition = new Vector3 (basePosition.x + (formation.spread *(1+ incrementsEven[slave.rank])), basePosition.y, basePosition.z-(distanceBetweenRanks*slaves[i].rank));
-						break;
-					}
-				case(Axis.Z):
-					{
-						slaves [i].formationPosition = new Vector3 (basePosition.x-(distanceBetweenRanks*slaves[i].rank), basePosition.y, basePosition.z + (formation.spread *(1+ incrementsEven[slave.rank])));
+			case(FormationTypes.LINE):
+				{
+					int[] incrementsEven = new int[maxRanks];
+					//evens
+					for (int i = 0; i < slaves.Count; i += 2) {
+						FormationSlave slave = slaves [i];
+						//slave.formationSlot = i;
+						if (slave != captain) {
+							switch (formation.axis) {
+							case(Axis.X):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x + (formation.xSpread * (1 + incrementsEven [slave.rank])), basePosition.y, basePosition.z - (formation.zSpread * slaves [i].rank));
+									break;
+								}
+							case(Axis.Z):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.zSpread * slaves [i].rank), basePosition.y, basePosition.z + (formation.xSpread * (1 + incrementsEven [slave.rank])));
 
-						break;
+									break;
+								}
+							}
+							incrementsEven [slave.rank]++;
+						}
 					}
+
+					int[] incrementsOdd = new int[maxRanks];
+					//odds
+					for (int i = 1; i < slaves.Count; i += 2) {
+						FormationSlave slave = slaves [i];
+						//	slave.formationSlot = i;
+						if (slave != captain) {
+							switch (formation.axis) {
+							case(Axis.X):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.xSpread * (1 + incrementsOdd [slave.rank])), basePosition.y, basePosition.z - (formation.zSpread * slaves [i].rank));
+									break;
+								}
+							case(Axis.Z):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.zSpread * slaves [i].rank), basePosition.y, basePosition.z - (formation.xSpread * (1 + incrementsOdd [slave.rank])));
+
+									break;
+								}
+
+							}
+							incrementsOdd [slave.rank]++;
+						}
+					}
+					break;
 				}
-				incrementsEven[slave.rank]++;
+
+			case(FormationTypes.SQUARE):
+				{
+					break;
+				}
+			}
+			captain.formationPosition = captain.transform.position;
+
+		} else {
+				//NavMeshSection
+			switch (formation.formationType) {
+			case(FormationTypes.LINE):
+				{
+					if (formation.DynamicSize) {
+						formation.SetTroops (slaves.Count);
+					}
+					int flankTroops = formation.troops - formation.ranks; //1 troop per rank will be in line with the captain, so not on a flank and their number will be = 0;
+					float troopsPerRank = formation.troops / formation.ranks;
+					float remainder = formation.troops % formation.ranks;
+					troopsPerRank -= remainder;
+					int troopsPerSide = ((int)troopsPerRank - 1) / 2;
+					int soldierCounter = 0;
+					for (int y = 1; y <= formation.ranks; y++) {
+						//for each rank
+						int side = -1;
+						for (int x = 1; x <= troopsPerSide; x++) {
+							//foreach soldier in that rank on left side
+							slaves[soldierCounter].FormationSlot = new Vector2(x*side,y);
+							soldierCounter++;
+						}
+						//the middle soldier
+						slaves[soldierCounter].FormationSlot = new Vector2(0,y);
+						soldierCounter++;
+						side = 1;
+						for (int x = 1; x <= troopsPerSide; x++) {
+							//foreach soldier in that rank on right side
+							slaves[soldierCounter].FormationSlot = new Vector2(x*side,y);
+							soldierCounter++;
+						}
+					}
+					AssignMovementOrders ();
+					Debug.Log ("Troops Per Side: " + troopsPerSide + ". Per Row: " + troopsPerRank );
+					break;
+				}
+
+
+			case(FormationTypes.SQUARE):
+				{
+
+
+					break;
+				}
 			}
 		}
+	}
 
-		int[] incrementsOdd = new int[maxRanks];
-		//odds
-		for (int i = 1; i < slaves.Count; i += 2) {
-			FormationSlave slave = slaves [i];
-			slave.formationSlot = i;
-			if (slave != captain) {
-				switch (formation.axis) {
-				case(Axis.X):
-					{
-						slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.spread * (1 + incrementsOdd[slave.rank])), basePosition.y, basePosition.z-(distanceBetweenRanks*slaves[i].rank));
-						break;
-					}
-				case(Axis.Z):
-					{
-						slaves [i].formationPosition = new Vector3 (basePosition.x-(distanceBetweenRanks*slaves[i].rank), basePosition.y, basePosition.z - (formation.spread * (1 + incrementsOdd[slave.rank])));
 
-						break;
-					}
-
+	void AssignMovementOrders(){
+		Vector2 vec = captain.transform.position;
+		int dir = 1;
+		if (!formation.HeadingPositive)
+			dir = -1;
+		if (formation.CaptainLeadsFromTheFront)
+			dir *= -1;
+		switch (formation.axis) {
+		case(Axis.X):{
+				foreach (FormationSlave slave in slaves) {
+					vec.x += (formation.xSpread * slave.FormationSlot.x );
+					vec.y += (formation.zSpread * slave.FormationSlot.y * dir);
+					slave.AgentFormationPosition = vec;
 				}
-				incrementsOdd[slave.rank]++;
-			}
-		}
+
 				break;
 			}
+		case(Axis.Z):{
+				foreach (FormationSlave slave in slaves) {
+					vec.y += (formation.xSpread * slave.FormationSlot.x );
+					vec.x += (formation.zSpread * slave.FormationSlot.y * dir);
+					slave.AgentFormationPosition = vec;
+				}
 
-
-		
-		case(FormationTypes.SQUARE):{
-
-			break;
+				break;
+			}
+		default:
+			{
+				Debug.Log ("Invalid axis");
+				break;
+			}
 		}
-
-
 	}
-		captain.formationPosition = captain.transform.position;
-
-	}
-
-
-
-
 
 	void MassMove(Vector3 moveOrder){
 		foreach(FormationSlave slave in slaves)
@@ -221,29 +297,29 @@ public class FormationMaster : MonoBehaviour {
 
 	void EnableColliders(){
 		foreach (FormationSlave slave in slaves) {
-			slave.go.layer = 0;
+			slave.gameObject.layer = 0;
 
 		}
 	}
 
 	void DisableColliders(){
 		foreach (FormationSlave slave in slaves) {
-			slave.go.layer = 31;
+			slave.gameObject.layer = 31;
 		}
 	}
 
 
 	public void Register(FormationSlave slave){
-		slaves.Add (slave);
+		if (slave != captain) {
+			slaves.Add (slave);
+		} else {
+			captain.FormationSlot = new Vector2 (0, 0);
+		}
 	}
 
 	public void DeRegister(FormationSlave slave){
 		slaves.Remove (slave);
 	}
-
-
-
-
 
 
 

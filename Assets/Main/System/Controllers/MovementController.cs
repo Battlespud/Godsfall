@@ -177,7 +177,7 @@ public class MovementController : MonoBehaviour {
 			//NavMeshAgentController
 
 			spriteController.UpdateSprite (agent.velocity, false);
-			if (canMove ()) {
+			if (canMove () && destination != null) {
 				agent.destination = destination;
 			} else {
 				agent.destination = transform.position;
@@ -373,6 +373,10 @@ public class MovementController : MonoBehaviour {
 		destination = vec;
 	}
 
+	public void agentInputToMove(Vector2 vec)
+	{
+		destination = new Vector3 (vec.x, transform.position.y, vec.y);
+	}
 	public void npcInputToMove(Vector3 i){
 		if (canMove () && !lockout) {
 			toMove += i;
