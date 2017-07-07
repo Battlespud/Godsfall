@@ -210,6 +210,21 @@ public class FormationMaster : MonoBehaviour {
 					if (formation.DynamicSize) {
 						formation.SetTroops (slaves.Count);
 					}
+
+
+					int numberOfTroops = slaves.Count;
+					int ranks = formation.ranks;
+					int soldiersWithNonZeroX = numberOfTroops - ranks; //overhead of 1 soldier per rank
+					bool unevenRanks = false;
+					if (soldiersWithNonZeroX % ranks != 0) {
+						unevenRanks = true;
+					}
+
+
+
+
+
+
 					int flankTroops = formation.troops - formation.ranks; //1 troop per rank will be in line with the captain, so not on a flank and their number will be = 0;
 					float troopsPerRank = formation.troops / formation.ranks;
 					float remainder = formation.troops % formation.ranks;
