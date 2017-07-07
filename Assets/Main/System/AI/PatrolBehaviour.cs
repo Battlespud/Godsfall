@@ -18,7 +18,7 @@ public class PatrolBehaviour : MonoBehaviour , IEventInitializer {
 
 
 
-	/// 
+	/// I swear to god i didnt know unity had built in pathfinding when i made this monstrosity.
 
 
 

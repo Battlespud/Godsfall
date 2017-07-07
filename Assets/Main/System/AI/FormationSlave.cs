@@ -12,7 +12,7 @@ public class FormationSlave : MonoBehaviour {
 	public MovementController mc;
 	public bool inFormation = false;
 	public Vector3 formationPosition; //where this soldier needs to go
-	public Vector2 AgentFormationPosition;
+	public Vector3 AgentFormationPosition;
 	public float distanceToTarget;
 	public int rank = 1; //which line this soldier stands in, 1 is first
 
@@ -46,18 +46,23 @@ public class FormationSlave : MonoBehaviour {
 				inFormation = true;
 			}
 		} else {
-			if(!inFormation)
-				mc.agentInputToMove (AgentFormationPosition);
-			distanceToTarget = Vector3.Distance (transform.position,new Vector3(AgentFormationPosition.x, transform.position.y, AgentFormationPosition.y));
-			if (Vector3.Distance (transform.position, formationPosition) <= closeEnoughFloat && !inFormation) {
-				inFormation = true;
-			}
-
+		//	if(!inFormation)
+				//mc.agentInputToMove (AgentFormationPosition);
+			if(mc.GetDestination().x != AgentFormationPosition.x || mc.GetDestination().z != AgentFormationPosition.z || master.captain == this || transform.position.x != AgentFormationPosition.x || transform.position.z != AgentFormationPosition.z)
+			mc.agentInputToMove(AgentFormationPosition);
+		//	distanceToTarget = Vector3.Distance (transform.position,new Vector3(AgentFormationPosition.x, transform.position.y, AgentFormationPosition.y));
+			//if (Vector3.Distance (transform.position, formationPosition) <= closeEnoughFloat && !inFormation) {
+			//	inFormation = true;
+		//	}
+		//
 
 
 		}
 	}
 
-	public void AssignPosition(){
+	public void AssignPosition(int x, int y){
+		FormationSlot = new Vector2 ((float)x, (float)y);
+
+
 	}
 }

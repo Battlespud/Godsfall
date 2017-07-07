@@ -6,11 +6,20 @@ using UnityEngine.AI;
 public class MovementController : MonoBehaviour {
 
 
+
+
 	//Dependencies:
 		// Only the main camera that follows the player should be active at the start of the scene. 
 		// Character Controller component must be present on same gameobject.
 	//Can be used on vehicles, npcs and player without any changes (aside from setting the "Player" bool to negative, and disabling gravity for
 	// vehicles like boats.
+	#region declarations
+
+	//speed for navmesh
+	//TODO Make an enum
+	public const int WALK = 3;
+	public const int RUN = 5;
+	public const int SPRINT = 7;
 
 	//Camera
 	public Camera camera;
@@ -75,6 +84,10 @@ public class MovementController : MonoBehaviour {
 	float jumpForce = 8f;
 	Vector3 impact;
 
+	#endregion
+
+
+	#region randomass methods that should go somewhere else
 
     //is the body damaged? ie, missing legs, broken bones etc. Set via event from Body.cs
     public void setBodyCanMove(bool b){
@@ -98,6 +111,8 @@ public class MovementController : MonoBehaviour {
 	private Vector3 TimeAdjusted(Vector3 v){
 		return (v * Time.deltaTime);
 	}
+
+	#endregion
 
 	#region Initialization
 
@@ -145,7 +160,7 @@ public class MovementController : MonoBehaviour {
 	}
 
 	#endregion
-
+	#region update
 	// Update is called once per frame
 	void Update () {
 		if (agent != null)
@@ -189,7 +204,7 @@ public class MovementController : MonoBehaviour {
 			}
 		}
 	}
-
+	#endregion
 	private void clearBuffer(){
 		toMove = new Vector3 (0f, 0f, 0f);
 		toSprite = new Vector3 (0f, 0f, 0f);
@@ -377,13 +392,20 @@ public class MovementController : MonoBehaviour {
 	{
 		destination = vec;
 		arrived = false;
+//		Debug.Log ("New destination: " + destination);
 	}
 
 	public void agentInputToMove(Vector2 vec)
 	{
 		destination = new Vector3 (vec.x, transform.position.y, vec.y);
 		arrived = false;
+	//	Debug.Log ("New destination: " + destination);
 	}
+
+	public Vector3 GetDestination(){
+		return destination;
+	}
+
 	public void npcInputToMove(Vector3 i){
 		if (canMove () && !lockout) {
 			toMove += i;
@@ -403,8 +425,15 @@ public class MovementController : MonoBehaviour {
 		}
 	}
 
+	public void AgentInputDirectionalMovement(Vector3 vec){
+		agent.Move (vec*Time.deltaTime);
+	}
 
+	public void AgentAdjustSpeed(int i){
+		agent.speed = i;
+	}
 
+	//pretty sure we legit never use this
 	private void lookAtMouse(){
 		Vector3 mouse_pos;
 		Transform target = this.gameObject.transform;
@@ -420,3 +449,5 @@ public class MovementController : MonoBehaviour {
 		transform.rotation = Quaternion.Euler (new Vector3 (0, -angle+90, 0));
 	}
 }
+
+

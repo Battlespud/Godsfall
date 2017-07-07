@@ -24,11 +24,13 @@ public class FormationMaster : MonoBehaviour {
 	//Collections
 	List<FormationSlave> slaves = new List<FormationSlave>();
 	List<Vector3> vectors = new List<Vector3> ();
-	FormationSlave[] slavesArray; //arrangement of soldiers according to formation rank and identifier
-
+	public Dictionary<Vector2,FormationSlave> FormationMatrix;
 	public bool UseNavMeshAgent = true;
 
 	Formation formation;
+
+	float timeKeyDown = 0f;
+	float mTimeKeyDown = .2f;
 
 	//Assign in inspector
 	public FormationSlave captain; //who all the troops will gather around.
@@ -80,6 +82,7 @@ public class FormationMaster : MonoBehaviour {
 			if (Input.GetKey (KeyCode.DownArrow)) {
 				MassMove (transform.forward * -1);
 			}
+
 			if (!formationFinished) {
 				bool weDidIt = true;
 				foreach (FormationSlave slave in slaves) {
@@ -108,16 +111,18 @@ public class FormationMaster : MonoBehaviour {
 
 
 			//NavMeshSection
-
-
-
-
-
-
-
-
-
-
+			if (Input.GetKey (KeyCode.UpArrow)) {
+				timeKeyDown += Time.deltaTime;
+				MassMove (transform.forward);
+			}
+			if (Input.GetKey (KeyCode.DownArrow)) {
+				timeKeyDown += Time.deltaTime;
+				MassMove (transform.forward * -1);
+			}
+			if (Input.GetKeyUp (KeyCode.DownArrow) || Input.GetKeyUp (KeyCode.UpArrow) || timeKeyDown >= mTimeKeyDown) {
+				timeKeyDown = 0f;
+				AssignMovementOrders ();
+			}
 
 		}
 	}
@@ -134,6 +139,7 @@ public class FormationMaster : MonoBehaviour {
 		ChangeAxis = false;
 	}
 
+	#region AssignPositions()
 	void AssignPositions(){
 		if (!UseNavMeshAgent) {
 			DisableColliders ();
@@ -202,10 +208,93 @@ public class FormationMaster : MonoBehaviour {
 			captain.formationPosition = captain.transform.position;
 
 		} else {
+
+
 				//NavMeshSection
 			switch (formation.formationType) {
 			case(FormationTypes.LINE):
 				{
+
+					int maxSoldiers = slaves.Count;
+					int maxIndex = maxSoldiers - 1;
+					int ranks = formation.ranks;
+					int maxSoldiersPerRank = Mathf.CeilToInt (maxSoldiers / ranks);
+
+					int soldierCount = 0;
+
+					//start adding from the bottom left, go across then next rank
+					FormationMatrix = new Dictionary<Vector2, FormationSlave>();
+					int lastRank;
+					for (int rank = ranks; rank > 0; rank--) {
+						for (int i = Mathf.CeilToInt (0f - maxSoldiersPerRank * .5f); i <= Mathf.CeilToInt (0f + maxSoldiersPerRank * .5f); i++) {
+							if (soldierCount <= maxIndex) {
+								slaves [soldierCount].AssignPosition (i, rank);
+								Debug.Log (soldierCount);
+								soldierCount++;
+							}
+						}
+					}
+
+					captain.FormationSlot = new Vector2 (0, 0);
+
+					foreach (FormationSlave slave in slaves) {
+						FormationMatrix.Add(slave.FormationSlot, slave);
+					}
+
+					AssignMovementOrders ();
+
+					/*
+
+					int[] incrementsEven = new int[maxRanks];
+					//evens
+					Vector3 basePosition = captain.transform.position;
+					for (int i = 0; i < slaves.Count; i += 2) {
+						FormationSlave slave = slaves [i];
+						//slave.formationSlot = i;
+						if (slave != captain) {
+							switch (formation.axis) {
+							case(Axis.X):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x + (formation.xSpread * (1 + incrementsEven [slave.rank])), basePosition.y, basePosition.z - (formation.zSpread * slaves [i].rank));
+									break;
+								}
+							case(Axis.Z):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.zSpread * slaves [i].rank), basePosition.y, basePosition.z + (formation.xSpread * (1 + incrementsEven [slave.rank])));
+
+									break;
+								}
+							}
+							incrementsEven [slave.rank]++;
+						}
+					}
+
+					int[] incrementsOdd = new int[maxRanks];
+					//odds
+					for (int i = 1; i < slaves.Count; i += 2) {
+						FormationSlave slave = slaves [i];
+						//	slave.formationSlot = i;
+						if (slave != captain) {
+							switch (formation.axis) {
+							case(Axis.X):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.xSpread * (1 + incrementsOdd [slave.rank])), basePosition.y, basePosition.z - (formation.zSpread * slaves [i].rank));
+									break;
+								}
+							case(Axis.Z):
+								{
+									slaves [i].formationPosition = new Vector3 (basePosition.x - (formation.zSpread * slaves [i].rank), basePosition.y, basePosition.z - (formation.xSpread * (1 + incrementsOdd [slave.rank])));
+
+									break;
+								}
+
+							}
+							incrementsOdd [slave.rank]++;
+						}
+					}
+					break;
+*/
+					/*
 					if (formation.DynamicSize) {
 						formation.SetTroops (slaves.Count);
 					}
@@ -314,8 +403,9 @@ public class FormationMaster : MonoBehaviour {
 						Debug.Log (soldierCounter + " were assigned out of " + numberOfTroops);
 
 					}
+*/
 
-					break;
+					//////////////////////////////////////////////////////////////////////////////////////////
 					/*
 
 					int flankTroops = formation.troops - formation.ranks; //1 troop per rank will be in line with the captain, so not on a flank and their number will be = 0;
@@ -344,8 +434,8 @@ public class FormationMaster : MonoBehaviour {
 					}
 					AssignMovementOrders ();
 					Debug.Log ("Troops Per Side: " + troopsPerSide + ". Per Row: " + troopsPerRank );
-					break;
 					*/
+					break;
 				}
 
 
@@ -359,30 +449,38 @@ public class FormationMaster : MonoBehaviour {
 		}
 	}
 
+	#endregion
 
 	void AssignMovementOrders(){
-		Vector2 vec = captain.transform.position;
-		int dir = 1;
+		int dir = -1;
 		if (!formation.HeadingPositive)
-			dir = -1;
+			dir = 1;
 		if (formation.CaptainLeadsFromTheFront)
 			dir *= -1;
 		switch (formation.axis) {
 		case(Axis.X):{
+				Debug.Log ("Assigning X axis movement orders");
 				foreach (FormationSlave slave in slaves) {
+					Vector3 vec = captain.transform.position;
 					vec.x += (formation.xSpread * slave.FormationSlot.x );
-					vec.y += (formation.zSpread * slave.FormationSlot.y * dir);
+					vec.z += (formation.zSpread * slave.FormationSlot.y * dir);
 					slave.AgentFormationPosition = vec;
+//					slave.mc.arrived = false;
 				}
-
+				captain.AgentFormationPosition = captain.transform.position;
+			//	DisableColliders();
+			//	Invoke ("EnableColliders", 3);
 				break;
 			}
 		case(Axis.Z):{
+				Debug.Log ("Assigning Z axis movement orders");
 				foreach (FormationSlave slave in slaves) {
-					vec.y += (formation.xSpread * slave.FormationSlot.x );
+					Vector3 vec = captain.transform.position;
+					vec.z += (formation.xSpread * slave.FormationSlot.x );
 					vec.x += (formation.zSpread * slave.FormationSlot.y * dir);
 					slave.AgentFormationPosition = vec;
 				}
+				captain.AgentFormationPosition = captain.transform.position;
 
 				break;
 			}
@@ -395,9 +493,13 @@ public class FormationMaster : MonoBehaviour {
 	}
 
 	void MassMove(Vector3 moveOrder){
-		foreach(FormationSlave slave in slaves)
-		{
-			slave.mc.npcInputToMove (moveOrder);
+		if (!UseNavMeshAgent) {
+			foreach (FormationSlave slave in slaves) {
+				slave.mc.npcInputToMove (moveOrder);
+			}
+		} else {
+			captain.mc.AgentAdjustSpeed (MovementController.WALK);
+			captain.mc.AgentInputDirectionalMovement (moveOrder);
 		}
 	}
 
@@ -405,18 +507,28 @@ public class FormationMaster : MonoBehaviour {
 
 
 	void EnableColliders(){
+		Debug.Log ("Colliders Enabled");
 		foreach (FormationSlave slave in slaves) {
 			slave.gameObject.layer = 0;
-
 		}
+		captain.gameObject.layer = 0;
+	}
+
+	public void EnableColliders(FormationSlave slave){
+			slave.gameObject.layer = 0;
 	}
 
 	void DisableColliders(){
+		Debug.Log ("Colliders Enabled");
 		foreach (FormationSlave slave in slaves) {
 			slave.gameObject.layer = 31;
 		}
+		captain.gameObject.layer = 31;
 	}
 
+	public void DisableColliders(FormationSlave slave){
+			slave.gameObject.layer = 31;
+		}
 
 	public void Register(FormationSlave slave){
 		if (slave != captain) {
