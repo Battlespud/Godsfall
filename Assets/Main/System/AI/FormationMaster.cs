@@ -52,10 +52,7 @@ public class FormationMaster : MonoBehaviour {
 	public SpeechMaster formationSpeechMaster; //the troops will  yell back
 	public SpeechModule captainSpeech; //the captain will yell commands
 
-
-
-
-
+	public List<Vector2> listOfFormationSlots;
 
 	// Use this for initialization
 	void Start () {
@@ -66,7 +63,9 @@ public class FormationMaster : MonoBehaviour {
 			HandleSpeechSetup ();
 		}
 		Debug.Log ("Assigning positions..");
+		listOfFormationSlots = new List<Vector2> ();
 		AssignPositions();
+
 	}
 	
 	// Update is called once per frame
@@ -271,33 +270,34 @@ public class FormationMaster : MonoBehaviour {
 					}
 			
 
+
 					int soldierCounter = 0;
 
 					//just the first rank
 					for (int x = 1; x <= soldiersLastLeftRank; x++) {
-						//foreach soldier in that rank on left side
 						slaves [soldierCounter].FormationSlot = new Vector2 (x * -1, 1);
+						listOfFormationSlots.Add (new Vector2 (x * -1, 1));
 						soldierCounter++;
 					}
+
 					for (int x = 1; x <= soldiersLastRightRank; x++) {
-						//foreach soldier in that rank on Right side
 						slaves [soldierCounter].FormationSlot = new Vector2 (x, 1);
+						listOfFormationSlots.Add (new Vector2 (x, 1));
 						soldierCounter++;
 					}
 
-
+					//all other ranks
 					for (int y = 2; y <= formation.ranks; y++) {
-						//for each rank
 						int side = -1;
 						for (int x = 1; x <= soldiersPerLeftRank; x++) {
-							//foreach soldier in that rank on left side
 							slaves[soldierCounter].FormationSlot = new Vector2(x*-1,y);
+							listOfFormationSlots.Add(new Vector2(x*-1,y));
 							soldierCounter++;
 						}
 	
 						for (int x = 1; x <= soldiersPerRightRank; x++) {
-							//foreach soldier in that rank on right side
 							slaves[soldierCounter].FormationSlot = new Vector2(x,y);
+							listOfFormationSlots.Add(new Vector2(x,y));
 							soldierCounter++;
 						}
 					}
@@ -307,6 +307,7 @@ public class FormationMaster : MonoBehaviour {
 					{
 						for (int g = 1; g <= ranks; g++) {
 							slaves[soldierCounter].FormationSlot = new Vector2(0,g);
+							listOfFormationSlots.Add(new Vector2(0,g));
 							soldierCounter++;
 						}
 
