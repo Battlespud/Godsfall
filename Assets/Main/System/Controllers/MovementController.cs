@@ -27,6 +27,7 @@ public class MovementController : MonoBehaviour {
 	[Tooltip("When active, only instructions to the actor will be followed, toMove modifications will be ignored.")]
 	public bool useNavMeshAgent;
 
+	public bool arrived = true;
 	//Automated
 	public bool isMoving = false;
 	public bool hasSpriteController = false;
@@ -177,11 +178,14 @@ public class MovementController : MonoBehaviour {
 			//NavMeshAgentController
 
 			spriteController.UpdateSprite (agent.velocity, false);
-			if (canMove () && destination != null) {
+			if (canMove () && destination != null && !arrived) {
 				agent.isStopped = false;
 				agent.destination = destination;
 			} else {
 				agent.isStopped = true;
+			}
+			if (agent.remainingDistance <= agent.stoppingDistance) {
+				arrived = true;
 			}
 		}
 	}
@@ -372,11 +376,13 @@ public class MovementController : MonoBehaviour {
 	public void agentInputToMove(Vector3 vec)
 	{
 		destination = vec;
+		arrived = false;
 	}
 
 	public void agentInputToMove(Vector2 vec)
 	{
 		destination = new Vector3 (vec.x, transform.position.y, vec.y);
+		arrived = false;
 	}
 	public void npcInputToMove(Vector3 i){
 		if (canMove () && !lockout) {
