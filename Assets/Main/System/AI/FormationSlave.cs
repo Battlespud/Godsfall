@@ -13,7 +13,7 @@ public class FormationSlave : MonoBehaviour {
 	public bool inFormation = false;
 	public Vector3 formationPosition; //where this soldier needs to go
 	public Vector2 AgentFormationPosition;
-	public Vector3 relativePosition;
+	public float distanceToTarget;
 	public int rank = 1; //which line this soldier stands in, 1 is first
 
 	[Tooltip("Represents position in formation.  Centered on the Captain, X represents how far to the Captain's left or right this troop is in terms of soldiers (not in terms of actual Unity units, so this cant be used for navigation on its own), 0 is inline with the captain." +
@@ -48,7 +48,7 @@ public class FormationSlave : MonoBehaviour {
 		} else {
 			if(!inFormation)
 				mc.agentInputToMove (AgentFormationPosition);
-			relativePosition = master.captain.transform.position - formationPosition;
+			distanceToTarget = Vector3.Distance (transform.position, AgentFormationPosition);
 			if (Vector3.Distance (transform.position, formationPosition) <= closeEnoughFloat && !inFormation) {
 				inFormation = true;
 			}
