@@ -48,7 +48,7 @@ public class FormationSlave : MonoBehaviour {
 		} else {
 			if(!inFormation)
 				mc.agentInputToMove (AgentFormationPosition);
-			distanceToTarget = Vector3.Distance (transform.position, Vector3(AgentFormationPosition.x, transform.position.y, AgentFormationPosition.y));
+			distanceToTarget = Vector3.Distance (transform.position,new Vector3(AgentFormationPosition.x, transform.position.y, AgentFormationPosition.y));
 			if (Vector3.Distance (transform.position, formationPosition) <= closeEnoughFloat && !inFormation) {
 				inFormation = true;
 			}
