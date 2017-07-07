@@ -67,7 +67,7 @@ public class MovementController : MonoBehaviour {
 
 //Agent stuff
 	[Tooltip("Approximately where the Actor will attempt to navigate, must be near navmesh.")]
-	[SerializeField]Vector3 destination;
+	[SerializeField]public Vector3 destination;
 
 //Physics Emulation
 	float mass = 10f;
@@ -178,9 +178,10 @@ public class MovementController : MonoBehaviour {
 
 			spriteController.UpdateSprite (agent.velocity, false);
 			if (canMove () && destination != null) {
+				agent.isStopped = false;
 				agent.destination = destination;
 			} else {
-				agent.destination = transform.position;
+				agent.isStopped = true;
 			}
 		}
 	}

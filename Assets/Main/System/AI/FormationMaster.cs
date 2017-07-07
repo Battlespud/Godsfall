@@ -215,15 +215,107 @@ public class FormationMaster : MonoBehaviour {
 					int numberOfTroops = slaves.Count;
 					int ranks = formation.ranks;
 					int soldiersWithNonZeroX = numberOfTroops - ranks; //overhead of 1 soldier per rank
-					bool unevenRanks = false;
-					if (soldiersWithNonZeroX % ranks != 0) {
-						unevenRanks = true;
+					bool unevenSides = false;
+					if (soldiersWithNonZeroX % 2 != 0) {
+						unevenSides = true;
+					}
+
+					int soldiersLeft;
+					int soldiersRight;
+
+					if (unevenSides) {
+						soldiersLeft = Mathf.RoundToInt (soldiersWithNonZeroX/2);
+						soldiersRight = soldiersWithNonZeroX - soldiersLeft;
+					} else {
+						soldiersLeft = soldiersWithNonZeroX/2;
+						soldiersRight = soldiersWithNonZeroX - soldiersLeft;
+					}
+
+					bool unevenLeftFlank = false;
+					bool unevenRightFlank = false;
+
+					if (soldiersLeft % ranks != 0) {
+						unevenLeftFlank = true;
+					}
+					if (soldiersRight % ranks != 0) {
+						unevenRightFlank = true;
+					}
+
+					int soldiersPerLeftRank;  //full rows
+					int soldiersLastLeftRank; //because we might not have enough to fil this row
+					if (unevenLeftFlank) {
+						soldiersPerLeftRank = Mathf.RoundToInt (soldiersLeft / ranks);
+						soldiersLastLeftRank = soldiersLeft-(soldiersPerLeftRank*ranks-1);
+					}
+					else
+					{
+						soldiersPerLeftRank = soldiersLeft / ranks;
+						soldiersLastLeftRank = soldiersPerLeftRank;
 					}
 
 
 
 
+					int soldiersPerRightRank;  //full rows
+					int soldiersLastRightRank; //because we might not have enough to fil this row
 
+
+					if (unevenRightFlank) {
+						soldiersPerRightRank = Mathf.RoundToInt (soldiersRight / ranks);
+						soldiersLastRightRank = soldiersRight-(soldiersPerRightRank*ranks-1);
+					}
+					else
+					{
+						soldiersPerRightRank = soldiersRight / ranks;
+						soldiersLastRightRank = soldiersPerRightRank;
+					}
+			
+
+					int soldierCounter = 0;
+
+					//just the first rank
+					for (int x = 1; x <= soldiersLastLeftRank; x++) {
+						//foreach soldier in that rank on left side
+						slaves [soldierCounter].FormationSlot = new Vector2 (x * -1, 1);
+						soldierCounter++;
+					}
+					for (int x = 1; x <= soldiersLastRightRank; x++) {
+						//foreach soldier in that rank on Right side
+						slaves [soldierCounter].FormationSlot = new Vector2 (x, 1);
+						soldierCounter++;
+					}
+
+
+					for (int y = 2; y <= formation.ranks; y++) {
+						//for each rank
+						int side = -1;
+						for (int x = 1; x <= soldiersPerLeftRank; x++) {
+							//foreach soldier in that rank on left side
+							slaves[soldierCounter].FormationSlot = new Vector2(x*-1,y);
+							soldierCounter++;
+						}
+	
+						for (int x = 1; x <= soldiersPerRightRank; x++) {
+							//foreach soldier in that rank on right side
+							slaves[soldierCounter].FormationSlot = new Vector2(x,y);
+							soldierCounter++;
+						}
+					}
+
+
+					//Middle troops
+					{
+						for (int g = 1; g <= ranks; g++) {
+							slaves[soldierCounter].FormationSlot = new Vector2(0,g);
+							soldierCounter++;
+						}
+
+						Debug.Log (soldierCounter + " were assigned out of " + numberOfTroops);
+
+					}
+
+					break;
+					/*
 
 					int flankTroops = formation.troops - formation.ranks; //1 troop per rank will be in line with the captain, so not on a flank and their number will be = 0;
 					float troopsPerRank = formation.troops / formation.ranks;
@@ -252,6 +344,7 @@ public class FormationMaster : MonoBehaviour {
 					AssignMovementOrders ();
 					Debug.Log ("Troops Per Side: " + troopsPerSide + ". Per Row: " + troopsPerRank );
 					break;
+					*/
 				}
 
 
