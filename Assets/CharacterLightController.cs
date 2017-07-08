@@ -14,16 +14,17 @@ public class CharacterLightController : MonoBehaviour {
 
 	const int maxDif = 4; //8 options on base 0 circular
 
-	float maxIntensity = 2f;
+	public float maxIntensity = 3f;
 	public float intensityPercent = 0f;
 
 	// Use this for initialization
 	void Start () {
-		RegisterLightDirection ();
 		cam = Camera.main;
 		dir = cam.GetComponent<CameraDirection> ();
 		characterLight = gameObject.GetComponent<Light> ();
-	}
+		Sun = GameObject.FindGameObjectWithTag ("Sun");
+		RegisterLightDirection ();
+		}
 
 	public Facing facing;
 

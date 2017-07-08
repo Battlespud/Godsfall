@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Entity : MonoBehaviour {
+
+	public UnityEvent ModifyBloodEvent;
 
 	public GameObject eGameObject;
 	public MovementController movementController;

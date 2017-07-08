@@ -11,7 +11,6 @@ public class Body : IEventInitializer {
 	public List<BodyPart> bodyPartsList = new List<BodyPart>();
 
 
-
 	MovementController movementController;
 	public List<StatusEffect> statusEffectsList = new List<StatusEffect>();
 
@@ -38,7 +37,7 @@ public class Body : IEventInitializer {
 	public void dealRandomDamage(int d){
 		BodyPart[] bArray = bodyPartsList.ToArray ();
 		//bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);
-
+		parentEntity.blood -= Mathf.FloorToInt(d/2);
 		switch(Random.Range(0,2) > 0){
 		case true:
 			bArray [Random.Range (0, bodyPartsList.Count)].takeDamage (d);

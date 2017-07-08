@@ -60,9 +60,21 @@ public class FormationSlave : MonoBehaviour {
 		}
 	}
 
+	public void RegisterDeath(){
+		//called by event in Actor.  Registers death with FormationMaster to allow new troops to move into gap.
+		master.RegisterDeath(this);
+	}
+	public void RegisterDeath(Actor e){
+		//called by event in Actor.  Registers death with FormationMaster to allow new troops to move into gap.
+		master.RegisterDeath(this);
+	}
+	public void RegisterMove(){
+		//called when the unit moves into a new slot, used to order following troops to move up as well.
+
+	}
+
 	public void AssignPosition(int x, int y){
 		FormationSlot = new Vector2 ((float)x, (float)y);
-
 
 	}
 }

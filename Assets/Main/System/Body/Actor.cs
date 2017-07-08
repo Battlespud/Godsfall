@@ -23,12 +23,14 @@ public class Actor : Entity , IEventInitializer {
 
 	public override void modifyBlood(int i){
 		blood += i;
-		//TODO add event
+		Debug.Log (name + " suffers a wound, losing " + i + " blood!");
+		//ModifyBloodEvent.Invoke ();
 	}
 
 	public void die(){
 		deathEvent.Invoke (this);
 		status = Status.Dead;
+		Destroy (gameObject);
 	}
 
 	public void breakEveryBone(){
@@ -86,6 +88,7 @@ public class Actor : Entity , IEventInitializer {
 	public void initializeEvents(){
 		deathEvent = new DeathEventArgs();
 		deathEvent.AddListener (Announcer.AnnounceDeath);
+		deathEvent.AddListener (gameObject.GetComponent<FormationSlave>().RegisterDeath);
 
 		combatEvent = new CombatEvent ();
 		combatEvent.AddListener (CombatHandler.ResolveCombat);

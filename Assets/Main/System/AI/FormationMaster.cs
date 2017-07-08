@@ -72,6 +72,9 @@ public class FormationMaster : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (ChangeAxis) {
+			ChangeFormationAxis ();
+		}
 		if (!UseNavMeshAgent) {
 			if (ChangeAxis) {
 				ChangeFormationAxis ();
@@ -492,6 +495,43 @@ public class FormationMaster : MonoBehaviour {
 		}
 	}
 
+	void AssignMovementOrders(FormationSlave slave){
+		int dir = -1;
+		if (!formation.HeadingPositive)
+			dir = 1;
+		if (formation.CaptainLeadsFromTheFront)
+			dir *= -1;
+		switch (formation.axis) {
+		case(Axis.X):{
+				Debug.Log ("Assigning X axis movement orders");
+				if(slave!= null){
+					Vector3 vec = captain.transform.position;
+					vec.x += (formation.xSpread * slave.FormationSlot.x );
+					vec.z += (formation.zSpread * slave.FormationSlot.y * dir);
+					slave.AgentFormationPosition = vec;
+					//					slave.mc.arrived = false;
+				//	DisableColliders();
+				//	Invoke ("EnableColliders", 3);
+				}
+				break;
+			}
+		case(Axis.Z):{
+				Debug.Log ("Assigning Z axis movement orders");
+					Vector3 vec = captain.transform.position;
+					vec.z += (formation.xSpread * slave.FormationSlot.x );
+					vec.x += (formation.zSpread * slave.FormationSlot.y * dir);
+					slave.AgentFormationPosition = vec;
+
+				break;
+			}
+		default:
+			{
+				Debug.Log ("Invalid axis");
+				break;
+			}
+		}
+	}
+
 	void MassMove(Vector3 moveOrder){
 		if (!UseNavMeshAgent) {
 			foreach (FormationSlave slave in slaves) {
@@ -543,6 +583,51 @@ public class FormationMaster : MonoBehaviour {
 	}
 
 
+	public void RegisterDeath(FormationSlave slave){
+		Debug.Log ("Registering death of " + slave.gameObject.name);
+		if (slave == captain) {
+			AssignNewCaptain ();
+		}
+		Vector2 toFill = slave.FormationSlot;
+		FormationMatrix.Remove (toFill);
+		slaves.Remove (slave);
+		FormationSlave rearSlave;
+		if(FormationMatrix.TryGetValue(new Vector2(toFill.x, toFill.y-1), out  rearSlave)){
+			RegisterMove(rearSlave);
+			rearSlave.FormationSlot = toFill;
+			FormationMatrix.Add (toFill, rearSlave);
+		}
+		AssignMovementOrders (rearSlave);
+	}
+
+
+	public void RegisterMove(FormationSlave slave){
+		Vector2 toFill = slave.FormationSlot;
+		FormationMatrix.Remove (toFill);
+		FormationSlave rearSlave;
+		if(FormationMatrix.TryGetValue(new Vector2(toFill.x, toFill.y-1), out  rearSlave)){
+			RegisterMove(rearSlave);
+			rearSlave.FormationSlot = toFill;
+			FormationMatrix.Add (toFill, rearSlave);
+		}
+	}
+
+	void AssignNewCaptain(){
+		Debug.Log ("Finding new captain...");
+		bool captainFound = false;
+		for (int i = 0; captainFound = false; i++) {
+			if (slaves [i] != null) {
+				captain = slaves [i];
+				RegisterMove (captain);
+				slaves.Remove (captain);
+				captain.FormationSlot = new Vector2 (0, 0);
+				AssignMovementOrders ();
+				captain.gameObject.name = "Captain";
+				captainFound = true;
+			}
+		}
+
+	}
 
 
 	//speech

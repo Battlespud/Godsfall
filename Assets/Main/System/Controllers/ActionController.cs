@@ -25,7 +25,7 @@ public class ActionController : MonoBehaviour {
 
 
 	public void tryAttack(){
-		Weapon.Attack ();
+		//Weapon.Attack ();
 		const float offset = .25f;
 		RaycastHit rayHit; 
 		Vector3 pos = transform.position;
@@ -47,7 +47,7 @@ public class ActionController : MonoBehaviour {
 				IInteractableC genericClass = (IInteractableC)rayHit.collider.gameObject.GetComponent (typeof(IInteractableC));
 				genericClass.Interact ();
 			} else {
-				Debug.Log ("Hit Nothing!");
+			//	Debug.Log ("Hit Nothing!");
 			}
 		} else if((Physics.Raycast (rayR, out rayHit, 10f))) {
 			if (rayHit.collider.gameObject.GetComponent<Actor> ()) {
@@ -60,7 +60,7 @@ public class ActionController : MonoBehaviour {
 				IInteractableC genericClass = (IInteractableC)rayHit.collider.gameObject.GetComponent (typeof(IInteractableC));
 				genericClass.Interact ();
 			} else {
-				Debug.Log ("Hit Nothing!");
+			//	Debug.Log ("Hit Nothing!");
 			}
 
 		}
